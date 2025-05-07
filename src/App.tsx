@@ -1,7 +1,7 @@
 import React from 'react';
 import './App.css';
 import {BrowserRouter, Route, Routes} from "react-router-dom"
-import { Login, Register } from './presentation/components';
+import { Login, Register, PasswordFinding } from './presentation/components';
 
 
 function App() {
@@ -11,6 +11,7 @@ function App() {
 				<Routes>
 					<Route path="/" element={<Login />}></Route>
           <Route path="/register" element={<Register />}></Route>
+          <Route path="/password-finding" element={<PasswordFinding />}></Route>
 				</Routes>
       </BrowserRouter>
     </div>
