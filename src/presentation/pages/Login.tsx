@@ -1,4 +1,5 @@
 import { Button, ImageButton, LoginForm } from "../components";
+import { Link } from "react-router-dom";
 
 const Login = () => {
   return (
@@ -12,9 +13,14 @@ const Login = () => {
           }}
         />
       </div>
-      <div className=" w-[456px] flex flex-col gap-y-20 ">
-        <h1 className=" text-headlineL text-white mb-2">로그인</h1>
+      <div className=" w-[456px] flex flex-col ">
+        <h1 className=" text-headlineL text-white mb-20">로그인</h1>
         <LoginForm />
+        <div className="flex justify-end mt-2 mb-20">
+          <a href="/passwordFinding" className="text-sm text-white">
+            비밀번호를 잊어버리셨습니까?
+          </a>
+        </div>
         <div className="flex flex-col gap-y-4">
           <ImageButton
             src="src\presentation\assets\naverLoginImg\btnG_완성형.png"

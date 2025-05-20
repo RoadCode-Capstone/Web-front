@@ -1,5 +1,6 @@
 import Button from "../common/Button";
 import InputField from "../common/InputField";
+import { Link } from "react-router-dom";
 
 const LoginForm = () => {
   return (
@@ -18,13 +19,8 @@ const LoginForm = () => {
           containerStyle="w-[456px]"
         />
       </div>
-      <div className="flex justify-end my-2">
-        <a href="/passwordFinding" className="text-sm text-white">
-          비밀번호를 잊어버리셨습니까?
-        </a>
-      </div>
 
-      <Button label="로그인" buttonStyle="w-[456px] my-6" />
+      <Button label="로그인" buttonStyle="w-[456px] mt-6" />
     </form>
   );
 };
