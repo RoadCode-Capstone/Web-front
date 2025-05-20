@@ -19,7 +19,7 @@ const LoginForm = () => {
         />
       </div>
       <div className="flex justify-end my-2">
-        <a href="/passwordFinding" className="text-sm">
+        <a href="/passwordFinding" className="text-sm text-white">
           비밀번호를 잊어버리셨습니까?
         </a>
       </div>
