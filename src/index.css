@@ -13,6 +13,16 @@
   --text-headlineL: 2rem;
   --text-headlineL--line-height: 2.5rem:
   --text-headlineL--letter-spacing: 0rem;
+
+  --text-displayL: 3.5625rem;
+  --text-displayL--line-height: 4rem;
+  --text-displayL--letter-spacing: -0.025em;
+  --text-displayL--font-weight: bold;
+
+  --text-displayS: 2.25rem;
+  --text-displayS--line-height: 2.75rem;
+  --text-displayS--letter-spacing: 0;
+  --text-displayS--font-weight: bold;
 }
 body {
   margin: 0;
