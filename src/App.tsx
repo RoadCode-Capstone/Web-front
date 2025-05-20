@@ -7,7 +7,7 @@ import {
   PasswordFinding,
   PasswordSetting,
 } from "./presentation/components";
-import { Login } from "./presentation/pages";
+import { Login, Register } from "./presentation/pages";
 
 function App() {
   return (
@@ -15,10 +15,10 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Login />}></Route>
-          {/* <Route path="/register" element={<RegisterForm />}></Route>
-          <Route path="/passwordFinding" element={<PasswordFinding />}></Route>
+          <Route path="/register" element={<Register />}></Route>
+          {/* <Route path="/passwordFinding" element={<PasswordFinding />}></Route>
           <Route path="/passwordSetting" element={<PasswordSetting />}></Route>
-          <Route path="/registerSuccess" element={<RegisterSuccess />}></Route> */}
+          <Route path="/registerSuccess" element={<RegisterSucces />}></Route> */}
         </Routes>
       </BrowserRouter>
     </div>
