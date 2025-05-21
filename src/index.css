@@ -9,6 +9,7 @@
   --color-kakao: #FEE500;
   --color-naver: #03C75A;
   --color-google: #f2f2f2;
+  --color-red: #ff0000;
 
   --text-headlineL: 2rem;
   --text-headlineL--line-height: 2.5rem:
@@ -23,6 +24,12 @@
   --text-displayS--line-height: 2.75rem;
   --text-displayS--letter-spacing: 0;
   --text-displayS--font-weight: bold;
+
+  --text-caption: 0.75rem;
+  --text-caption--line-height: 1.125rem;
+  --text-caption--letter-spacing: -0.002em; 
+
+
 }
 body {
   margin: 0;
