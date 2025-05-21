@@ -4,6 +4,7 @@ import * as Fa6Icons from "react-icons/fa6";
 export interface IconProps {
   name: string;
   size?: number;
+  color?: string;
 }
 
 const IconList: Record<string, keyof typeof Fa6Icons> = {
@@ -11,7 +12,7 @@ const IconList: Record<string, keyof typeof Fa6Icons> = {
   lock: "FaLock",
 };
 
-const Icon: React.FC<IconProps> = ({ name, size = 20 }) => {
+const Icon: React.FC<IconProps> = ({ name, size = 20, color = "black" }) => {
   const iconName = IconList[name];
   let IconComponent: IconType | undefined = Fa6Icons[iconName];
 
@@ -24,7 +25,7 @@ const Icon: React.FC<IconProps> = ({ name, size = 20 }) => {
 
   return (
     <div className="inline-flex justify-center items-center">
-      <IconComponent size={size} />
+      <IconComponent size={size} color={color} />
     </div>
   );
 };
