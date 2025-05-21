@@ -7,6 +7,7 @@ import {
   RegisterSuccess,
   PasswordFinding,
   PasswordSetting,
+  UserInfo,
 } from "./presentation/pages";
 
 function App() {
@@ -19,6 +20,8 @@ function App() {
           <Route path="/passwordFinding" element={<PasswordFinding />}></Route>
           <Route path="/passwordSetting" element={<PasswordSetting />}></Route>
           <Route path="/registerSuccess" element={<RegisterSuccess />}></Route>
+
+          <Route path="/userInfo" element={<UserInfo />}></Route>
         </Routes>
       </BrowserRouter>
     </div>
