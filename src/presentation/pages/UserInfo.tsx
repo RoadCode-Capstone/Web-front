@@ -1,8 +1,11 @@
+import { useNavigate } from "react-router-dom";
 import { Button, InputField } from "../components";
 import Icon from "../components/common/Icon";
 import IconButton from "../components/common/IconButton";
 
 const UserInfo = () => {
+  const navigate = useNavigate();
+
   return (
     <div className="min-h-screen w-full flex flex-col items-center justify-center">
       <div className="w-[643px] flex flex-col items-center gap-y-12 ">
@@ -36,7 +39,14 @@ const UserInfo = () => {
             iconProps={{ name: "email", size: 24 }}
             disabled={true}
           />
-          <Button type="submit" label="비밀번호 수정" buttonStyle=" h-18" />
+          <Button
+            type="submit"
+            label="비밀번호 수정"
+            buttonStyle=" h-18"
+            onClick={() =>
+              navigate("/passwordFinding", { state: { theme: "main" } })
+            }
+          />
         </div>
         <div className="flex w-full justify-end gap-x-4">
           <Button
