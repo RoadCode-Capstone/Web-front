@@ -5,14 +5,23 @@ export interface IconProps {
   name: string;
   size?: number;
   color?: string;
+  containerStyle?: string;
 }
 
 const IconList: Record<string, keyof typeof Fa6Icons> = {
   user: "FaUser",
   lock: "FaLock",
+  check: "FaRegCircleCheck",
+  email: "FaEnvelope",
+  imageEdit: "FaRegFileImage",
 };
 
-const Icon: React.FC<IconProps> = ({ name, size = 20, color = "black" }) => {
+const Icon: React.FC<IconProps> = ({
+  name,
+  size = 20,
+  color = undefined,
+  containerStyle = "",
+}) => {
   const iconName = IconList[name];
   let IconComponent: IconType | undefined = Fa6Icons[iconName];
 
@@ -24,7 +33,9 @@ const Icon: React.FC<IconProps> = ({ name, size = 20, color = "black" }) => {
   }
 
   return (
-    <div className="inline-flex justify-center items-center">
+    <div
+      className={`inline-flex justify-center items-center ${containerStyle}`}
+    >
       <IconComponent size={size} color={color} />
     </div>
   );

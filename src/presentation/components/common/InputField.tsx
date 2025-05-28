@@ -7,6 +7,7 @@ interface InputFieldProps {
   iconProps?: IconProps;
   containerStyle?: string;
   inputStyle?: string;
+  disabled?: boolean;
 }
 
 const InputField: React.FC<InputFieldProps> = ({
@@ -15,6 +16,7 @@ const InputField: React.FC<InputFieldProps> = ({
   iconProps,
   containerStyle = "",
   inputStyle = "",
+  disabled = false,
 }) => {
   return (
     <div
@@ -25,6 +27,7 @@ const InputField: React.FC<InputFieldProps> = ({
         className={`w-full focus:outline-none ${inputStyle}`}
         type={type}
         placeholder={placeholder}
+        disabled={disabled}
       ></input>
     </div>
   );
