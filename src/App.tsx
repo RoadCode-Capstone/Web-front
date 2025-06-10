@@ -8,6 +8,9 @@ import {
   PasswordFinding,
   PasswordSetting,
   UserInfo,
+  Main,
+  Planning,
+  LevelTest,
 } from "./presentation/pages";
 
 function App() {
@@ -22,6 +25,11 @@ function App() {
           <Route path="/registerSuccess" element={<RegisterSuccess />}></Route>
 
           <Route path="/userInfo" element={<UserInfo />}></Route>
+
+          <Route path="/main" element={<Main />}></Route>
+
+          <Route path="/newRoadMap" element={<Planning />}></Route>
+          <Route path="/levelTest" element={<LevelTest />}></Route>
         </Routes>
       </BrowserRouter>
     </div>

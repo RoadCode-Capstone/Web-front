@@ -4,3 +4,6 @@ export { default as RegisterSuccess } from "./RegisterSuccess";
 export { default as PasswordFinding } from "./PasswordFinding";
 export { default as PasswordSetting } from "./PasswordSetting";
 export { default as UserInfo } from "./UserInfo";
+export { default as Main } from "./Main";
+export { default as Planning } from "./Planning";
+export { default as LevelTest } from "./LevelTest";
