@@ -9,3 +9,5 @@ export { default as Header } from "./common/Header";
 export { default as ImageButton } from "./common/ImageButton";
 
 export { default as PlanningFeaturedCard } from "./planning/FeatruedCard";
+
+export { default as CodeEditor } from "./problem/CodeEditor";
