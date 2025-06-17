@@ -51,7 +51,6 @@ export default function CodeEditor({
         getLanguageExtension(),
         // javascript(), // JavaScript 하이라이팅
         // oneDark, // 다크 테마
-        dracula,
         // cobalt,
 
         EditorView.updateListener.of((update) => {
