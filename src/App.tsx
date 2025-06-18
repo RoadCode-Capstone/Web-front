@@ -11,6 +11,7 @@ import {
   Main,
   Planning,
   LevelTest,
+  Problem,
 } from "./presentation/pages";
 
 function App() {
@@ -30,6 +31,18 @@ function App() {
 
           <Route path="/newRoadMap" element={<Planning />}></Route>
           <Route path="/levelTest" element={<LevelTest />}></Route>
+          <Route
+            path="/problem"
+            element={
+              <Problem
+                problemDescription={""}
+                inputDescription={""}
+                outputDescription={""}
+                language={"python"}
+                problemName={""}
+              />
+            }
+          ></Route>
         </Routes>
       </BrowserRouter>
     </div>

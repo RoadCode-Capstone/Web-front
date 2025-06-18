@@ -50,7 +50,7 @@ export default function CodeEditor({
         basicSetup,
         getLanguageExtension(),
         // javascript(), // JavaScript 하이라이팅
-        // oneDark, // 다크 테마
+        oneDark, // 다크 테마
         // cobalt,
 
         EditorView.updateListener.of((update) => {
@@ -91,5 +91,5 @@ export default function CodeEditor({
     };
   }, [initialCode, onChange]);
 
-  return <div ref={editorRef} className="flex h-screen w-screen" />;
+  return <div ref={editorRef} className="flex h-full w-full" />;
 }
