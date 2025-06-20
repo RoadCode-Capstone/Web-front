@@ -5,6 +5,29 @@ import { ProblemResponse } from "../types/leveltest";
 import { ApiDefaultHeaders } from "../utils/apiHeaders";
 
 const PROBLEM_PREFIX = `${API_PREFIX}/problems`;
+
+export const getProblem = async (
+  problemId: number
+): Promise<ProblemResponse> => {
+  try {
+    const axiosResponse = await axios.get(`${PROBLEM_PREFIX}/${problemId}`, {
+      headers: {
+        ...ApiDefaultHeaders,
+      },
+    });
+
+    const response: ApiResponse<ProblemResponse> = axiosResponse.data;
+
+    if (response.code != "SUCCESS" || response.data == null)
+      throw new Error(response.message);
+
+    return response.data;
+  } catch (err) {
+    console.log(err);
+    throw err;
+  }
+};
+
 export const getProblems = async (
   request: number[]
 ): Promise<ProblemResponse[]> => {

@@ -14,6 +14,8 @@ const IconList: Record<string, keyof typeof Fa6Icons> = {
   check: "FaRegCircleCheck",
   email: "FaEnvelope",
   imageEdit: "FaRegFileImage",
+  left: "FaAngleLeft",
+  right: "FaAngleRight",
 };
 
 const Icon: React.FC<IconProps> = ({
