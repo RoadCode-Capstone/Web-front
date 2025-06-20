@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { postLeveltest } from "../../apis/levelTest";
+import { postLeveltest, postSubmission } from "../../apis/levelTest";
 import { ProblemResponse } from "../../types/leveltest";
 import { Button } from "../components";
 import { useLocation } from "react-router-dom";
@@ -50,6 +50,28 @@ const LevelTest = () => {
   const [problems, setProblems] = useState<ProblemResponse[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
 
+  const handleSubmit = async () => {
+    const submissions = {
+      submissions: problems.map((problem, index) => ({
+        problemId: problem.id,
+        language: language,
+        sourceCode: codes[index] || " ", // 빈칸 방지
+      })),
+    };
+
+    console.log(`submissions: ${JSON.stringify(submissions)}`);
+
+    try {
+      setIsLoading(true);
+      const res = await postSubmission(submissions);
+      console.log("제출 성공:", res);
+    } catch (err) {
+      console.error("제출 실패:", err);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   const handleNext = (code: string) => {
     setCodes((prev) => [...prev, code]);
     setCurrentIndex((prev) => prev + 1);
@@ -82,7 +104,11 @@ const LevelTest = () => {
           inputDescription={problems[currentIndex].inputDescription}
           outputDescription={problems[currentIndex].outputDescription}
           language={language}
-          onActionClick={handleNext}
+          onActionClick={
+            currentIndex === problems.length - 1
+              ? handleSubmit // 마지막 문제면 제출
+              : handleNext // 아니면 다음 문제로
+          }
         />
       ) : (
         <>

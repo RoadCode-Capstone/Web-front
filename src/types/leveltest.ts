@@ -3,6 +3,22 @@ export interface LeveltestRequest {
   category?: string;
 }
 
+export interface LevelTestSubmission {
+  problemId: number;
+  language: string;
+  sourceCode: string;
+}
+
+export interface LevelTestSubmissionsRequest {
+  submissions: LevelTestSubmission[];
+}
+
+export interface LevelTestSubmissionsResponse {
+  totalProblems: number;
+  result: boolean[];
+  passedCount: number;
+}
+
 export interface ProblemResponse {
   id: number;
   contestId: number;
