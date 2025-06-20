@@ -12,6 +12,7 @@ import {
   Planning,
   LevelTest,
   Problem,
+  LevelTestResult,
 } from "./presentation/pages";
 
 function App() {
@@ -31,6 +32,7 @@ function App() {
 
           <Route path="/newRoadMap" element={<Planning />}></Route>
           <Route path="/levelTest" element={<LevelTest />}></Route>
+          <Route path="/levelTest/result" element={<LevelTestResult />}></Route>
           <Route
             path="/problem"
             element={

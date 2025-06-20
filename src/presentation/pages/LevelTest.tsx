@@ -2,7 +2,7 @@ import { useState } from "react";
 import { postLeveltest, postSubmission } from "../../apis/levelTest";
 import { ProblemResponse } from "../../types/leveltest";
 import { Button } from "../components";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import Problem from "./Problem";
 import { getProblems } from "../../apis/problem";
 
@@ -35,9 +35,9 @@ interface LevelTestProps {
   algorithm?: string;
 }
 
-interface CodeSubmissoion {}
 const LevelTest = () => {
   const location = useLocation();
+  const navigate = useNavigate();
   const { language = "cpp", algorithm } = location.state as LevelTestProps;
   const [codes, setCodes] = useState<string[]>([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -65,6 +65,11 @@ const LevelTest = () => {
       setIsLoading(true);
       const res = await postSubmission(submissions);
       console.log("제출 성공:", res);
+      navigate("/leveltest/result", {
+        state: {
+          results: res.result,
+        },
+      });
     } catch (err) {
       console.error("제출 실패:", err);
     } finally {
