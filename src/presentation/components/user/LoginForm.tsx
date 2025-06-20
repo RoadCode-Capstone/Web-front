@@ -1,18 +1,19 @@
 import { useState } from "react";
-import { TEST_EMAIL, TEST_PASSWORD } from "../../../constants/config";
 import Button from "../common/Button";
 import InputField from "../common/InputField";
 import { login } from "../../../apis/auth";
 import { useNavigate } from "react-router-dom";
+import { API_TEST_EMAIL, API_TEST_PASSWORD } from "../../../constants/api";
 
 const LoginForm = () => {
-  const [email, setEmail] = useState<string>(TEST_EMAIL);
-  const [password, setPassword] = useState<string>(TEST_PASSWORD);
+  const [email, setEmail] = useState<string>(API_TEST_EMAIL);
+  const [password, setPassword] = useState<string>(API_TEST_PASSWORD);
   const navigate = useNavigate();
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    const token = await login({ email, password });
+    const loginResult = await login({ email, password });
+    // localStorage.setItem("token", loginResult.accessToken);
     navigate("/main");
   };
 

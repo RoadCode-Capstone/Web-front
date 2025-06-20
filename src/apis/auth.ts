@@ -19,17 +19,20 @@ export const signup = async (request: Auth) => {
   }
 };
 
-export const login = async (request: AuthLoginRequest) => {
+export const login = async (
+  request: AuthLoginRequest
+): Promise<AuthLoginResponse> => {
   try {
     const axiosResponse = await axios.post(`${AUTH_PREFIX}/login`, request);
     const response: ApiResponse<AuthLoginResponse> = axiosResponse.data;
-    if (response.code != "SUCCESS") {
+
+    if (response.code != "SUCCESS" || response.data == null) {
       throw new Error(response.message);
     }
 
-    return response.data.accessToken;
+    return response.data;
   } catch (error) {
-    console.log(error);
+    throw error;
   }
 };
 
