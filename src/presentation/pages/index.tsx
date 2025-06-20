@@ -7,3 +7,5 @@ export { default as UserInfo } from "./UserInfo";
 export { default as Main } from "./Main";
 export { default as Planning } from "./Planning";
 export { default as LevelTest } from "./LevelTest";
+export { default as Problem } from "./Problem";
+export { default as LevelTestResult } from "./LevelTestResult";

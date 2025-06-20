@@ -11,6 +11,8 @@ import {
   Main,
   Planning,
   LevelTest,
+  Problem,
+  LevelTestResult,
 } from "./presentation/pages";
 
 function App() {
@@ -30,6 +32,22 @@ function App() {
 
           <Route path="/newRoadMap" element={<Planning />}></Route>
           <Route path="/levelTest" element={<LevelTest />}></Route>
+          <Route path="/levelTest/result" element={<LevelTestResult />}></Route>
+          <Route
+            path="/problem"
+            element={
+              <Problem
+                problemDescription={""}
+                inputDescription={""}
+                outputDescription={""}
+                language={"python"}
+                problemName={""}
+                onActionClick={function (code: string): void {
+                  throw new Error("Function not implemented.");
+                }}
+              />
+            }
+          ></Route>
         </Routes>
       </BrowserRouter>
     </div>

@@ -140,6 +140,7 @@ const Planning = () => {
         state: {
           language: selectedLanguage,
           algorithm: selectedAlgorithmType,
+          dailyGoal: selectedCount,
         },
       });
     }
