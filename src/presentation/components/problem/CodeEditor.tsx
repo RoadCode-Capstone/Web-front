@@ -1,12 +1,9 @@
 import { useEffect, useRef } from "react";
 import { basicSetup } from "codemirror";
 import { EditorView, keymap } from "@codemirror/view";
-import { EditorState, Extension } from "@codemirror/state";
+import { EditorState, Extension, StateEffect } from "@codemirror/state";
 import { defaultKeymap } from "@codemirror/commands";
-
 import { oneDark } from "@codemirror/theme-one-dark";
-import { dracula } from "thememirror";
-import { cobalt } from "thememirror";
 
 import { python } from "@codemirror/lang-python";
 import { java } from "@codemirror/lang-java";
@@ -39,24 +36,21 @@ export default function CodeEditor({
     }
   };
 
+  // 에디터 최초 생성
   useEffect(() => {
     if (!editorRef.current) return;
 
-    // CodeMirror 상태 정의
-    const startState = EditorState.create({
+    const state = EditorState.create({
       doc: initialCode,
       extensions: [
-        keymap.of(defaultKeymap), // 기본 키맵 설정
         basicSetup,
+        keymap.of(defaultKeymap),
         getLanguageExtension(),
-        // javascript(), // JavaScript 하이라이팅
-        oneDark, // 다크 테마
-        // cobalt,
-
+        oneDark,
         EditorView.updateListener.of((update) => {
           if (update.docChanged && onChange) {
             const newCode = update.state.doc.toString();
-            onChange(newCode); // 실시간 콜백 호출
+            onChange(newCode);
           }
         }),
         EditorView.theme({
@@ -79,17 +73,70 @@ export default function CodeEditor({
       ],
     });
 
-    // 에디터 뷰 생성
-    viewRef.current = new EditorView({
-      state: startState,
+    const view = new EditorView({
+      state,
       parent: editorRef.current,
     });
 
-    // 컴포넌트 언마운트 시 cleanup
+    viewRef.current = view;
+
     return () => {
-      viewRef.current?.destroy();
+      view.destroy();
     };
-  }, [initialCode, onChange]);
+  }, []);
+
+  // initialCode 변경 시 코드 반영
+  useEffect(() => {
+    if (!viewRef.current) return;
+    const current = viewRef.current.state.doc.toString();
+    if (initialCode !== current) {
+      const transaction = viewRef.current.state.update({
+        changes: {
+          from: 0,
+          to: current.length,
+          insert: initialCode,
+        },
+      });
+      viewRef.current.dispatch(transaction);
+    }
+  }, [initialCode]);
+
+  // language 변경 시 문법 하이라이팅 교체
+  useEffect(() => {
+    if (!viewRef.current) return;
+    const languageExtension = getLanguageExtension();
+    viewRef.current.dispatch({
+      effects: StateEffect.reconfigure.of([
+        basicSetup,
+        keymap.of(defaultKeymap),
+        languageExtension,
+        oneDark,
+        EditorView.updateListener.of((update) => {
+          if (update.docChanged && onChange) {
+            const newCode = update.state.doc.toString();
+            onChange(newCode);
+          }
+        }),
+        EditorView.theme({
+          "&": {
+            height: "100%",
+            width: "100%",
+            fontSize: "16pt",
+          },
+          ".cm-editor": {
+            height: "100%",
+          },
+          ".cm-scroller": {
+            overflow: "auto",
+            height: "100%",
+          },
+          ".cm-content": {
+            height: "100%",
+          },
+        }),
+      ]),
+    });
+  }, [language]);
 
   return <div ref={editorRef} className="flex h-full w-full" />;
 }
