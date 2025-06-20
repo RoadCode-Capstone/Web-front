@@ -40,6 +40,9 @@ function App() {
                 outputDescription={""}
                 language={"python"}
                 problemName={""}
+                onActionClick={function (code: string): void {
+                  throw new Error("Function not implemented.");
+                }}
               />
             }
           ></Route>

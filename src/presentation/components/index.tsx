@@ -11,6 +11,6 @@ export { default as ImageButton } from "./common/ImageButton";
 export { default as PlanningFeaturedCard } from "./planning/FeatruedCard";
 
 export { default as CodeEditor } from "./problem/CodeEditor";
-export { default as ProblemBox } from "./problem/ProblemBox";
+export { default as ProblemBody } from "./problem/ProblemBody";
 export { default as ProblemFooter } from "./problem/ProblemFooter";
 export { default as ProblemHeader } from "./problem/ProblemHeader";
