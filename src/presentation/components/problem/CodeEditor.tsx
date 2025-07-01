@@ -12,13 +12,13 @@ import { cpp } from "@codemirror/lang-cpp";
 interface CodeEditorProps {
   initialCode?: string;
   onChange?: (value: string) => void;
-  language: "python" | "java" | "cpp";
+  language: "python" | "java" | "cpp" | "c";
 }
 
 export default function CodeEditor({
   initialCode = "",
   onChange,
-  language = "python",
+  language,
 }: CodeEditorProps) {
   const editorRef = useRef<HTMLDivElement | null>(null);
   const viewRef = useRef<EditorView | null>(null);
@@ -30,6 +30,8 @@ export default function CodeEditor({
       case "java":
         return java();
       case "cpp":
+        return cpp();
+      case "c":
         return cpp();
       default:
         return [];

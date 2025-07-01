@@ -30,13 +30,20 @@ const LevelTestResult = () => {
         .filter((id): id is number => id !== null);
 
       const totalScore = passedIds.reduce((sum, id) => sum + id, 0);
-      const averageScore = totalScore / data.passedCount;
+      const averageScore = totalScore / data.passedCount ;
+
+      console.log(`LevelTestResult:  
+        type: ${data.type},
+        category: ${data.category},
+        dailyGoal: ${data.dailyGoal},
+        levelTestResult: ${averageScore}`
+      )
 
       const request = {
         type: data.type,
         category: data.category,
         dailyGoal: data.dailyGoal,
-        levelTestResult: averageScore,
+        levelTestResult:  isNaN(averageScore) ? 0 : averageScore,
       };
 
       await postRoadmap(request);

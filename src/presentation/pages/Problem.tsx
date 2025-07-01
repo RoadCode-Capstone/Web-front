@@ -11,7 +11,7 @@ interface ProblemProps {
   problemDescription: string;
   inputDescription: string;
   outputDescription: string;
-  language: "python" | "java" | "cpp";
+  language: "python" | "java" | "c";
   onActionClick: (code: string) => void;
 }
 

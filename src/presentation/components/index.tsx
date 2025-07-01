@@ -14,3 +14,5 @@ export { default as CodeEditor } from "./problem/CodeEditor";
 export { default as ProblemBody } from "./problem/ProblemBody";
 export { default as ProblemFooter } from "./problem/ProblemFooter";
 export { default as ProblemHeader } from "./problem/ProblemHeader";
+
+export {default as Modal} from "./common/Modal"

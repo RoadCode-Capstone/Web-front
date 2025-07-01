@@ -8,7 +8,7 @@ import { getProblems } from "../../apis/problem";
 import { Spinner } from "../components/common/spinner";
 
 interface LevelTestProps {
-  language?: "java" | "python" | "cpp";
+  language?: "java" | "python" | "c";
   algorithm?: string;
   dailyGoal: number;
 }
@@ -17,7 +17,7 @@ const LevelTest = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const {
-    language = "cpp",
+    language,
     algorithm,
     dailyGoal,
   } = location.state as LevelTestProps;
@@ -36,7 +36,7 @@ const LevelTest = () => {
     const submissions = {
       submissions: problems.map((problem, index) => ({
         problemId: problem.id,
-        language: language,
+        language: language == undefined ? "python" : language,
         sourceCode: codes[index] || " ", // 빈칸 방지
       })),
     };
@@ -50,8 +50,9 @@ const LevelTest = () => {
 
       const request = algorithm
         ? { type: "algorithm", category: algorithm }
-        : { type: "language", category: language == "cpp" ? "c" : language };
-
+        : { type: "language", category: language };
+        
+      console.log("로드맵 생성 request",request)
       navigate("/leveltest/result", {
         state: {
           type: request.type,
@@ -79,7 +80,7 @@ const LevelTest = () => {
     try {
       const request = algorithm
         ? { type: "algorithm", category: algorithm }
-        : { type: "language", category: "python" };
+        : { type: "language", category: language };
 
       const problemIdList = await postLeveltest(request);
       const problemList = await getProblems(problemIdList);
@@ -100,7 +101,7 @@ const LevelTest = () => {
           problemDescription={problems[currentIndex].description}
           inputDescription={problems[currentIndex].inputDescription}
           outputDescription={problems[currentIndex].outputDescription}
-          language={language}
+          language={language ? language : "python" }
           onActionClick={
             currentIndex === problems.length - 1
               ? handleSubmit // 마지막 문제면 제출

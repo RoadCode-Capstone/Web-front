@@ -7,6 +7,14 @@ import studyTypeLanguage from "../assets/image/study_type_language.svg";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
+export const ROADMAP_ALGORITHM : Record<string, string>= {
+  "스택/큐": "스택,큐",
+  "DFS/BFS": "DFS/BFS",
+  "탐욕법": "그리디",     // 🔧 오타 수정: greddy ❌ → greedy ✅
+  "트리": "트리"          // 🔧 오타 수정: "트래" ❌ → "트리" ✅
+};
+
+
 const StudyLanguageSelect = ({
   onSelect,
 }: {
@@ -105,7 +113,7 @@ const StudyCountSelect = ({
 
   return (
     <main className="min-h-screen flex flex-col justify-center items-center gap-y-16">
-      <h1 className="text-headlineL">학습 유형을 선택하세요</h1>
+      <h1 className="text-headlineL">일일 학습 목표를 선택하세요</h1>
       <section className="flex gap-x-23">
         {countOption.map((item: number) => (
           <PlanningFeaturedCard
@@ -130,16 +138,27 @@ const Planning = () => {
   );
   const [selectedAlgorithmType, setSelectedAlgorithmType] = useState<
     string | null
-  >(null);
+  >("");
   const [selectedCount, setSelectedCount] = useState<number | null>(null);
 
   // 5. 모든 선택 완료 → navigate 실행
   useEffect(() => {
+    console.log(`
+    language: ${selectedLanguage?.toLowerCase()},
+    algorithm: ${selectedStudyType === "알고리즘"
+    ? ROADMAP_ALGORITHM[selectedAlgorithmType || ""]
+    : null},
+    dailyGoal: ${selectedCount},
+  `)
+  
     if (selectedCount !== null) {
       navigate("/levelTest", {
         state: {
-          language: selectedLanguage,
-          algorithm: selectedAlgorithmType,
+          language: selectedLanguage?.toLowerCase(),
+          algorithm:
+          selectedStudyType === "알고리즘"
+            ? ROADMAP_ALGORITHM[selectedAlgorithmType || ""]
+            : null,
           dailyGoal: selectedCount,
         },
       });

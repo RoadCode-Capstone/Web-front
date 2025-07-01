@@ -5,7 +5,7 @@ export interface LeveltestRequest {
 
 export interface LevelTestSubmission {
   problemId: number;
-  language: string;
+  language:  "c" | "java" | "python";
   sourceCode: string;
 }
 

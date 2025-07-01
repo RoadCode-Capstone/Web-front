@@ -33,7 +33,8 @@ function App() {
           <Route path="/newRoadMap" element={<Planning />}></Route>
           <Route path="/levelTest" element={<LevelTest />}></Route>
           <Route path="/levelTest/result" element={<LevelTestResult />}></Route>
-          <Route
+        {/* <Route path="/problem/:problemId" element={<Problem />}></Route> */}
+          {/* <Route
             path="/problem"
             element={
               <Problem
@@ -47,7 +48,7 @@ function App() {
                 }}
               />
             }
-          ></Route>
+          ></Route> */}
         </Routes>
       </BrowserRouter>
     </div>

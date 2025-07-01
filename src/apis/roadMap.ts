@@ -95,3 +95,26 @@ export const postRoadmap = async (
     throw err;
   }
 };
+
+
+export const deleteRoadmap = async (
+  roadmapId: number
+) => {
+  try {
+    const axiosResponse = await axios.delete(`${PROBLEM_PREFIX}/${roadmapId}`, {
+      headers: {
+        ...ApiDefaultHeaders,
+      },
+    });
+
+    const response: ApiResponse<null> = axiosResponse.data;
+
+    console.log(response);
+    if (response.code != "SUCCESS") throw new Error(response.message);
+
+    return true;
+  } catch (err) {
+    console.log(err);
+    throw err;
+  }
+}
