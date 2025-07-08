@@ -1,0 +1,54 @@
+.login {
+  background-color: #2B3440;
+  padding: 0 156px;
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+}
+
+.title {
+  text-align: center;
+  font-size: 32px;
+  color: white;
+  margin-bottom: 63px; /* 87px - 24px 의도라면 계산된 값 */
+}
+
+.caption {
+  font-size: 12px;
+  text-decoration: none;
+  color: white;
+  margin-top: 8px;
+}
+
+.forgetPassword {
+  text-align: right;
+}
+
+.form {
+  width: 456px;
+  display: grid;
+}
+
+.input {
+  height: 72px;
+  margin-top: 24px;
+  border-radius: 16px;
+  border: none;
+  padding: 0px 24px;
+}
+
+.loginInput {
+  display: grid;
+}
+
+.loginSubmit {
+ height: 72px;
+ border-radius: 16px;
+ border:none;
+ margin-top: 24px;
+  font-size: 12px;
+  background-color: #F2C53D;
+  color: white;
+}

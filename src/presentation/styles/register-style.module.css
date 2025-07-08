@@ -1,0 +1,58 @@
+.container {
+    background-color: #2B3440;
+    padding: 0 156px;
+  
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+  }
+  
+  .title {
+    text-align: center;
+    font-size: 32px;
+    color: white;
+    margin-bottom: 63px; /* 87px - 24px 계산 */
+  }
+  
+  .caption_left {
+    text-align: left;
+    font-size: 12px;
+    text-decoration: none;
+    color: white;
+    margin-top: 8px;
+    margin-left: 14px;
+  }
+  
+  .forgetPassword {
+    text-align: right;
+  }
+  
+  .form {
+    width: 641px;
+    display: grid;
+  }
+  
+  .input {
+    height: 72px;
+    margin-top: 24px;
+    border-radius: 16px;
+    border: none;
+    padding: 0px 24px;
+  }
+  
+  .inputGroup {
+    display: grid;
+  }
+  
+  .submit {
+    font-size: 12px;
+    background-color: #F2C53D;
+    height: 72px;
+    border-radius: 16px;
+    border: none;
+    margin-top:42px;
+    color: white;
+  }
+  

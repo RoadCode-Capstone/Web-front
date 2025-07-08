@@ -1,0 +1,52 @@
+import { Button, ImageButton, LoginForm } from "../components";
+import { Link, useNavigate } from "react-router-dom";
+
+const Login = () => {
+  const navigate = useNavigate();
+  return (
+    <div className="w-full min-h-screen bg-main px-[156px] py-8 flex flex-col">
+      <div className="flex justify-end">
+        <Button
+          type="button"
+          label="회원가입"
+          onClick={() => {
+            window.location.href = "/register"; // 예시
+          }}
+        />
+      </div>
+      <div className=" w-[456px] flex flex-col ">
+        <h1 className=" text-headlineL text-white mb-20">로그인</h1>
+        <LoginForm />
+        <div className="flex justify-end mt-2 mb-20">
+          <Button
+            type="button"
+            label="비밀번호를 잊어버리셨습니까?"
+            buttonStyle="text-sm text-white bg-transparent !px-0 h-auto min-h-0 w-auto min-w-0"
+            onClick={() =>
+              navigate("/passwordFinding", { state: { theme: "point" } })
+            }
+          />
+          {/* <a href="/passwordFinding" className="text-sm text-white">
+            비밀번호를 잊어버리셨습니까?
+          </a> */}
+        </div>
+        <div className="flex flex-col gap-y-4">
+          <ImageButton
+            src="src\presentation\assets\naverLoginImg\btnG_완성형.png"
+            buttonStyle="bg-naver w-full"
+          />
+          <ImageButton
+            src="src\presentation\assets\kakaoLoginImg\kakao_login_large_narrow_ko.png"
+            buttonStyle="bg-kakao w-full"
+          />
+          <ImageButton
+            src="src\presentation\assets\googleLoginImg\web_neutral_sq_ctn.svg"
+            buttonStyle="bg-google w-full"
+          />
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default Login;
