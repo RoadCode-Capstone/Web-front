@@ -11,7 +11,7 @@ export type ButtonTheme =
 export interface ButtonProps {
   leftIcon: ReactNode;
   rightIcon: ReactNode;
-  label: string;
+  text: string;
   onClick: () => void;
   colorTheme: ButtonTheme;
 }
@@ -28,7 +28,7 @@ export default function Button(props: ButtonProps) {
       text-btn-text hover:text-btn-text-hover"
     >
       {props.leftIcon}
-      {props.label}
+      {props.text}
       {props.rightIcon}
     </button>
   );
