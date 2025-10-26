@@ -3,6 +3,7 @@
 
 @theme {
   --font-spoqa: 'Spoqa Han Sans Neo', 'sans-serif';
+
   
   --color-main: #2b3440;
   --color-main-secondary-hover: #606770;
@@ -17,9 +18,15 @@
   --color-kakao: #FEE500;
   --color-naver: #03C75A;
   --color-google: #f2f2f2;
-  
+
   --color-red: #ff0000;
 
+  --color-btn-default: var(--color-point);
+  --color-btn-hover: #EEBA1F;
+  --color-btn-text: black;
+  --color-btn-text-hover: black;
+
+  
   --text-headlineL: 2rem;
   --text-headlineL--line-height: 2.5rem:
   --text-headlineL--letter-spacing: 0rem;
@@ -50,6 +57,40 @@
 
 
 }
+
+@layer base {
+  [data-theme='point-primary'] {
+    --color-btn-default: var(--color-point);
+    --color-btn-hover: #EEBA1F;
+  }
+  [data-theme='point-secondary'] {
+    --color-btn-default: var(--color-point-secondary);
+    --color-btn-hover: var(--color-point-secondary-hover);
+  }
+  [data-theme='point-teritary'] {
+    --color-btn-default: var(--color-point-teritary);
+    --color-btn-hover: var(--color-point-secondary);
+  }
+  [data-theme='main-primary'] {
+    --color-btn-default: var(--color-main);
+    --color-btn-hover: #282D35;
+    --color-btn-text: #ffffff;
+    --color-btn-text-hover: #ffffff;
+  }
+  [data-theme='main-secondary'] {
+    --color-btn-default: var(--color-main-secondary);
+    --color-btn-hover: var(--color-main-secondary-hover);
+    --color-btn-text: #ffffff;
+    --color-btn-text-hover: #ffffff;
+  }
+  [data-theme='main-teritary'] {
+    --color-btn-default: var(--color-main-teritary);
+    --color-btn-hover: var(--color-main-secondary);
+    --color-btn-text-hover: #ffffff;
+  }
+}
+
+
 body {
   margin: 0;
   font-family: 'Spoqa Han Sans Neo', -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
