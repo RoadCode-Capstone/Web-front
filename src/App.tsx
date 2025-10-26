@@ -14,12 +14,14 @@ import {
   Problem,
   LevelTestResult,
 } from "./presentation/pages";
+import Components from "./presentation/pages/Components";
 
 function App() {
   return (
     <div className="App">
       <BrowserRouter>
         <Routes>
+          <Route path="/dev/components" element={<Components />}></Route>
           <Route path="/" element={<Login />}></Route>
           <Route path="/register" element={<Register />}></Route>
           <Route path="/passwordFinding" element={<PasswordFinding />}></Route>
@@ -33,7 +35,7 @@ function App() {
           <Route path="/newRoadMap" element={<Planning />}></Route>
           <Route path="/levelTest" element={<LevelTest />}></Route>
           <Route path="/levelTest/result" element={<LevelTestResult />}></Route>
-        {/* <Route path="/problem/:problemId" element={<Problem />}></Route> */}
+          {/* <Route path="/problem/:problemId" element={<Problem />}></Route> */}
           {/* <Route
             path="/problem"
             element={

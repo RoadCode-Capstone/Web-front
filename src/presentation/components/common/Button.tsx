@@ -1,28 +1,35 @@
+import { ReactNode } from "react";
+
+export type ButtonTheme =
+  | "point-primary"
+  | "point-secondary"
+  | "point-teritary"
+  | "main-primary"
+  | "main-secondary"
+  | "main-teritary";
+
 export interface ButtonProps {
-  disabled?: boolean;
+  leftIcon: ReactNode;
+  rightIcon: ReactNode;
   label: string;
-  onClick?: () => void;
-  type?: "button" | "submit" | "reset";
-  buttonStyle?: string;
+  onClick: () => void;
+  colorTheme: ButtonTheme;
 }
 
-const Button: React.FC<ButtonProps> = ({
-  disabled = false,
-  label,
-  onClick,
-  type = "button",
-  buttonStyle = "",
-}) => {
+export default function Button(props: ButtonProps) {
   return (
     <button
-      type={type}
-      disabled={disabled}
-      onClick={onClick}
-      className={`bg-[#F2C53D] text-white flex items-center justify-center rounded-2xl h-16 px-8 ${buttonStyle}`}
+      onClick={props.onClick}
+      data-theme={props.colorTheme}
+      className="flex justify-center items-center gap-x-3 py-3 w-full h-full
+      rounded-2xl
+      font-medium text-base
+      bg-btn-default hover:bg-btn-hover 
+      text-btn-text hover:text-btn-text-hover"
     >
-      {label}
+      {props.leftIcon}
+      {props.label}
+      {props.rightIcon}
     </button>
   );
-};
-
-export default Button;
+}
