@@ -5,10 +5,19 @@
   --font-spoqa: 'Spoqa Han Sans Neo', 'sans-serif';
   
   --color-main: #2b3440;
-  --color-point: #f2c53d;
+  --color-main-secondary-hover: #606770;
+  --color-main-secondary: #94999F;
+  --color-main-teritary: #CED0D3;
+
+  --color-point: #F2C53D;
+  --color-point-secondary-hover: #F5D777;
+  --color-point-sencodary: #F8E19D;
+  --color-point-teritary: #FBF0CE;
+  
   --color-kakao: #FEE500;
   --color-naver: #03C75A;
   --color-google: #f2f2f2;
+  
   --color-red: #ff0000;
 
   --text-headlineL: 2rem;
