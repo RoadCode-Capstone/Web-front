@@ -9,11 +9,12 @@ export type ButtonTheme =
   | "main-teritary";
 
 export interface ButtonProps {
-  leftIcon: ReactNode;
-  rightIcon: ReactNode;
+  leftIcon?: ReactNode;
+  rightIcon?: ReactNode;
   text: string;
   onClick: () => void;
   colorTheme: ButtonTheme;
+  style?: string;
 }
 
 export default function Button(props: ButtonProps) {
@@ -21,11 +22,11 @@ export default function Button(props: ButtonProps) {
     <button
       onClick={props.onClick}
       data-theme={props.colorTheme}
-      className="flex justify-center items-center gap-x-3 py-3 w-full h-full
+      className={`flex justify-center items-center gap-x-3 py-3 w-full h-full
       rounded-2xl
       font-medium text-base
       bg-btn-default hover:bg-btn-hover 
-      text-btn-text hover:text-btn-text-hover"
+      text-btn-text hover:text-btn-text-hover ${props.style}`}
     >
       {props.leftIcon}
       {props.text}

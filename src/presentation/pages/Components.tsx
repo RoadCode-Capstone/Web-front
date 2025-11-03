@@ -2,6 +2,7 @@ import { Button, InputField } from "../components";
 import ForWardIcon from "../assets/icons/chevron_forward.svg?react";
 import BackWardIcon from "../assets/icons/chevron_backward.svg?react";
 import { ButtonTheme } from "../components/common/Button";
+import WindowBox from "../components/common/WindowBox";
 
 export default function Components() {
   const btnColorTheme: ButtonTheme[] = [
@@ -23,7 +24,7 @@ export default function Components() {
                 <Button
                   leftIcon={<BackWardIcon width={24} height={24} />}
                   rightIcon={<ForWardIcon width={24} height={24} />}
-                  label={"텍스트를 입력하세요"}
+                  text={"텍스트를 입력하세요"}
                   onClick={() => {}}
                   colorTheme={theme}
                 />
@@ -38,6 +39,8 @@ export default function Components() {
         placeholder={"텍스트를 입력하세요"}
         type={"text"}
       />
+
+      <WindowBox />
     </div>
   );
 }

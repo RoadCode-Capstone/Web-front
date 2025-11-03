@@ -1,8 +1,6 @@
-import React from "react";
 import "./App.css";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import {
-  Login,
   Register,
   RegisterSuccess,
   PasswordFinding,
@@ -11,10 +9,12 @@ import {
   Main,
   Planning,
   LevelTest,
-  Problem,
   LevelTestResult,
 } from "./presentation/pages";
 import Components from "./presentation/pages/Components";
+import LoginPage from "./presentation/pages/LoginPage";
+import AuthLayout from "./layouts/AuthLayout";
+import RegisterPage from "./presentation/pages/RegisterPage";
 
 function App() {
   return (
@@ -22,7 +22,11 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/dev/components" element={<Components />}></Route>
-          <Route path="/" element={<Login />}></Route>
+          <Route element={<AuthLayout />}>
+            <Route path="/login" element={<LoginPage />}></Route>
+            <Route path="/signup" element={<RegisterPage />}></Route>
+          </Route>
+          <Route path="/" element={<LoginPage />}></Route>
           <Route path="/register" element={<Register />}></Route>
           <Route path="/passwordFinding" element={<PasswordFinding />}></Route>
           <Route path="/passwordSetting" element={<PasswordSetting />}></Route>
