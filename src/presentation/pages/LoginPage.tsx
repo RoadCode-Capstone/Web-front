@@ -1,6 +1,6 @@
 import { Button, ImageButton, InputField } from "../components";
 import { InputFieldProps } from "../components/common/InputField";
-import Character from "../assets/character/default_left_up.svg?react";
+import Character from "../assets/character/sleep.svg?react";
 import WindowBox from "../components/common/WindowBox";
 import BubbleBtn from "../components/common/CartoonButton";
 import { useNavigate } from "react-router-dom";
@@ -39,12 +39,17 @@ export default function LoginPage() {
           style="absolute! top-[-25px]! left-[-47px]! z-0!"
         />
         {/* 3. 캐릭터에 z-20! 추가 */}
-        <Character className="absolute bottom-[-123px] right-[-284px] z-20!" />
+        <Character className="absolute bottom-[-155px] right-[-277px] z-20!" />
         {/* 4. 말풍선에 z-20! 추가 */}
         <BubbleBtn
           onClick={() => navigate("/register")}
-          className="absolute! bottom-[200px]! right-[-249px]! w-[259px]! h-[111px]! z-20!"
+          className="absolute! bottom-[145px]! right-[-196px]! w-[259px]! h-[111px]! z-20!"
           text={"회원가입"}
+        />
+        <BubbleBtn
+          onClick={() => navigate("/login")}
+          className="absolute! bottom-[273px]! right-[-276px]! w-[259px]! h-[111px]! z-20!"
+          text={"비밀번호 찾기"}
         />
       </div>
     </div>

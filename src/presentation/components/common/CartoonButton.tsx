@@ -19,7 +19,7 @@ export default function BubbleBtn({
 }: BubbleBtnProps) {
   // 3. 기본 스타일과 위치별 스타일 정의 (em 단위 유지)
   const baseStyle =
-    "w-full h-full relative flex items-center justify-center rounded-full bg-[#B9DDFF] font-semibold transition-all px-[2em] py-[2em]";
+    "w-full h-full relative flex items-center justify-center rounded-full bg-[#B9DDFF] font-medium transition-all px-[2em] py-[2em]";
 
   const positionStyles: Record<Position, string> = {
     top: "before:absolute before:content-[''] before:left-[4em] before:bottom-full before:border-x-[2em] before:border-b-[2em] before:border-x-transparent before:border-b-[#B9DDFF]",
@@ -37,7 +37,12 @@ export default function BubbleBtn({
 
   // 5. 이제 외부 div가 컨테이너 역할을 하므로, 내부에서는 button만 반환
   return (
-    <button onClick={onClick} className={buttonClassName}>
+    <button
+      onClick={onClick}
+      className={
+        buttonClassName + "  drop-shadow-[10px_20px_0px_rgba(0,0,0,0.25)]"
+      }
+    >
       {text}
     </button>
   );

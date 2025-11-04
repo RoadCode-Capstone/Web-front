@@ -38,11 +38,19 @@ export default function RegisterPage() {
           width={640}
           content={<RegisterForm />}
           colorTheme={"point"}
+          style="relative! z-10!"
         />
-        <Character className="absolute bottom-[-123px] right-[-284px]" />
+        <WindowBox
+          height={672}
+          width={640}
+          content={<div></div>}
+          colorTheme={"point-outline"}
+          style="absolute! top-[-25px]! left-[-47px]! z-0!"
+        />
+        <Character className="absolute bottom-[-155px] right-[-284px] z-20!" />
         <BubbleBtn
           onClick={() => navigate("/login")}
-          className="absolute! bottom-[200px]! right-[-249px]! w-[259px]! h-[111px]!"
+          className="absolute! bottom-[180px]! right-[-249px]! w-[259px]! h-[111px]! z-20!"
           text={"로그인"}
         />
       </div>
