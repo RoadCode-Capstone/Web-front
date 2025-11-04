@@ -22,12 +22,8 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/dev/components" element={<Components />}></Route>
-          <Route element={<AuthLayout />}>
-            <Route path="/login" element={<LoginPage />}></Route>
-            <Route path="/signup" element={<RegisterPage />}></Route>
-          </Route>
-          <Route path="/" element={<LoginPage />}></Route>
-          <Route path="/register" element={<Register />}></Route>
+          <Route path="/login" element={<LoginPage />}></Route>
+          <Route path="/register" element={<RegisterPage />}></Route>
           <Route path="/passwordFinding" element={<PasswordFinding />}></Route>
           <Route path="/passwordSetting" element={<PasswordSetting />}></Route>
           <Route path="/registerSuccess" element={<RegisterSuccess />}></Route>

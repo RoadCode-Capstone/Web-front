@@ -3,6 +3,7 @@ import { InputFieldProps } from "../components/common/InputField";
 import Character from "../assets/character/default_left_up.svg?react";
 import WindowBox from "../components/common/WindowBox";
 import BubbleBtn from "../components/common/CartoonButton";
+import { useNavigate } from "react-router-dom";
 
 const authInputProps: Record<string, InputFieldProps> = {
   email: {
@@ -28,12 +29,19 @@ const authInputProps: Record<string, InputFieldProps> = {
 };
 
 export default function RegisterPage() {
+  const navigate = useNavigate();
   return (
     <div className="min-h-screen min-w-screen bg-main flex items-center justify-center">
       <div className="relative">
-        <WindowBox height={672} width={640} content={<RegisterForm />} />
+        <WindowBox
+          height={672}
+          width={640}
+          content={<RegisterForm />}
+          colorTheme={"point"}
+        />
         <Character className="absolute bottom-[-123px] right-[-284px]" />
         <BubbleBtn
+          onClick={() => navigate("/login")}
           className="absolute! bottom-[200px]! right-[-249px]! w-[259px]! h-[111px]!"
           text={"로그인"}
         />

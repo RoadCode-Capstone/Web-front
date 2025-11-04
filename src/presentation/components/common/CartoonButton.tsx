@@ -7,6 +7,7 @@ interface BubbleBtnProps {
   text: string;
   position?: Position;
   className?: string;
+  onClick?: () => void;
 }
 
 // 2. 컴포넌트 구현
@@ -14,6 +15,7 @@ export default function BubbleBtn({
   text,
   position = "bottom",
   className,
+  onClick,
 }: BubbleBtnProps) {
   // 3. 기본 스타일과 위치별 스타일 정의 (em 단위 유지)
   const baseStyle =
@@ -34,5 +36,9 @@ export default function BubbleBtn({
     .join(" ");
 
   // 5. 이제 외부 div가 컨테이너 역할을 하므로, 내부에서는 button만 반환
-  return <button className={buttonClassName}>{text}</button>;
+  return (
+    <button onClick={onClick} className={buttonClassName}>
+      {text}
+    </button>
+  );
 }
