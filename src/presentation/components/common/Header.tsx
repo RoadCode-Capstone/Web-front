@@ -1,14 +1,15 @@
-import Icon from "./Icon";
+import Logo from "../../assets/image/logo.svg?react";
+import AccountIcon from "../../assets/icons/account_circle.svg?react";
 
 const Header = () => {
   return (
-    <div className="relative h-18 bg-main flex items-center justify-center">
-      <div className="absolute left-18">
-        <span className="text-white">로고</span>
-      </div>
-      <div className="absolute right-18">
-        <Icon name="user" size={24} color="white"></Icon>
-      </div>
+    <div
+      className="
+    flex w-full items-center justify-between h-[72px] px-[72px]
+     bg-white border-b-2 border-[#d9d9d9]"
+    >
+      <Logo />
+      <AccountIcon height={32} width={32} />
     </div>
   );
 };

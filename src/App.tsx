@@ -15,7 +15,7 @@ import Components from "./presentation/pages/Components";
 import LoginPage from "./presentation/pages/LoginPage";
 import AuthLayout from "./layouts/AuthLayout";
 import RegisterPage from "./presentation/pages/RegisterPage";
-
+import MainPage from "./presentation/pages/MainPage";
 function App() {
   return (
     <div className="App">
@@ -30,7 +30,7 @@ function App() {
 
           <Route path="/userInfo" element={<UserInfo />}></Route>
 
-          <Route path="/main" element={<Main />}></Route>
+          <Route path="/" element={<MainPage />}></Route>
 
           <Route path="/newRoadMap" element={<Planning />}></Route>
           <Route path="/levelTest" element={<LevelTest />}></Route>

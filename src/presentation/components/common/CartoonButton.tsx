@@ -24,7 +24,7 @@ export default function BubbleBtn({
   const positionStyles: Record<Position, string> = {
     top: "before:absolute before:content-[''] before:left-[4em] before:bottom-full before:border-x-[2em] before:border-b-[2em] before:border-x-transparent before:border-b-[#B9DDFF]",
     bottom:
-      "before:absolute before:content-[''] before:left-[4em] before:top-full before:border-r-[2em] before:border-t-[2em] before:border-r-transparent before:border-t-[#B9DDFF]",
+      "before:absolute before:content-[''] before:left-[4em] before:top-full before:border-r-[32px] before:border-t-[32px] before:border-r-transparent before:border-t-[#B9DDFF]",
     left: "before:absolute before:content-[''] before:top-1/2 before:-translate-y-1/2 before:right-full before:border-y-[2em] before:border-r-[2em] before:border-y-transparent before:border-r-[#B9DDFF]",
     right:
       "before:absolute before:content-[''] before:top-1/2 before:-translate-y-1/2 before:left-full before:border-y-[2em] before:border-l-[2em] before:border-y-transparent before:border-l-[#B9DDFF]",

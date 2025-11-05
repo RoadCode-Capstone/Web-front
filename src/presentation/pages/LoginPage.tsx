@@ -56,6 +56,7 @@ export default function LoginPage() {
   );
 }
 function LoginForm() {
+  const navigate = useNavigate();
   return (
     <form className="flex flex-col w-[400px] gap-y-6">
       <div className="flex flex-col gap-y-4 w-full">
@@ -64,7 +65,9 @@ function LoginForm() {
       </div>
       <Button
         text={"로그인"}
-        onClick={() => {}}
+        onClick={() => {
+          navigate("/");
+        }}
         colorTheme={"point-primary"}
         style="h-[72px]!"
       />
