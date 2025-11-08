@@ -9,7 +9,7 @@ const Header = () => {
   return (
     <div
       className=" relative
-    flex w-full items-center justify-between h-[72px] px-[72px]
+    flex w-full items-center justify-between min-h-[72px] px-[72px]
      bg-white drop-shadow-sm"
     >
       <Link to="/">
