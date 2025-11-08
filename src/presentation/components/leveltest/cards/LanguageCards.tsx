@@ -1,6 +1,6 @@
 import FeaturedCard from "../FeaturedCard";
 import ImgC from "@assets/image/logo_C.svg?react";
-import ImgJava from "@assets/image/logo_Java.svg?react";
+import ImgJava from "@assets/image/logo_JAVA.svg?react";
 import ImgPython from "@assets/image/logo_Python.svg?react";
 
 const LanguageCardStyle =
