@@ -16,11 +16,16 @@ import LoginPage from "./presentation/pages/LoginPage";
 import AuthLayout from "./layouts/AuthLayout";
 import RegisterPage from "./presentation/pages/RegisterPage";
 import MainPage from "./presentation/pages/MainPage";
+import { HeaderLayout } from "./layouts/HeaderLayout";
 function App() {
   return (
     <div className="App">
       <BrowserRouter>
         <Routes>
+          <Route element={<HeaderLayout />}>
+            <Route path="/" element={<MainPage />} />
+            {/* 다른 하위 라우트도 여기에 추가 */}
+          </Route>
           <Route path="/dev/components" element={<Components />}></Route>
           <Route path="/login" element={<LoginPage />}></Route>
           <Route path="/register" element={<RegisterPage />}></Route>
@@ -29,8 +34,6 @@ function App() {
           <Route path="/registerSuccess" element={<RegisterSuccess />}></Route>
 
           <Route path="/userInfo" element={<UserInfo />}></Route>
-
-          <Route path="/" element={<MainPage />}></Route>
 
           <Route path="/newRoadMap" element={<Planning />}></Route>
           <Route path="/levelTest" element={<LevelTest />}></Route>
