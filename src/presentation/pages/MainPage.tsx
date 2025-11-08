@@ -1,8 +1,10 @@
 import BubbleBtn from "../components/common/CartoonButton";
 import WindowBox from "../components/common/WindowBox";
 import Character from "../assets/character/sad.svg?react";
+import { useNavigate } from "react-router-dom";
 
 export default function Main() {
+  const navigate = useNavigate();
   return (
     <div className="flex flex-col w-full h-full items-center justify-center gap-y-12">
       <WindowBox
@@ -17,6 +19,7 @@ export default function Main() {
           <BubbleBtn
             text={"새로운 학습 로드맵 만들기"}
             className="w-[636px]! h-[110px]! drop-shadow-[0_0_0_rgba(0,0,0,0.25)]! text-[22px]!"
+            onClick={() => navigate("/leveltest/setting")}
           />
           <BubbleBtn
             text={"완료한 학습 로드맵 목록 조회하기"}
