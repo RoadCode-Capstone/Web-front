@@ -1,4 +1,4 @@
-import { Button, ImageButton, InputField, LoginForm } from "../components";
+import { Button, ImageButton, InputField } from "../components";
 import { InputFieldProps } from "../components/common/InputField";
 import Character from "../assets/character/default_left_up.svg?react";
 import WindowBox from "../components/common/WindowBox";
@@ -14,12 +14,12 @@ const authInputProps: Record<string, InputFieldProps> = {
   password: {
     id: "password",
     placeholder: "비밀번호를 입력하세요",
-    type: "pasword",
+    type: "password",
   },
   passwordConfirm: {
     id: "password-confirm",
     placeholder: "비밀번호를 한 번 더 입력하세요",
-    type: "pasword",
+    type: "password",
   },
   nickname: {
     id: "nickname",
