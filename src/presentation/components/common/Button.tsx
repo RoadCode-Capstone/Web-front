@@ -1,3 +1,4 @@
+import { cn } from "@/utils/tailwind";
 import { ReactNode } from "react";
 
 export type ButtonTheme =
@@ -22,15 +23,17 @@ export default function Button(props: ButtonProps) {
     <button
       onClick={props.onClick}
       data-theme={props.colorTheme}
-      className={`flex justify-center items-center gap-x-3 py-3 w-full h-full
-      rounded-2xl
+      className={cn(
+        `flex justify-center items-center gap-x-3 py-3 w-full h-full rounded-2xl
       font-medium text-base
       bg-btn-default hover:bg-btn-hover 
-      text-btn-text hover:text-btn-text-hover ${props.style}`}
+      text-btn-text hover:text-btn-text-hover`,
+        props.style
+      )}
     >
-      {props.leftIcon}
+      {props?.leftIcon}
       {props.text}
-      {props.rightIcon}
+      {props?.rightIcon}
     </button>
   );
 }
