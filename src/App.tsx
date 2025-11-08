@@ -1,8 +1,6 @@
-import React from "react";
 import "./App.css";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import {
-  Login,
   Register,
   RegisterSuccess,
   PasswordFinding,
@@ -11,29 +9,40 @@ import {
   Main,
   Planning,
   LevelTest,
-  Problem,
   LevelTestResult,
 } from "./presentation/pages";
-
+import Components from "./presentation/pages/Components";
+import LoginPage from "./presentation/pages/LoginPage";
+import AuthLayout from "./layouts/AuthLayout";
+import RegisterPage from "./presentation/pages/RegisterPage";
+import MainPage from "./presentation/pages/MainPage";
+import { HeaderLayout } from "./layouts/HeaderLayout";
+import { LeveltestSettingPage } from "./presentation/pages/LevelTestSettingPage";
 function App() {
   return (
     <div className="App">
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Login />}></Route>
-          <Route path="/register" element={<Register />}></Route>
-          <Route path="/passwordFinding" element={<PasswordFinding />}></Route>
+          <Route element={<HeaderLayout />}>
+            <Route path="/" element={<MainPage />} />
+            {/* 다른 하위 라우트도 여기에 추가 */}
+            <Route
+              path="/leveltest/setting"
+              element={<LeveltestSettingPage />}
+            ></Route>
+          </Route>
+          <Route path="/dev/components" element={<Components />}></Route>
+          <Route path="/login" element={<LoginPage />}></Route>
+          <Route path="/register" element={<RegisterPage />}></Route>
+          {/* <Route path="/passwordFinding" element={<PasswordFinding />}></Route>
           <Route path="/passwordSetting" element={<PasswordSetting />}></Route>
           <Route path="/registerSuccess" element={<RegisterSuccess />}></Route>
 
           <Route path="/userInfo" element={<UserInfo />}></Route>
 
-          <Route path="/main" element={<Main />}></Route>
-
           <Route path="/newRoadMap" element={<Planning />}></Route>
-          <Route path="/levelTest" element={<LevelTest />}></Route>
-          <Route path="/levelTest/result" element={<LevelTestResult />}></Route>
-        {/* <Route path="/problem/:problemId" element={<Problem />}></Route> */}
+          <Route path="/levelTest/result" element={<LevelTestResult />}></Route> */}
+          {/* <Route path="/problem/:problemId" element={<Problem />}></Route> */}
           {/* <Route
             path="/problem"
             element={

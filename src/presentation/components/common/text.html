@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .box {
+            width: 0px;
+            height: 0px;
+            border-style: solid;
+            border-width: 20px;
+            border-top-color: red;
+            /* 위: 빨강 */
+            border-right-color: blue;
+            /* 오른쪽: 파랑 */
+            border-bottom-color: green;
+            /* 아래: 초록 */
+            border-left-color: orange;
+            /* 왼쪽: 주황 */
+        }
+
+        .triangle {
+            width: 0px;
+            height: 0px;
+            border-style: solid;
+            /* 기본 테두리 두께를 20px로 설정 (좌/우 너비가 됨) */
+            border-width: 20px;
+
+            /* 위쪽 테두리 두께만 50px로 덮어쓰기 (삼각형의 높이가 됨) */
+            border-top-width: 50px;
+            /* ✅ 수정된 부분 */
+
+            border-top-color: black;
+            border-right-color: transparent;
+            border-bottom-color: transparent;
+            border-left-color: transparent;
+        }
+
+        .diagonal-triangle {
+            width: 0;
+            height: 0;
+
+            /* 높이: 100px, 너비: 50px인 대각선 삼각형 */
+            border-top: 100px solid black;
+            /* 윗변: 검은색, 높이 100px */
+            border-right: 50px solid red;
+            /* 오른변: 투명, 너비 50px */
+        }
+    </style>
+</head>
+
+<body>
+    <div class="triangle"></div>
+    <div class="diagonal-triangle"></div>
+</body>
+
+</html>

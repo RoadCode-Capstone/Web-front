@@ -1,4 +1,5 @@
 /// <reference types="vite/client" />
+/// <reference types="vite-plugin-svgr/client" />
 
 interface ViteTypeOptions {
   // 아래 라인을 추가하면, ImportMetaEnv 타입을 엄격하게 설정해

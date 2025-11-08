@@ -1,28 +1,39 @@
+import { cn } from "@/utils/tailwind";
+import { ReactNode } from "react";
+
+export type ButtonTheme =
+  | "point-primary"
+  | "point-secondary"
+  | "point-teritary"
+  | "main-primary"
+  | "main-secondary"
+  | "main-teritary";
+
 export interface ButtonProps {
-  disabled?: boolean;
-  label: string;
-  onClick?: () => void;
-  type?: "button" | "submit" | "reset";
-  buttonStyle?: string;
+  leftIcon?: ReactNode;
+  rightIcon?: ReactNode;
+  text: string;
+  onClick: () => void;
+  colorTheme: ButtonTheme;
+  style?: string;
 }
 
-const Button: React.FC<ButtonProps> = ({
-  disabled = false,
-  label,
-  onClick,
-  type = "button",
-  buttonStyle = "",
-}) => {
+export default function Button(props: ButtonProps) {
   return (
     <button
-      type={type}
-      disabled={disabled}
-      onClick={onClick}
-      className={`bg-[#F2C53D] text-white flex items-center justify-center rounded-2xl h-16 px-8 ${buttonStyle}`}
+      onClick={props.onClick}
+      data-theme={props.colorTheme}
+      className={cn(
+        `flex justify-center items-center gap-x-3 py-3 w-full h-full rounded-2xl
+      font-medium text-base
+      bg-btn-default hover:bg-btn-hover 
+      text-btn-text hover:text-btn-text-hover`,
+        props.style
+      )}
     >
-      {label}
+      {props?.leftIcon}
+      {props.text}
+      {props?.rightIcon}
     </button>
   );
-};
-
-export default Button;
+}
