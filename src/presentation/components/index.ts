@@ -4,7 +4,7 @@ export { default as ImageButton } from "./common/ImageButton";
 export { default as InputField } from "./common/InputField";
 export { default as Header } from "./common/Header";
 
-export { default as FeaturedCard } from "./leveltest/FeaturedCard";
+export { default as FeaturedCard } from "./testSetting/FeaturedCard";
 // export { default as CodeEditor } from "./common/CodeEditor";
 export { default as ProblemBody } from "./problem/ProblemBody";
 export { default as ProblemFooter } from "./problem/ProblemFooter";

@@ -1,10 +1,10 @@
-import { Heading } from "../components/leveltest/Heading";
-import { LanguageCards } from "../components/leveltest/cards/LanguageCards";
-import ReturnBtn from "../components/leveltest/ReturnBtn";
-import SkipBtn from "../components/leveltest/SkipBtn";
-import { TypeCards } from "../components/leveltest/cards/TypeCards";
-import { AlgorithmCards } from "../components/leveltest/cards/AlgorithmCards";
-import { DailyCard } from "../components/leveltest/cards/DailyCard";
+import { Heading } from "../components/testSetting/Heading";
+import { LanguageCards } from "../components/testSetting/cards/LanguageCards";
+import ReturnBtn from "../components/testSetting/ReturnBtn";
+import SkipBtn from "../components/testSetting/SkipBtn";
+import { TypeCards } from "../components/testSetting/cards/TypeCards";
+import { AlgorithmCards } from "../components/testSetting/cards/AlgorithmCards";
+import { DailyCard } from "../components/testSetting/cards/DailyCard";
 import { useEffect, useState } from "react";
 import React from "react";
 
