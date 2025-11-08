@@ -53,8 +53,17 @@ export function LeveltestSettingPage() {
       ...prev,
       [currentStep]: value,
     }));
-    if (currentStepIndex < LEVELTEST_STEP_ORDER.length - 1) {
-      setCurrentStepIndex(currentStepIndex + 1);
+
+    let nextStepIndex = currentStepIndex + 1;
+
+    if (currentStep === "type") {
+      value === "algorithm"
+        ? (nextStepIndex = LEVELTEST_STEP_ORDER.indexOf("algorithm"))
+        : (nextStepIndex = LEVELTEST_STEP_ORDER.indexOf("daily"));
+    }
+
+    if (nextStepIndex < LEVELTEST_STEP_ORDER.length) {
+      setCurrentStepIndex(nextStepIndex);
     }
   };
 

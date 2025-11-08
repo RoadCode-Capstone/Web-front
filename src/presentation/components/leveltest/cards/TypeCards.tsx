@@ -7,10 +7,12 @@ const TypeCardStyle =
 const CARD_PROPS = [
   {
     text: "프로그래밍 언어",
+    value: "language",
     img: <ImgLanguage height={108} width={108} />,
   },
   {
     text: "알고리즘",
+    value: "algorithm",
     img: <ImgAlgorithm height={120} width={120} />,
   },
 ];
@@ -19,7 +21,7 @@ export function TypeCards({ onClick }: { onClick?: (value: string) => void }) {
   return (
     <div className="flex items-center justify-center gap-x-20">
       {CARD_PROPS.map((props) => (
-        <button key={props.text} onClick={() => onClick?.(props.text)}>
+        <button key={props.text} onClick={() => onClick?.(props.value)}>
           <FeaturedCard {...props} styles={TypeCardStyle} />
         </button>
       ))}
