@@ -4,6 +4,7 @@ import Character from "../assets/character/sleep.svg?react";
 import WindowBox from "../components/common/WindowBox";
 import BubbleBtn from "../components/common/CartoonButton";
 import { useNavigate } from "react-router-dom";
+import RoadcodeSleep from "../assets/character/roadcode_sleep.gif";
 
 const authInputProps: Record<string, InputFieldProps> = {
   email: {
@@ -14,7 +15,7 @@ const authInputProps: Record<string, InputFieldProps> = {
   password: {
     id: "password",
     placeholder: "비밀번호를 입력하세요",
-    type: "pasword",
+    type: "password",
   },
 };
 export default function LoginPage() {
@@ -39,7 +40,11 @@ export default function LoginPage() {
           style="absolute! top-[-25px]! left-[-47px]! z-0!"
         />
         {/* 3. 캐릭터에 z-20! 추가 */}
-        <Character className="absolute bottom-[-155px] right-[-277px] z-20!" />
+        <div className="absolute bottom-[-155px] right-[-277px] z-20!">
+          <img src={RoadcodeSleep} alt="Character" />
+        </div>
+
+        {/* <Character className="absolute bottom-[-155px] right-[-277px] z-20!" /> */}
         {/* 4. 말풍선에 z-20! 추가 */}
         <BubbleBtn
           onClick={() => navigate("/register")}
