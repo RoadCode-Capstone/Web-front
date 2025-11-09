@@ -19,9 +19,9 @@ export function Suggest({ onClose }: { onClose: () => void }) {
         <Character className="relative" />
         <div>
           <BubbleBtn
-            text={`개념 강화 학습 문제를 풀어보세요!`}
+            text={`개념 강화 학습\n문제를 풀어보세요!`}
             position="right"
-            className="h-[160px] w-[344px] absolute bottom-[350px] left-[-230px]"
+            className="h-[160px] w-[344px] absolute bottom-[350px] left-[-230px] whitespace-pre-line"
             style={{ "--tail-offset": "80px" }}
           />
           <BubbleBtn
