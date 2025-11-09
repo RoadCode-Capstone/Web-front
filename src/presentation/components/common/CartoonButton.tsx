@@ -1,5 +1,7 @@
 // src/components/BubbleBtn.tsx
 
+import { cn } from "@/utils/tailwind";
+
 // 1. Props 타입에서 'size' 제거
 type Position = "top" | "bottom" | "left" | "right";
 
@@ -31,7 +33,7 @@ export default function BubbleBtn({
   };
 
   // 4. 클래스 조합
-  const buttonClassName = [baseStyle, positionStyles[position], className]
+  const buttonClassName = [baseStyle, positionStyles[position]]
     .filter(Boolean)
     .join(" ");
 
@@ -39,9 +41,11 @@ export default function BubbleBtn({
   return (
     <button
       onClick={onClick}
-      className={
-        buttonClassName + "  drop-shadow-[10px_20px_0px_rgba(0,0,0,0.25)]"
-      }
+      className={cn(
+        buttonClassName,
+        "drop-shadow-[10px_20px_0px_rgba(0,0,0,0.25)]",
+        className
+      )}
     >
       {text}
     </button>

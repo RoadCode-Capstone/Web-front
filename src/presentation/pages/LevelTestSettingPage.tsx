@@ -7,6 +7,7 @@ import { AlgorithmCards } from "../components/testSetting/cards/AlgorithmCards";
 import { DailyCard } from "../components/testSetting/cards/DailyCard";
 import { useEffect, useState } from "react";
 import React from "react";
+import { TestInfo } from "../components/testSetting/TestInfo";
 
 type LeveltestStepType = "language" | "type" | "algorithm" | "daily";
 
@@ -47,6 +48,7 @@ export function LeveltestSettingPage() {
   const [currentStepIndex, setCurrentStepIndex] = useState<number>(0);
   const currentStep = LEVELTEST_STEP_ORDER[currentStepIndex];
   const [selectedValues, setSelectedValues] = useState<SelectedValues>({});
+  const isLastStep = currentStepIndex >= LEVELTEST_STEP_ORDER.length;
 
   const handleCardClick = (value: string | number) => {
     setSelectedValues((prev) => ({
@@ -62,7 +64,7 @@ export function LeveltestSettingPage() {
         : (nextStepIndex = LEVELTEST_STEP_ORDER.indexOf("daily"));
     }
 
-    if (nextStepIndex < LEVELTEST_STEP_ORDER.length) {
+    if (nextStepIndex < LEVELTEST_STEP_ORDER.length + 1) {
       setCurrentStepIndex(nextStepIndex);
     }
   };
@@ -83,12 +85,20 @@ export function LeveltestSettingPage() {
         <ReturnBtn />
         <SkipBtn />
       </div>
-      <div className="flex flex-col gap-y-14">
-        {LeveltestSettings[currentStep].heading}
-        {React.cloneElement(LeveltestSettings[currentStep].cards, {
-          onClick: handleCardClick,
-        })}
-      </div>
+      {isLastStep ? (
+        <TestInfo
+          language={selectedValues.language || ""}
+          type={selectedValues.type || ""}
+          algorithm={selectedValues.algorithm}
+        />
+      ) : (
+        <div className="flex flex-col gap-y-14">
+          {LeveltestSettings[currentStep].heading}
+          {React.cloneElement(LeveltestSettings[currentStep].cards, {
+            onClick: handleCardClick,
+          })}
+        </div>
+      )}
     </div>
   );
 }
