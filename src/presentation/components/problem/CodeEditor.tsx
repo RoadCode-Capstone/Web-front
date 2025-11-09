@@ -8,17 +8,20 @@ import { oneDark } from "@codemirror/theme-one-dark";
 import { python } from "@codemirror/lang-python";
 import { java } from "@codemirror/lang-java";
 import { cpp } from "@codemirror/lang-cpp";
+import { cn } from "@/utils/tailwind";
 
 interface CodeEditorProps {
   initialCode?: string;
   onChange?: (value: string) => void;
   language: "python" | "java" | "cpp" | "c";
+  style?: string;
 }
 
 export default function CodeEditor({
   initialCode = "",
   onChange,
   language,
+  style,
 }: CodeEditorProps) {
   const editorRef = useRef<HTMLDivElement | null>(null);
   const viewRef = useRef<EditorView | null>(null);
@@ -140,5 +143,5 @@ export default function CodeEditor({
     });
   }, [language]);
 
-  return <div ref={editorRef} className="flex h-full w-full" />;
+  return <div ref={editorRef} className={cn(`${style}`)} />;
 }
