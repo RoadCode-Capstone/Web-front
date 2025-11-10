@@ -20,6 +20,7 @@ import { HeaderLayout } from "./layouts/HeaderLayout";
 import { LeveltestSettingPage } from "./presentation/pages/LevelTestSettingPage";
 import { ProblemPage } from "./presentation/pages/ProblemPage";
 import { RoadMap } from "./presentation/pages/RoadMap";
+import { RankingPage } from "./presentation/pages/RankingPage";
 function App() {
   return (
     <div className="App">
@@ -31,8 +32,9 @@ function App() {
             <Route
               path="/leveltest/setting"
               element={<LeveltestSettingPage />}
-            ></Route>
+            />
             <Route path="/roadmap" element={<RoadMap />} />
+            <Route path="/ranking" element={<RankingPage />} />
           </Route>
           <Route
             path="/leveltest"
