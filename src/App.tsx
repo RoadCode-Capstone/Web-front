@@ -18,6 +18,8 @@ import RegisterPage from "./presentation/pages/RegisterPage";
 import MainPage from "./presentation/pages/MainPage";
 import { HeaderLayout } from "./layouts/HeaderLayout";
 import { LeveltestSettingPage } from "./presentation/pages/LevelTestSettingPage";
+import { ProblemPage } from "./presentation/pages/ProblemPage";
+import { RoadMap } from "./presentation/pages/RoadMap";
 function App() {
   return (
     <div className="App">
@@ -30,7 +32,12 @@ function App() {
               path="/leveltest/setting"
               element={<LeveltestSettingPage />}
             ></Route>
+            <Route path="/roadmap" element={<RoadMap />} />
           </Route>
+          <Route
+            path="/leveltest"
+            element={<ProblemPage language="python" />}
+          ></Route>
           <Route path="/dev/components" element={<Components />}></Route>
           <Route path="/login" element={<LoginPage />}></Route>
           <Route path="/register" element={<RegisterPage />}></Route>
