@@ -21,6 +21,7 @@ import { LeveltestSettingPage } from "./presentation/pages/LevelTestSettingPage"
 import { ProblemPage } from "./presentation/pages/ProblemPage";
 import { RoadMap } from "./presentation/pages/RoadMap";
 import { RankingPage } from "./presentation/pages/RankingPage";
+import AttendancePage from "./presentation/pages/AttendancePage";
 function App() {
   return (
     <div className="App">
@@ -28,13 +29,13 @@ function App() {
         <Routes>
           <Route element={<HeaderLayout />}>
             <Route path="/" element={<MainPage />} />
-            {/* 다른 하위 라우트도 여기에 추가 */}
             <Route
               path="/leveltest/setting"
               element={<LeveltestSettingPage />}
             />
             <Route path="/roadmap" element={<RoadMap />} />
             <Route path="/ranking" element={<RankingPage />} />
+            <Route path="/attendance" element={<AttendancePage />} />
           </Route>
           <Route
             path="/leveltest"

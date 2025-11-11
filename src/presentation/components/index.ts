@@ -9,3 +9,5 @@ export { default as FeaturedCard } from "./testSetting/FeaturedCard";
 export { default as ProblemBody } from "./problem/ProblemBody";
 export { default as ProblemFooter } from "./problem/ProblemFooter";
 export { default as ProblemHeader } from "./problem/ProblemHeader";
+
+export { default as AttendanceCalendar } from "./attendance/Calendar";
