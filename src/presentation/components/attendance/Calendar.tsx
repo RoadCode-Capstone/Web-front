@@ -3,7 +3,8 @@
 import React, { useState } from "react";
 import Calendar from "react-calendar";
 import { format, isSameDay, isWeekend } from "date-fns";
-
+import IconPrev from "@assets/icons/chevron_backward.svg?react";
+import IconNext from "@assets/icons/chevron_forward.svg?react";
 // 1. react-calendar의 기본 CSS는 임포트하지 않습니다.
 // import 'react-calendar/dist/Calendar.css'; // <--- 이 줄이 있다면 삭제하세요!
 
@@ -41,7 +42,7 @@ export default function AttendanceCalendar() {
         // --- 2. Tailwind 스타일링 (Props) ---
 
         // (A) 캘린더 전체 컨테이너
-        className="mx-auto flex flex-col rounded-lg border border-gray-200 p-4 shadow-lg"
+        className="mx-auto flex flex-col rounded-lg  p-4 "
         // (B) 상단 네비게이션 (월/연도)
         navigationLabel={({ date }) => (
           <h1 className="text-2xl font-medium text-black">
@@ -49,10 +50,14 @@ export default function AttendanceCalendar() {
           </h1>
         )}
         prevLabel={
-          <span className="rounded-md p-2 hover:bg-gray-100">{"<"}</span>
+          <button className="rounded-md py-2 px-3 hover:bg-gray-100">
+            <IconPrev />
+          </button>
         }
         nextLabel={
-          <span className="rounded-md p-2 hover:bg-gray-100">{">"}</span>
+          <button className="rounded-md  py-2 px-3 hover:bg-gray-100">
+            <IconNext />
+          </button>
         }
         prev2Label={null} // 2단계 이전 버튼 (연도) 숨기기
         next2Label={null} // 2단계 다음 버튼 (연도) 숨기기
@@ -60,6 +65,7 @@ export default function AttendanceCalendar() {
         // 5. formatShortWeekday 에러 해결: JSX가 아닌 순수 'string'을 반환합니다.
         //    스타일링은 2부(CSS)에서 @apply로 처리합니다.
         formatShortWeekday={(locale, date) => format(date, "E")[0]} // 'S', 'M', 'T'...
+        formatDay={(locale, date) => format(date, "d")}
         // (D) 날짜 타일 (가장 중요!)
         // 'tileClassName'을 사용하여 조건부 Tailwind 클래스를 적용합니다.
         tileClassName={({ date, view }) => {
