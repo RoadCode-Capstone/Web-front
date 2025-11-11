@@ -19,7 +19,7 @@ const Header = () => {
         <li className="flex items-center gap-x-22 font-medium text-base">
           <Link to="/">로드맵 조회</Link>
           <Link to="/ranking">순위</Link>
-          <Link to="/">출석</Link>
+          <Link to="/attendance">출석</Link>
         </li>
         <button onClick={() => setIsModalOpen((isModalOpen) => !isModalOpen)}>
           <AccountIcon height={32} width={32} />
