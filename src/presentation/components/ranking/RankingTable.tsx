@@ -37,7 +37,7 @@ export function RankingTable() {
   };
 
   return (
-    <div className="w-full flex h-full flex-col justify-between bg-[#f9f9f9] rounded-2xl border-[0.5px] border-main overflow-hidden py-6 px-14">
+    <div className="w-full flex h-full flex-col min-w-[816px] justify-between bg-[#f9f9f9] rounded-2xl border-[0.5px] border-main overflow-hidden py-6 px-14">
       <table className="w-full table-auto border-collapse">
         <thead className="border-b-1">
           <tr>
