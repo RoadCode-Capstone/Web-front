@@ -91,6 +91,31 @@
 }
 
 
+/* react-calendar v6 스타일링을 위한 레이어 */
+@layer components {
+  /* 1. 네비게이션 (justify-between 적용) */
+  .react-calendar__navigation {
+    @apply flex justify-between items-center mb-11 px-4;
+  }
+  .react-calendar__navigation button {
+    @apply p-0; 
+  }
+
+  /* 2. 요일 헤더 */
+  .react-calendar__month-view__weekdays__weekday {
+    @apply p-2 text-center font-semibold text-gray-600;
+  }
+  .react-calendar__month-view__weekdays__weekday abbr[title] {
+    @apply no-underline; /* 요일 밑줄 제거 */
+  }
+
+  /* 3. 이웃 월 날짜 */
+  .react-calendar__month-view__days__day--neighboringMonth {
+    @apply text-gray-400 opacity-70;
+  }
+}
+
+
 body {
   margin: 0;
   font-family: 'Spoqa Han Sans Neo', -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
