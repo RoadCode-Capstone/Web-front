@@ -18,7 +18,7 @@ const signup = async (request: Auth) => {
       throw new Error(response.message);
     }
 
-    return response.data;
+    return response.message;
   } catch (error) {
     throw error;
   }
@@ -47,21 +47,22 @@ const login = async (request: AuthLoginRequest): Promise<AuthLoginResponse> => {
 
 const logout = async () => {
   try {
-    const rawResponse = await axios.post(`${AUTH_PREFIX}/logout`, {
-      headers: {
-        Authorization: API_TEST_TOKEN,
-      },
-    });
+    localStorage.removeItem("jwt");
+    // const rawResponse = await axios.post(`${AUTH_PREFIX}/logout`, {
+    //   headers: {
+    //     Authorization: API_TEST_TOKEN,
+    //   },
+    // });
 
-    const response: ApiResponse<string> = rawResponse.data;
+    // const response: ApiResponse<string> = rawResponse.data;
 
-    if (response.code != "SUCCESS") {
-      throw new Error(response.message);
-    }
+    // if (response.code != "SUCCESS") {
+    //   throw new Error(response.message);
+    // }
 
-    return response.message;
+    // return response.message;
   } catch (error) {
-    console.log(error);
+    throw error;
   }
 };
 
@@ -88,7 +89,7 @@ const verifyEmail = async (email: string) => {
 
 const verifyCode = async (email: string, verificationCode: string) => {
   try {
-    const rawResponse = await fetch(`${AUTH_PREFIX}/signup/verify-code`, {
+    const rawResponse = await fetch(`${AUTH_PREFIX}/verify-code`, {
       method: "Post",
       body: JSON.stringify({
         email,
@@ -102,10 +103,64 @@ const verifyCode = async (email: string, verificationCode: string) => {
       throw new Error(response.message);
     }
 
-    return response.data;
+    return response.message;
   } catch (error) {
     throw error;
   }
 };
 
-export { signup, login, logout, verifyEmail, verifyCode };
+const getPasswordverifyCode = async (email: string) => {
+  try {
+    const rawResponse = await fetch(
+      `${AUTH_PREFIX}/reset-password/verify-email`,
+      {
+        method: "Post",
+        body: JSON.stringify({
+          email,
+        }),
+        headers: BASE_HEADER,
+      }
+    );
+
+    const response: ApiResponse<null> = await rawResponse.json();
+    if (response.code != "SUCCESS") {
+      throw new Error(response.message);
+    }
+
+    return response.message;
+  } catch (error) {
+    throw error;
+  }
+};
+
+const resetPassword = async (email: string, newPassword: string) => {
+  try {
+    const rawResponse = await fetch(`${AUTH_PREFIX}/reset-password`, {
+      method: "Post",
+      body: JSON.stringify({
+        email,
+        newPassword,
+      }),
+      headers: BASE_HEADER,
+    });
+
+    const response: ApiResponse<null> = await rawResponse.json();
+    if (response.code != "SUCCESS") {
+      throw new Error(response.message);
+    }
+
+    return response.message;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export {
+  signup,
+  login,
+  logout,
+  verifyEmail,
+  verifyCode,
+  getPasswordverifyCode,
+  resetPassword,
+};

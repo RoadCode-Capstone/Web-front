@@ -24,6 +24,7 @@ import { RankingPage } from "./presentation/pages/RankingPage";
 import AttendancePage from "./presentation/pages/AttendancePage";
 import RestrictedRoute from "./presentation/components/auth/RestrictedRoute";
 import PrivateRoute from "./presentation/components/auth/PrivateRoute";
+import PasswordResetPage from "./presentation/pages/PasswordResetPage";
 function App() {
   return (
     <div className="App">
@@ -52,6 +53,7 @@ function App() {
           <Route element={<RestrictedRoute />}>
             <Route path="/login" element={<LoginPage />}></Route>
             <Route path="/register" element={<RegisterPage />}></Route>
+            <Route path="/reset" element={<PasswordResetPage />} />
           </Route>
           {/* <Route path="/passwordFinding" element={<PasswordFinding />}></Route>
           <Route path="/passwordSetting" element={<PasswordSetting />}></Route>

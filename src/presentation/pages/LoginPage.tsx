@@ -22,6 +22,7 @@ export default function LoginPage() {
       });
       const token = response.accessToken;
       localStorage.setItem("jwt", token);
+      navigate("/");
     } catch (error) {
       const errorMessage =
         error instanceof Error ? error.message : "알 수 없는 오류입니다.";
@@ -69,7 +70,7 @@ export default function LoginPage() {
           text={"회원가입"}
         />
         <BubbleBtn
-          onClick={() => navigate("/login")}
+          onClick={() => navigate("/reset")}
           className="absolute! bottom-[273px]! right-[-276px]! w-[259px]! h-[111px]! z-20!"
           text={"비밀번호 찾기"}
         />
