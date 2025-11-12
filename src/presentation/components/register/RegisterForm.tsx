@@ -7,11 +7,16 @@ interface RegisterFormProps {
   password: string;
   passwordConfirm: string;
   nickname: string;
+  verifyCode: string;
   emailCheckResult: boolean | null;
+  verifyCodeResult: boolean | null;
   nicknameCheckResult: boolean | null;
   passwordCheckResult: boolean | null;
   onEmailChange: ChangeEventHandler<HTMLInputElement>;
   onCheckEmail: () => void;
+  onClickSendCode: () => void;
+  onClickVerifyCode: () => void;
+  onVerifyCodeChange: ChangeEventHandler<HTMLInputElement>;
   onPasswordChange: ChangeEventHandler<HTMLInputElement>;
   onPasswordConfirmChange: ChangeEventHandler<HTMLInputElement>;
   onNicknameChange: ChangeEventHandler<HTMLInputElement>;
@@ -20,36 +25,70 @@ interface RegisterFormProps {
 }
 
 export function RegisterForm(props: RegisterFormProps) {
-  return (
-    <div className="flex flex-col w-[512px] gap-y-6">
-      <div className="flex flex-col gap-y-4 w-full">
-        <div className="flex flex-col gap-y-1">
-          <div className="flex gap-x-4">
-            <InputField
-              id="email"
-              placeholder="이메일을 입력하세요"
-              type="email"
-              value={props.email}
-              onChange={props.onEmailChange}
-            />
+  return !props.verifyCodeResult ? (
+    <div className="flex flex-col w-[512px] gap-y-2">
+      <div className="flex flex-col gap-y-1">
+        <div className="flex gap-x-4">
+          <InputField
+            id="email"
+            placeholder="이메일을 입력하세요"
+            type="email"
+            value={props.email}
+            onChange={props.onEmailChange}
+          />
+          {!props.emailCheckResult ? (
             <Button
               text={"중복 확인"}
               onClick={props.onCheckEmail}
               colorTheme={"point-secondary"}
-              style="w-[128px]! h-[72px]!"
+              style="w-[160px]! h-[72px]!"
             />
-          </div>
-          {props.emailCheckResult !== null &&
-            (props.emailCheckResult ? (
-              <span className=" pl-3 text-sm text-green-400">
-                사용 가능한 이메일입니다
-              </span>
-            ) : (
-              <span className=" pl-3 text-sm text-red">
-                중복된 이메일입니다
-              </span>
-            ))}
+          ) : (
+            <Button
+              text={"인증코드 발송"}
+              onClick={props.onClickSendCode}
+              colorTheme={"point-secondary"}
+              style="w-[160px]! h-[72px]!"
+            />
+          )}
         </div>
+        {props.emailCheckResult === null && (
+          <span className=" pl-3 text-sm text-red">
+            이메일 중복 확인이 필요합니다
+          </span>
+        )}
+        {props.emailCheckResult !== null &&
+          (props.emailCheckResult ? (
+            <span className=" pl-3 text-sm text-green-400">
+              사용 가능한 이메일입니다
+            </span>
+          ) : (
+            <span className=" pl-3 text-sm text-red">
+              사용할 수 없는 이메일입니다
+            </span>
+          ))}
+      </div>
+      {props.emailCheckResult && (
+        <div className="flex gap-x-4">
+          <InputField
+            id="email"
+            placeholder="인증코드를 입력하세요"
+            type="email"
+            value={props.verifyCode}
+            onChange={props.onVerifyCodeChange}
+          />
+          <Button
+            text={"인증코드 확인"}
+            onClick={props.onClickVerifyCode}
+            colorTheme={"point-secondary"}
+            style="w-[160px]! h-[72px]!"
+          />
+        </div>
+      )}
+    </div>
+  ) : (
+    <div className="flex flex-col w-[512px] gap-y-6">
+      <div className="flex flex-col gap-y-4 w-full">
         <InputField
           id="password"
           placeholder="비밀번호를 입력하세요"
@@ -92,6 +131,11 @@ export function RegisterForm(props: RegisterFormProps) {
               style="w-[128px]! h-[72px]!"
             />
           </div>
+          {props.nicknameCheckResult === null && (
+            <span className=" pl-3 text-sm text-red">
+              닉네임 중복 확인이 필요합니다
+            </span>
+          )}
           {props.nicknameCheckResult !== null &&
             (props.nicknameCheckResult ? (
               <span className=" pl-3 text-sm text-green-400">
@@ -99,7 +143,7 @@ export function RegisterForm(props: RegisterFormProps) {
               </span>
             ) : (
               <span className=" pl-3 text-sm text-red">
-                중복된 닉네임입니다
+                사용할 수 없는 닉네임입니다
               </span>
             ))}
         </div>

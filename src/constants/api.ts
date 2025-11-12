@@ -8,3 +8,10 @@ export const API_TEST_PASSWORD = `${import.meta.env.VITE_API_TEST_PASSWORD}`;
 export const BASE_HEADER = {
   "Content-Type": "application/json",
 };
+
+export const TOKEN_HEADER = {
+  Authorization: `${import.meta.env.VITE_TOKEN_TYPE} ${localStorage.getItem(
+    "jwt"
+  )}`,
+  ...BASE_HEADER,
+};

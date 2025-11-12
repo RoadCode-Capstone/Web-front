@@ -18,9 +18,9 @@ const signup = async (request: Auth) => {
       throw new Error(response.message);
     }
 
-    return response.message;
+    return response.data;
   } catch (error) {
-    console.log(error);
+    throw error;
   }
 };
 
@@ -65,4 +65,47 @@ const logout = async () => {
   }
 };
 
-export { signup, login, logout };
+const verifyEmail = async (email: string) => {
+  try {
+    const rawResponse = await fetch(`${AUTH_PREFIX}/signup/verify-email`, {
+      method: "Post",
+      body: JSON.stringify({
+        email,
+      }),
+      headers: BASE_HEADER,
+    });
+
+    const response: ApiResponse<null> = await rawResponse.json();
+    if (response.code != "SUCCESS") {
+      throw new Error(response.message);
+    }
+
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
+const verifyCode = async (email: string, verificationCode: string) => {
+  try {
+    const rawResponse = await fetch(`${AUTH_PREFIX}/signup/verify-code`, {
+      method: "Post",
+      body: JSON.stringify({
+        email,
+        verificationCode,
+      }),
+      headers: BASE_HEADER,
+    });
+
+    const response: ApiResponse<null> = await rawResponse.json();
+    if (response.code != "SUCCESS") {
+      throw new Error(response.message);
+    }
+
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export { signup, login, logout, verifyEmail, verifyCode };

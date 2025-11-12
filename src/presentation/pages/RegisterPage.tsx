@@ -4,17 +4,27 @@ import BubbleBtn from "../components/common/CartoonButton";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { RegisterForm } from "@/presentation/components/register/RegisterForm";
-import { signup, isExistEmail, isExistNickname } from "@/apis";
+import {
+  signup,
+  isExistEmail,
+  isExistNickname,
+  verifyEmail,
+  verifyCode as verfiyCodeApi,
+} from "@/apis";
 
 export default function RegisterPage() {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [passwordConfirm, setPasswordConfirm] = useState<string>("");
   const [nickname, setNickname] = useState<string>("");
+  const [verifyCode, setVerifyCode] = useState<string>("");
 
   const [emailResult, setEmailResult] = useState<boolean | null>(null);
   const [passwordResult, setPasswordResult] = useState<boolean | null>(null);
   const [nicknameResult, setNicknameResult] = useState<boolean | null>(null);
+  const [verfiyCodeResult, setVerifyCodeResult] = useState<boolean | null>(
+    null
+  );
 
   const navigate = useNavigate();
 
@@ -23,6 +33,27 @@ export default function RegisterPage() {
       const response = await isExistEmail(email);
       if (response.duplicated) setEmailResult(false);
       else setEmailResult(true);
+    } catch (error) {
+      const errorMessage =
+        error instanceof Error ? error.message : "알 수 없는 오류입니다";
+      alert(errorMessage);
+    }
+  };
+
+  const sendVerifyCode = async () => {
+    try {
+      const response = await verifyEmail(email);
+    } catch (error) {
+      const errorMessage =
+        error instanceof Error ? error.message : "알 수 없는 오류입니다";
+      alert(errorMessage);
+    }
+  };
+
+  const handleVerifyCode = async () => {
+    try {
+      const response = await verfiyCodeApi(email, verifyCode);
+      if (response === null) setVerifyCodeResult(true);
     } catch (error) {
       const errorMessage =
         error instanceof Error ? error.message : "알 수 없는 오류입니다";
@@ -90,6 +121,11 @@ export default function RegisterPage() {
               onNicknameChange={(e) => setNickname(e.target.value)}
               onCheckNickname={checkExistNickname}
               onRegister={handleSignup}
+              verifyCode={verifyCode}
+              verifyCodeResult={verfiyCodeResult}
+              onClickSendCode={sendVerifyCode}
+              onClickVerifyCode={handleVerifyCode}
+              onVerifyCodeChange={(e) => setVerifyCode(e.target.value)}
             />
           }
           colorTheme={"point"}
