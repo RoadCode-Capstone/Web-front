@@ -12,8 +12,10 @@ export default function InputField(props: InputFieldProps) {
   return (
     <div
       className="flex py-6 px-[30px] w-full
-   bg-[#F9F9F9] border-1 border-black rounded-2xl
-   font-light text-base "
+   bg-[#F9F9F9] border border-black rounded-2xl
+   font-light text-base 
+   focus-within:outline-3
+    focus-within:outline-point"
     >
       <input
         id={props.id}
@@ -21,7 +23,7 @@ export default function InputField(props: InputFieldProps) {
         type={props.type}
         value={props.value}
         onChange={props.onChange}
-        className="outline-none w-full "
+        className="outline-none w-full bg-transparent"
       />
     </div>
   );
