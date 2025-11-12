@@ -1,25 +1,34 @@
 import { Button, ImageButton, InputField } from "../components";
 import { InputFieldProps } from "../components/common/InputField";
 import Character from "../assets/character/sleep.svg?react";
+import { LoginForm } from "@/presentation/components/login/LoginForm";
 import WindowBox from "../components/common/WindowBox";
 import BubbleBtn from "../components/common/CartoonButton";
 import { useNavigate } from "react-router-dom";
 import RoadcodeSleep from "../assets/character/roadcode_sleep.gif";
+import { login } from "@/apis/auth";
+import { useState } from "react";
 
-const authInputProps: Record<string, InputFieldProps> = {
-  email: {
-    id: "email",
-    placeholder: "이메일을 입력하세요",
-    type: "email",
-  },
-  password: {
-    id: "password",
-    placeholder: "비밀번호를 입력하세요",
-    type: "password",
-  },
-};
 export default function LoginPage() {
   const navigate = useNavigate();
+  const [email, setEmail] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
+
+  const handleLogin = async () => {
+    try {
+      const response = await login({
+        email,
+        password,
+      });
+      const token = response.accessToken;
+      localStorage.setItem("jwt", token);
+    } catch (error) {
+      const errorMessage =
+        error instanceof Error ? error.message : "알 수 없는 오류입니다.";
+      alert(errorMessage);
+    }
+  };
+
   return (
     <div className="min-h-screen min-w-screen bg-main flex items-center justify-center">
       <div className="relative">
@@ -27,7 +36,15 @@ export default function LoginPage() {
         <WindowBox
           height={672}
           width={640}
-          content={<LoginForm />}
+          content={
+            <LoginForm
+              email={email}
+              password={password}
+              onEmailChange={(e) => setEmail(e.target.value)}
+              onPasswordChange={(e) => setPassword(e.target.value)}
+              onLogin={handleLogin}
+            />
+          }
           colorTheme={"point"}
           style="relative! z-10!"
         />
@@ -58,24 +75,5 @@ export default function LoginPage() {
         />
       </div>
     </div>
-  );
-}
-function LoginForm() {
-  const navigate = useNavigate();
-  return (
-    <form className="flex flex-col w-[400px] gap-y-6">
-      <div className="flex flex-col gap-y-4 w-full">
-        <InputField {...authInputProps.email} />
-        {<InputField {...authInputProps.password} />}
-      </div>
-      <Button
-        text={"로그인"}
-        onClick={() => {
-          navigate("/");
-        }}
-        colorTheme={"point-primary"}
-        style="h-[72px]!"
-      />
-    </form>
   );
 }
