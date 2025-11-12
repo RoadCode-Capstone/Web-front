@@ -22,28 +22,37 @@ import { ProblemPage } from "./presentation/pages/ProblemPage";
 import { RoadMap } from "./presentation/pages/RoadMap";
 import { RankingPage } from "./presentation/pages/RankingPage";
 import AttendancePage from "./presentation/pages/AttendancePage";
+import RestrictedRoute from "./presentation/components/auth/RestrictedRoute";
+import PrivateRoute from "./presentation/components/auth/PrivateRoute";
 function App() {
   return (
     <div className="App">
       <BrowserRouter>
         <Routes>
-          <Route element={<HeaderLayout />}>
-            <Route path="/" element={<MainPage />} />
+          {/* private pages */}
+          <Route element={<PrivateRoute />}>
+            <Route element={<HeaderLayout />}>
+              <Route path="/" element={<MainPage />} />
+              <Route
+                path="/leveltest/setting"
+                element={<LeveltestSettingPage />}
+              />
+              <Route path="/roadmap" element={<RoadMap />} />
+              <Route path="/ranking" element={<RankingPage />} />
+              <Route path="/attendance" element={<AttendancePage />} />
+            </Route>
             <Route
-              path="/leveltest/setting"
-              element={<LeveltestSettingPage />}
-            />
-            <Route path="/roadmap" element={<RoadMap />} />
-            <Route path="/ranking" element={<RankingPage />} />
-            <Route path="/attendance" element={<AttendancePage />} />
+              path="/leveltest"
+              element={<ProblemPage language="python" />}
+            ></Route>
           </Route>
-          <Route
-            path="/leveltest"
-            element={<ProblemPage language="python" />}
-          ></Route>
           <Route path="/dev/components" element={<Components />}></Route>
-          <Route path="/login" element={<LoginPage />}></Route>
-          <Route path="/register" element={<RegisterPage />}></Route>
+
+          {/* public pages(이미 로그인한 사람 제한) */}
+          <Route element={<RestrictedRoute />}>
+            <Route path="/login" element={<LoginPage />}></Route>
+            <Route path="/register" element={<RegisterPage />}></Route>
+          </Route>
           {/* <Route path="/passwordFinding" element={<PasswordFinding />}></Route>
           <Route path="/passwordSetting" element={<PasswordSetting />}></Route>
           <Route path="/registerSuccess" element={<RegisterSuccess />}></Route>
