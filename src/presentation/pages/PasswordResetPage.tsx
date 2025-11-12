@@ -10,39 +10,27 @@ import {
   isExistNickname,
   verifyEmail,
   verifyCode as verfiyCodeApi,
+  getPasswordverifyCode,
+  resetPassword,
 } from "@/apis";
+import { PasswordResetForm } from "../components/passwordReset/ResetForm";
 
-export default function RegisterPage() {
+export default function PasswordResetPage() {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [passwordConfirm, setPasswordConfirm] = useState<string>("");
-  const [nickname, setNickname] = useState<string>("");
   const [verifyCode, setVerifyCode] = useState<string>("");
 
-  const [emailResult, setEmailResult] = useState<boolean | null>(null);
   const [passwordResult, setPasswordResult] = useState<boolean | null>(null);
-  const [nicknameResult, setNicknameResult] = useState<boolean | null>(null);
   const [verfiyCodeResult, setVerifyCodeResult] = useState<boolean | null>(
     null
   );
 
   const navigate = useNavigate();
 
-  const checkExistEmail = async () => {
-    try {
-      const response = await isExistEmail(email);
-      if (response.duplicated) setEmailResult(false);
-      else setEmailResult(true);
-    } catch (error) {
-      const errorMessage =
-        error instanceof Error ? error.message : "알 수 없는 오류입니다";
-      alert(errorMessage);
-    }
-  };
-
   const sendVerifyCode = async () => {
     try {
-      const response = await verifyEmail(email);
+      const response = await getPasswordverifyCode(email);
     } catch (error) {
       const errorMessage =
         error instanceof Error ? error.message : "알 수 없는 오류입니다";
@@ -61,28 +49,12 @@ export default function RegisterPage() {
     }
   };
 
-  const checkExistNickname = async () => {
+  const handleResetPassword = async () => {
     try {
-      const response = await isExistNickname(nickname);
-      if (response.duplicated) setNicknameResult(false);
-      else setNicknameResult(true);
-    } catch (error) {
-      const errorMessage =
-        error instanceof Error ? error.message : "알 수 없는 오류입니다";
-      alert(errorMessage);
-    }
-  };
-
-  const handleSignup = async () => {
-    try {
-      if (!(emailResult && passwordResult && nicknameResult)) {
+      if (!passwordResult) {
         return;
       }
-      const response = await signup({
-        email,
-        password,
-        nickname,
-      });
+      const response = await resetPassword(email, password);
       alert(response);
       navigate("/login");
     } catch (error) {
@@ -99,16 +71,12 @@ export default function RegisterPage() {
           height={672}
           width={640}
           content={
-            <RegisterForm
+            <PasswordResetForm
               email={email}
               password={password}
               passwordConfirm={passwordConfirm}
-              nickname={nickname}
-              emailCheckResult={emailResult}
               passwordCheckResult={passwordResult}
-              nicknameCheckResult={nicknameResult}
               onEmailChange={(e) => setEmail(e.target.value)}
-              onCheckEmail={checkExistEmail}
               onPasswordChange={(e) => setPassword(e.target.value)}
               onPasswordConfirmChange={(e) => {
                 setPasswordConfirm(e.target.value);
@@ -118,14 +86,12 @@ export default function RegisterPage() {
                   setPasswordResult(null);
                 }
               }}
-              onNicknameChange={(e) => setNickname(e.target.value)}
-              onCheckNickname={checkExistNickname}
-              onRegister={handleSignup}
               verifyCode={verifyCode}
               verifyCodeResult={verfiyCodeResult}
               onClickSendCode={sendVerifyCode}
               onClickVerifyCode={handleVerifyCode}
               onVerifyCodeChange={(e) => setVerifyCode(e.target.value)}
+              onClickReset={handleResetPassword}
             />
           }
           colorTheme={"point"}

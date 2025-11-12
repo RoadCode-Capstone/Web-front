@@ -1,7 +1,8 @@
 import Logo from "../../assets/image/logo.svg?react";
 import AccountIcon from "../../assets/icons/account_circle.svg?react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
+import { logout } from "@/apis";
 
 const Header = () => {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
@@ -31,6 +32,19 @@ const Header = () => {
 };
 
 const HeaderModal = ({ isOpen }: { isOpen: boolean }) => {
+  const navigate = useNavigate();
+  const handleLogout = async () => {
+    try {
+      await logout();
+      navigate("/login");
+    } catch (error) {
+      const errorMessage =
+        error instanceof Error
+          ? error.message
+          : "로그아웃 중 오류가 발생했습니다.";
+      alert(errorMessage);
+    }
+  };
   return (
     isOpen && (
       <div
@@ -41,9 +55,9 @@ const HeaderModal = ({ isOpen }: { isOpen: boolean }) => {
           <Link to="/" className="py-2 pr-1 text-left">
             마이페이지
           </Link>
-          <Link to="/logout" className="py-2  text-left">
+          <button onClick={handleLogout} className="py-2  text-left">
             로그아웃
-          </Link>
+          </button>
         </li>
       </div>
     )
