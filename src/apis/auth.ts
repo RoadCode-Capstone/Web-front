@@ -1,16 +1,16 @@
 import axios from "axios";
-import { API_HEADER, API_PREFIX, API_TEST_TOKEN } from "../constants/api";
+import { BASE_HEADER, API_PREFIX, API_TEST_TOKEN } from "../constants/api";
 import { ApiResponse } from "../types/api";
 import { Auth, AuthLoginRequest, AuthLoginResponse } from "../types/auth";
 
 const AUTH_PREFIX = `${API_PREFIX}/auth`;
 
-export const signup = async (request: Auth) => {
+const signup = async (request: Auth) => {
   try {
     const rawResponse = await fetch(`${AUTH_PREFIX}/signup`, {
       method: "Post",
       body: JSON.stringify(request),
-      headers: API_HEADER,
+      headers: BASE_HEADER,
     });
 
     const response: ApiResponse<null> = await rawResponse.json();
@@ -24,9 +24,7 @@ export const signup = async (request: Auth) => {
   }
 };
 
-export const login = async (
-  request: AuthLoginRequest
-): Promise<AuthLoginResponse> => {
+const login = async (request: AuthLoginRequest): Promise<AuthLoginResponse> => {
   try {
     const response = await fetch(`${AUTH_PREFIX}/login`, {
       method: "Post",
@@ -47,7 +45,7 @@ export const login = async (
   }
 };
 
-export const logout = async () => {
+const logout = async () => {
   try {
     const rawResponse = await axios.post(`${AUTH_PREFIX}/logout`, {
       headers: {
@@ -66,3 +64,5 @@ export const logout = async () => {
     console.log(error);
   }
 };
+
+export { signup, login, logout };

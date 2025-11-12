@@ -1,42 +1,97 @@
-import { Button, ImageButton, InputField } from "../components";
-import { InputFieldProps } from "../components/common/InputField";
 import Character from "../assets/character/default_left_up.svg?react";
 import WindowBox from "../components/common/WindowBox";
 import BubbleBtn from "../components/common/CartoonButton";
 import { useNavigate } from "react-router-dom";
-
-const authInputProps: Record<string, InputFieldProps> = {
-  email: {
-    id: "email",
-    placeholder: "이메일을 입력하세요",
-    type: "email",
-  },
-  password: {
-    id: "password",
-    placeholder: "비밀번호를 입력하세요",
-    type: "password",
-  },
-  passwordConfirm: {
-    id: "password-confirm",
-    placeholder: "비밀번호를 한 번 더 입력하세요",
-    type: "password",
-  },
-  nickname: {
-    id: "nickname",
-    placeholder: "사용할 닉네임을 입력하세요",
-    type: "text",
-  },
-};
+import { useState } from "react";
+import { RegisterForm } from "@/presentation/components/register/RegisterForm";
+import { signup, isExistEmail, isExistNickname } from "@/apis";
 
 export default function RegisterPage() {
+  const [email, setEmail] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
+  const [passwordConfirm, setPasswordConfirm] = useState<string>("");
+  const [nickname, setNickname] = useState<string>("");
+
+  const [emailResult, setEmailResult] = useState<boolean | null>(null);
+  const [passwordResult, setPasswordResult] = useState<boolean | null>(null);
+  const [nicknameResult, setNicknameResult] = useState<boolean | null>(null);
+
   const navigate = useNavigate();
+
+  const checkExistEmail = async () => {
+    try {
+      const response = await isExistEmail(email);
+      if (response.duplicated) setEmailResult(false);
+      else setEmailResult(true);
+    } catch (error) {
+      const errorMessage =
+        error instanceof Error ? error.message : "알 수 없는 오류입니다";
+      alert(errorMessage);
+    }
+  };
+
+  const checkExistNickname = async () => {
+    try {
+      const response = await isExistNickname(nickname);
+      if (response.duplicated) setNicknameResult(false);
+      else setNicknameResult(true);
+    } catch (error) {
+      const errorMessage =
+        error instanceof Error ? error.message : "알 수 없는 오류입니다";
+      alert(errorMessage);
+    }
+  };
+
+  const handleSignup = async () => {
+    try {
+      if (!(emailResult && passwordResult && nicknameResult)) {
+        return;
+      }
+      const response = await signup({
+        email,
+        password,
+        nickname,
+      });
+      alert(response);
+      navigate("/login");
+    } catch (error) {
+      const errorMessage =
+        error instanceof Error ? error.message : "알 수 없는 오류입니다.";
+      alert(errorMessage);
+    }
+  };
+
   return (
     <div className="min-h-screen min-w-screen bg-main flex items-center justify-center">
       <div className="relative">
         <WindowBox
           height={672}
           width={640}
-          content={<RegisterForm />}
+          content={
+            <RegisterForm
+              email={email}
+              password={password}
+              passwordConfirm={passwordConfirm}
+              nickname={nickname}
+              emailCheckResult={emailResult}
+              passwordCheckResult={passwordResult}
+              nicknameCheckResult={nicknameResult}
+              onEmailChange={(e) => setEmail(e.target.value)}
+              onCheckEmail={checkExistEmail}
+              onPasswordChange={(e) => setPassword(e.target.value)}
+              onPasswordConfirmChange={(e) => {
+                setPasswordConfirm(e.target.value);
+                if (e.target.value) {
+                  setPasswordResult(password === e.target.value);
+                } else {
+                  setPasswordResult(null);
+                }
+              }}
+              onNicknameChange={(e) => setNickname(e.target.value)}
+              onCheckNickname={checkExistNickname}
+              onRegister={handleSignup}
+            />
+          }
           colorTheme={"point"}
           style="relative! z-10!"
         />
@@ -55,40 +110,5 @@ export default function RegisterPage() {
         />
       </div>
     </div>
-  );
-}
-
-function RegisterForm() {
-  return (
-    <form className="flex flex-col w-[512px] gap-y-6">
-      <div className="flex flex-col gap-y-4 w-full">
-        <div className="flex w-full gap-x-4 items-center">
-          <InputField {...authInputProps.email} />
-          <Button
-            text={"중복 확인"}
-            onClick={() => {}}
-            colorTheme={"point-secondary"}
-            style="w-[128px]! h-[72px]!"
-          />
-        </div>
-        {<InputField {...authInputProps.password} />}
-        {<InputField {...authInputProps.passwordConfirm} />}
-        <div className="flex w-full gap-x-4 items-center">
-          <InputField {...authInputProps.nickname} />
-          <Button
-            text={"중복 확인"}
-            onClick={() => {}}
-            colorTheme={"point-secondary"}
-            style="w-[128px]! h-[72px]!"
-          />
-        </div>
-      </div>
-      <Button
-        text={"회원가입"}
-        onClick={() => {}}
-        colorTheme={"point-primary"}
-        style="h-[72px]!"
-      />
-    </form>
   );
 }

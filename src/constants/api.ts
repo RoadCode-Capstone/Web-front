@@ -5,6 +5,6 @@ export const API_TEST_TOKEN = `${import.meta.env.VITE_API_TEST_TOKEN_TYPE} ${
 export const API_TEST_EMAIL = `${import.meta.env.VITE_API_TEST_EMAIL}`;
 export const API_TEST_PASSWORD = `${import.meta.env.VITE_API_TEST_PASSWORD}`;
 
-export const API_HEADER = {
+export const BASE_HEADER = {
   "Content-Type": "application/json",
 };
