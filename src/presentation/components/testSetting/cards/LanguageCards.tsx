@@ -8,14 +8,17 @@ const LanguageCardStyle =
 const CARD_PROPS = [
   {
     text: "C",
+    value: "c",
     img: <ImgC height={120} width={108} />,
   },
   {
     text: "JAVA",
+    value: "java",
     img: <ImgJava height={132} width={108} />,
   },
   {
     text: "Python",
+    value: "python",
     img: <ImgPython height={120} width={120} />,
   },
 ];
@@ -28,7 +31,7 @@ export function LanguageCards({
   return (
     <div className="flex items-center justify-center gap-x-20">
       {CARD_PROPS.map((props) => (
-        <button key={props.text} onClick={() => onClick?.(props.text)}>
+        <button key={props.text} onClick={() => onClick?.(props.value)}>
           <FeaturedCard {...props} styles={LanguageCardStyle} />
         </button>
       ))}

@@ -1,13 +1,14 @@
-import { Heading } from "../components/testSetting/Heading";
-import { LanguageCards } from "../components/testSetting/cards/LanguageCards";
-import ReturnBtn from "../components/testSetting/ReturnBtn";
-import SkipBtn from "../components/testSetting/SkipBtn";
-import { TypeCards } from "../components/testSetting/cards/TypeCards";
-import { AlgorithmCards } from "../components/testSetting/cards/AlgorithmCards";
-import { DailyCard } from "../components/testSetting/cards/DailyCard";
+import { Heading } from "../../components/testSetting/Heading";
+import { LanguageCards } from "../../components/testSetting/cards/LanguageCards";
+import ReturnBtn from "../../components/testSetting/ReturnBtn";
+import SkipBtn from "../../components/testSetting/SkipBtn";
+import { TypeCards } from "../../components/testSetting/cards/TypeCards";
+import { AlgorithmCards } from "../../components/testSetting/cards/AlgorithmCards";
+import { DailyCard } from "../../components/testSetting/cards/DailyCard";
 import { useEffect, useState } from "react";
 import React from "react";
-import { TestInfo } from "../components/testSetting/TestInfo";
+import { TestInfo } from "../../components/testSetting/TestInfo";
+import { LanguageType } from "@/types/problem";
 
 type LeveltestStepType = "language" | "type" | "algorithm" | "daily";
 
@@ -38,7 +39,7 @@ const LEVELTEST_STEP_ORDER: LeveltestStepType[] = [
 ];
 
 type SelectedValues = {
-  language?: string;
+  language?: LanguageType;
   type?: string;
   algorithm?: string;
   daily?: string;
@@ -87,9 +88,9 @@ export function LeveltestSettingPage() {
       </div>
       {isLastStep ? (
         <TestInfo
-          language={selectedValues.language || ""}
-          type={selectedValues.type || ""}
-          algorithm={selectedValues.algorithm}
+          language={selectedValues.language || "c"}
+          type={selectedValues.type || "language"}
+          algorithm={selectedValues.algorithm || ""}
         />
       ) : (
         <div className="flex flex-col gap-y-14">

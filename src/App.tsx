@@ -12,12 +12,13 @@ import {
   LevelTestResult,
 } from "./presentation/pages";
 import Components from "./presentation/pages/Components";
+import { Navigate } from "react-router-dom";
 import LoginPage from "./presentation/pages/LoginPage";
 import AuthLayout from "./layouts/AuthLayout";
 import RegisterPage from "./presentation/pages/RegisterPage";
 import MainPage from "./presentation/pages/MainPage";
 import { HeaderLayout } from "./layouts/HeaderLayout";
-import { LeveltestSettingPage } from "./presentation/pages/LevelTestSettingPage";
+import { LeveltestSettingPage } from "./presentation/pages/leveltest/LevelTestSettingPage";
 import { ProblemPage } from "./presentation/pages/ProblemPage";
 import { RoadMap } from "./presentation/pages/RoadMap";
 import { RankingPage } from "./presentation/pages/RankingPage";
@@ -25,6 +26,7 @@ import AttendancePage from "./presentation/pages/AttendancePage";
 import RestrictedRoute from "./presentation/components/auth/RestrictedRoute";
 import PrivateRoute from "./presentation/components/auth/PrivateRoute";
 import PasswordResetPage from "./presentation/pages/PasswordResetPage";
+import { LeveltestEditor } from "./presentation/pages/leveltest/leveltestEditor";
 function App() {
   return (
     <div className="App">
@@ -42,10 +44,7 @@ function App() {
               <Route path="/ranking" element={<RankingPage />} />
               <Route path="/attendance" element={<AttendancePage />} />
             </Route>
-            <Route
-              path="/leveltest"
-              element={<ProblemPage language="python" />}
-            ></Route>
+            <Route path="/leveltest" element={<LeveltestEditor />} />
           </Route>
           <Route path="/dev/components" element={<Components />}></Route>
 
@@ -55,6 +54,7 @@ function App() {
             <Route path="/register" element={<RegisterPage />}></Route>
             <Route path="/reset" element={<PasswordResetPage />} />
           </Route>
+          <Route path="*" element={<Navigate to="/" />} />
           {/* <Route path="/passwordFinding" element={<PasswordFinding />}></Route>
           <Route path="/passwordSetting" element={<PasswordSetting />}></Route>
           <Route path="/registerSuccess" element={<RegisterSuccess />}></Route>

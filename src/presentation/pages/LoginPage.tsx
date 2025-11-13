@@ -24,7 +24,6 @@ export default function LoginPage() {
       const token = response.accessToken;
       localStorage.setItem("jwt", token);
       const attendance = await addAttendance();
-      console.log(attendance);
       navigate("/");
     } catch (error) {
       const errorMessage =
