@@ -1,6 +1,10 @@
 import { API_PREFIX, TOKEN_HEADER } from "@/constants/api";
 import { ApiResponse } from "@/types/api";
-import { getMyPointByTypeDto, getMyPointDto } from "./dto/pointDto";
+import {
+  getMyPointByTypeDto,
+  getMyPointDto,
+  getRankingDto,
+} from "./dto/pointDto";
 
 const PREFIX = `${API_PREFIX}/points`;
 
@@ -72,4 +76,27 @@ const getMyPointByType = async (
   }
 };
 
-export { addAttendance, getMyPoint, getMyPointByType };
+const getRanking = async (
+  start: string,
+  end: string
+): Promise<getRankingDto> => {
+  try {
+    const param = `start=${start}&end=${end}`;
+    const rawResponse = await fetch(`${PREFIX}/ranking?${param}`, {
+      method: "GET",
+      headers: TOKEN_HEADER,
+    });
+
+    const response: ApiResponse<getRankingDto> = await rawResponse.json();
+    if (response.code != "SUCCESS" || response.data === null) {
+      throw new Error(response.message);
+    }
+
+    return response.data;
+  } catch (err) {
+    console.log(err);
+    throw err;
+  }
+};
+
+export { addAttendance, getMyPoint, getMyPointByType, getRanking };
