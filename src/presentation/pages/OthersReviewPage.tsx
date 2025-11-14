@@ -10,13 +10,14 @@ import { Button } from "../components";
 import { Spinner } from "../components/common/spinner";
 import { getOthersSubmissionsDto } from "@/apis/dto/problemDto";
 import CodeFooter from "../components/review/CodeFooter";
+import OtherCodeHeader from "../components/review/OtherCodeHeader";
 
 export default function OthersReviewPage() {
   const { problemId } = useParams<{ problemId: string }>();
   const navigate = useNavigate();
   const [submissionIds, setSubmissionIds] = useState<number[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
-
+  const [nickname, setNickname] = useState<string>();
   const [reviewsData, setReviewsData] = useState<getReviewsDto | null>(null);
   const [code, setCode] = useState("");
   const [language, setLanguage] = useState<LanguageType>("c");
@@ -62,6 +63,12 @@ export default function OthersReviewPage() {
     const fetchSubmissionDetail = async () => {
       try {
         setIsLoading(true);
+
+        const response: getOthersSubmissionsDto = await getOthersSubmissions(
+          parseInt(problemId!, 10)
+        );
+        setNickname(response.submissions[currentIndex].nickname);
+
         const submissionId = submissionIds[currentIndex];
         const [submissionDetail, reviews] = await Promise.all([
           getSubmission(submissionId),
@@ -108,13 +115,16 @@ export default function OthersReviewPage() {
   return (
     <div className="flex h-full w-full px-[72px] py-4 gap-x-4">
       <div className="basis-3/5 min-w-0 overflow-y-auto bg-[#282C34] flex flex-col justify-between">
-        <CodeEditor
-          key={submissionIds[currentIndex]}
-          language={language}
-          initialCode={code}
-          onChange={() => {}}
-          readOnly={true}
-        />
+        <div>
+          <OtherCodeHeader nickname={nickname!} />
+          <CodeEditor
+            key={submissionIds[currentIndex]}
+            language={language}
+            initialCode={code}
+            onChange={() => {}}
+            readOnly={true}
+          />
+        </div>
         <CodeFooter language={language} />
       </div>
       <div className="basis-2/5 min-w-0 overflow-y-auto  flex flex-col gap-y-4">

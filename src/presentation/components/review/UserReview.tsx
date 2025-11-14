@@ -50,8 +50,11 @@ function UserReviewElement(props: reviewDto) {
       className="flex flex-col font-light text-base gap-y-4 bg-gray py-6 px-4
     rounded-2xl border-1 border-black "
     >
-      <div>
-        <p className="font-bold">{props.nickname}</p>
+      <div className="flex flex-col gap-y-1">
+        <div className="flex justify-between">
+          <span className="font-bold">{props.nickname}</span>
+          <span className="text-sm">{props.createdAt.split("T")[0]}</span>
+        </div>
         <p>{props.content}</p>
       </div>
       <hr />
@@ -79,8 +82,11 @@ function UserReviewElement(props: reviewDto) {
 
 function UserComment(props: commentDetail) {
   return (
-    <div className="flex flex-col font-light text-sm gap-y-2">
-      <p className="font-bold">{props.nickname}</p>
+    <div className="flex flex-col gap-y-1">
+      <div className="flex justify-between">
+        <span className="font-bold">{props.nickname}</span>
+        <span className="text-sm">{props.createdAt.split("T")[0]}</span>
+      </div>
       <p>{props.content}</p>
     </div>
   );
