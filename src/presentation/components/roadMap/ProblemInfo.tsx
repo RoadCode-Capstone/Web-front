@@ -4,6 +4,7 @@ import Button from "../common/Button";
 interface ProblemInfoProps {
   title: string;
   description: string;
+  onClick: () => void;
 }
 export function ProblemInfo(props: ProblemInfoProps) {
   return (
@@ -11,11 +12,14 @@ export function ProblemInfo(props: ProblemInfoProps) {
       <BubbleImg className="absolute w-full h-auto -z-10 top-0" />
       <div className="flex flex-col justify-start gap-y-4 pt-10 w-[860px]">
         <h1 className="font-medium text-[28px]">{props.title}</h1>
-        <p className="font-light text-2xl h-[8.75em]">{props.description}</p>
+        <p
+          className="font-light text-2xl line-clamp-5"
+          dangerouslySetInnerHTML={{ __html: props.description }}
+        ></p>
         <div className="flex justify-end">
           <Button
             text={"학습 시작하기"}
-            onClick={function (): void {}}
+            onClick={props.onClick}
             colorTheme={"main-primary"}
             style="w-[400px] h-[72px]"
           />

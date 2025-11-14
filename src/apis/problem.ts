@@ -4,26 +4,24 @@ import { ApiResponse } from "../types/api";
 import { ProblemResponse } from "../types/leveltest";
 import { ApiDefaultHeaders } from "../utils/apiHeaders";
 import { SolutionRequest, SolutionResponse } from "../types/problem";
-import { problemsRes } from "./dto/problemDto";
+import { problemsRes, problemRes } from "./dto/problemDto";
 
 const PROBLEM_PREFIX = `${API_PREFIX}/problems`;
 
-export const getProblem = async (
-  problemId: number
-): Promise<ProblemResponse> => {
+export const getProblem = async (request: number): Promise<problemRes> => {
   try {
-    const rawResponse = await axios.get(`${PROBLEM_PREFIX}/${problemId}`, {
-      headers: {
-        ...ApiDefaultHeaders,
-      },
+    const params = `ids=${request}`;
+    const rawResponse = await fetch(`${PROBLEM_PREFIX}?${params}`, {
+      method: "GET",
+      headers: TOKEN_HEADER,
     });
 
-    const response: ApiResponse<ProblemResponse> = rawResponse.data;
-
-    if (response.code != "SUCCESS" || response.data == null)
+    const response: ApiResponse<problemsRes> = await rawResponse.json();
+    if (response.code != "SUCCESS" || response.data === null) {
       throw new Error(response.message);
+    }
 
-    return response.data;
+    return response.data.problems[0];
   } catch (err) {
     console.log(err);
     throw err;
@@ -55,18 +53,16 @@ export const postSolution = async (
   request: SolutionRequest
 ): Promise<SolutionResponse> => {
   try {
-    const rawResponse = await axios.post(
-      `${PROBLEM_PREFIX}/${problemId}/solution`,
-      request,
+    const rawResponse = await fetch(
+      `${PROBLEM_PREFIX}/${problemId}/submission`,
       {
-        headers: {
-          ...ApiDefaultHeaders,
-        },
+        body: JSON.stringify(request),
+        headers: TOKEN_HEADER,
+        method: "POST",
       }
     );
-    const response: ApiResponse<SolutionResponse> = rawResponse.data;
+    const response: ApiResponse<SolutionResponse> = await rawResponse.json();
 
-    console.log(response);
     if (response.code != "SUCCESS" || response.data == null)
       throw new Error(response.message);
 

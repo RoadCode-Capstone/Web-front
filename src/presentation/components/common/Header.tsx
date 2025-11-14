@@ -18,7 +18,7 @@ const Header = () => {
       </Link>
       <div className="flex gap-x-20">
         <li className="flex items-center gap-x-22 font-medium text-base">
-          <Link to="/">로드맵 조회</Link>
+          <Link to="/roadmap/list">로드맵 조회</Link>
           <Link to="/ranking">순위</Link>
           <Link to="/attendance">출석</Link>
         </li>

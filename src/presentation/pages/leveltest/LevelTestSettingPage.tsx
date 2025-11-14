@@ -10,7 +10,7 @@ import React from "react";
 import { TestInfo } from "../../components/testSetting/TestInfo";
 import { LanguageType } from "@/types/problem";
 
-type LeveltestStepType = "language" | "type" | "algorithm" | "daily";
+type LeveltestStepType = "language" | "type" | "algorithm" | "dailyGoal";
 
 const LeveltestSettings: Record<LeveltestStepType, any> = {
   language: {
@@ -25,7 +25,7 @@ const LeveltestSettings: Record<LeveltestStepType, any> = {
     heading: <Heading text="STEP 2-2. 학습할 알고리즘을 선택하세요" />,
     cards: <AlgorithmCards />,
   },
-  daily: {
+  dailyGoal: {
     heading: <Heading text="STEP 3. 일일 학습 목표를 선택하세요" />,
     cards: <DailyCard />,
   },
@@ -35,14 +35,14 @@ const LEVELTEST_STEP_ORDER: LeveltestStepType[] = [
   "language",
   "type",
   "algorithm",
-  "daily",
+  "dailyGoal",
 ];
 
 type SelectedValues = {
   language?: LanguageType;
   type?: string;
   algorithm?: string;
-  daily?: string;
+  dailyGoal?: number;
 };
 
 export function LeveltestSettingPage() {
@@ -62,7 +62,7 @@ export function LeveltestSettingPage() {
     if (currentStep === "type") {
       value === "algorithm"
         ? (nextStepIndex = LEVELTEST_STEP_ORDER.indexOf("algorithm"))
-        : (nextStepIndex = LEVELTEST_STEP_ORDER.indexOf("daily"));
+        : (nextStepIndex = LEVELTEST_STEP_ORDER.indexOf("dailyGoal"));
     }
 
     if (nextStepIndex < LEVELTEST_STEP_ORDER.length + 1) {
@@ -84,13 +84,14 @@ export function LeveltestSettingPage() {
     >
       <div className="flex justify-between w-full">
         <ReturnBtn />
-        {isLastStep ? <></> : <SkipBtn />}
+        {/* {isLastStep ? <></> : <SkipBtn />} */}
       </div>
       {isLastStep ? (
         <TestInfo
           language={selectedValues.language || "c"}
           type={selectedValues.type || "language"}
           algorithm={selectedValues.algorithm || ""}
+          dailyGoal={selectedValues.dailyGoal || 1}
         />
       ) : (
         <div className="flex flex-col gap-y-14">

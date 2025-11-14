@@ -1,12 +1,12 @@
 import { useNavigate } from "react-router-dom";
-import Button from "../../common/Button";
-import WindowBox from "../../common/WindowBox";
+import Button from "@/presentation/components/common/Button";
+import WindowBox from "@/presentation/components/common/WindowBox";
 import Character from "@assets/character/sad.svg?react";
 
-export function Fail({ onClose }: { onClose: () => void }) {
+export function NoRoadMap() {
   const navigate = useNavigate();
   return (
-    <div className="fixed inset-0 bg-black/50 flex justify-center z-50 ">
+    <div className=" inset-0 bg-black/50 flex justify-center w-full h-full ">
       <div className="absolute top-1/5 flex flex-col gap-y-4">
         <WindowBox
           colorTheme={"point"}
@@ -21,8 +21,8 @@ export function Fail({ onClose }: { onClose: () => void }) {
             style="h-[72px]"
           />
           <Button
-            text={"다시 풀기"}
-            onClick={onClose}
+            text={"새로운 학습 로드맵 만들기"}
+            onClick={() => navigate("/leveltest/setting")}
             colorTheme={"point-secondary"}
             style="h-[72px]"
           />
@@ -36,9 +36,9 @@ export function Fail({ onClose }: { onClose: () => void }) {
 function FailInfo() {
   return (
     <div className="flex flex-col items-center">
-      <h1 className="font-bold text-[45px] text-red">틀렸습니다!</h1>
+      <h1 className="font-bold text-[45px] text-red">로드맵 내역이 없습니다</h1>
       <span className="font-light text-[22px] text-black">
-        다시 시도해보세요
+        [새로운 학습 로드맵 만들기]를 통해서 학습을 시작해보세요!
       </span>
     </div>
   );
