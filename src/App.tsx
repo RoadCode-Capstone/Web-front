@@ -27,6 +27,7 @@ import RestrictedRoute from "./presentation/components/auth/RestrictedRoute";
 import PrivateRoute from "./presentation/components/auth/PrivateRoute";
 import PasswordResetPage from "./presentation/pages/PasswordResetPage";
 import { LeveltestEditor } from "./presentation/pages/leveltest/leveltestEditor";
+import RoadMapListPage from "./presentation/pages/RoadMapListPage";
 function App() {
   return (
     <div className="App">
@@ -43,6 +44,7 @@ function App() {
               <Route path="/roadmap" element={<RoadMap />} />
               <Route path="/ranking" element={<RankingPage />} />
               <Route path="/attendance" element={<AttendancePage />} />
+              <Route path="/roadmap/list" element={<RoadMapListPage />} />
             </Route>
             <Route path="/leveltest" element={<LeveltestEditor />} />
           </Route>

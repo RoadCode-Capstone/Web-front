@@ -5,16 +5,20 @@ import Character from "@assets/character/study_hard.svg?react";
 import { LanguageType } from "@/types/problem";
 import { getProblems } from "@/apis/problem";
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 
 interface TestInfoProps {
   language: LanguageType;
   type: string;
   algorithm?: string;
+  dailyGoal: number;
 }
 export function TestInfo(props: TestInfoProps) {
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const navigate = useNavigate();
   const handleOnClick = async () => {
     try {
+      setIsLoading(true);
       const response = await postLeveltest({
         language: props.language,
         type: props.type,
@@ -23,11 +27,14 @@ export function TestInfo(props: TestInfoProps) {
       const problemIds: number[] = response.problemIds;
       const problemsResponse = await getProblems(problemIds);
       const problems = problemsResponse.problems;
-      console.log(problems);
+      setIsLoading(false);
       navigate("/leveltest", {
         state: {
           language: props.language,
           problems: problems,
+          type: props.type,
+          algorithm: props.algorithm,
+          dailyGoal: props.dailyGoal,
         },
       });
     } catch (error) {

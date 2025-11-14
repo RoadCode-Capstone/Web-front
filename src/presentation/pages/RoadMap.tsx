@@ -4,11 +4,61 @@ import IconStar from "@assets/icons/star.svg?react";
 import Character from "@assets/character/twinkle.svg?react";
 import { ProblemInfo } from "../components/roadMap/ProblemInfo";
 import BubbleBtn from "../components/common/CartoonButton";
+import { useLocation, useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { getRoadmap, getRoadmapProblems } from "@/apis/roadMap";
+import { RoadmapProblem } from "@/types/roadmap";
+import { getProblem, getProblems } from "@/apis/problem";
+import { problemRes } from "@/apis/dto/problemDto";
+
 export function RoadMap() {
   const currentIndex = 3;
+
+  const navigate = useNavigate();
+  const { state: roadmapId } = useLocation();
+
+  const [currentProblemOrder, setCurrentProblemOrder] = useState<number>(0);
+  const [problems, setProblems] = useState<RoadmapProblem[]>([]);
+  const [currProblem, setCurrProblem] = useState<problemRes>();
+
+  useEffect(() => {
+    if (!roadmapId) {
+      alert("잘못된 접근입니다. 메인 페이지로 이동합니다.");
+      navigate("/");
+    }
+    if (roadmapId) {
+      const handleRoadmap = async () => {
+        try {
+          // 1. 로드맵 진행 상태 및 문제 목록 가져오기
+          const roadmap = await getRoadmap(roadmapId);
+          const problemsResponse = await getRoadmapProblems(roadmapId);
+          const allProblems = problemsResponse.roadmapProblems;
+          const currentOrder = roadmap.currentProblem.order;
+
+          // 2. 현재 순서에 맞는 문제 ID로 문제 정보 가져오기
+          const currentProblemId = allProblems[currentOrder].problemId;
+          const problemResponse = await getProblem(currentProblemId);
+
+          // 3. 모든 상태 한 번에 업데이트
+          setProblems(allProblems);
+          setCurrentProblemOrder(currentOrder);
+          setCurrProblem(problemResponse);
+        } catch (error) {
+          console.error("로드맵 정보를 불러오는 데 실패했습니다.", error);
+          alert("로드맵 정보를 불러오는 데 실패했습니다.");
+        }
+      };
+
+      handleRoadmap();
+    }
+  }, [roadmapId, navigate]);
+
   return (
     <>
-      <ProblemInfo title={"문제 제목"} description={"문제 내용"} />
+      <ProblemInfo
+        title={currProblem?.name || "오류 발생"}
+        description={currProblem?.description || "오류 발생"}
+      />
       <div className="flex items-end justify-center w-full gap-x-[116px] fixed bottom-12 ">
         <PrevBtn />
         <div className="flex items-center justify-center">

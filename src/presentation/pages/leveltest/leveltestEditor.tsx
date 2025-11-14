@@ -8,7 +8,6 @@ import CodeEditor from "@/presentation/components/problem/CodeEditor";
 import { problemRes } from "@/apis/dto/problemDto";
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { Suggest } from "@/presentation/components/problem/modals/Suggest";
 import { Scoring } from "@/presentation/components/problem/modals/Scoring";
 import { postSubmission } from "@/apis/leveltest";
 import { ResultModal } from "@/presentation/components/leveltest/ResultModal";
@@ -16,6 +15,9 @@ import { ResultModal } from "@/presentation/components/leveltest/ResultModal";
 interface ProblemPageProps {
   language: LanguageType;
   problems: problemRes[];
+  type: string;
+  algorithm?: string;
+  dailyGoal: number;
 }
 
 export function LeveltestEditor() {
@@ -32,7 +34,8 @@ export function LeveltestEditor() {
   if (!location.state) {
     return null; // useEffect가 실행될 때까지 렌더링을 중단합니다.
   }
-  const { language, problems } = location.state as ProblemPageProps;
+  const { language, problems, type, algorithm, dailyGoal } =
+    location.state as ProblemPageProps;
   const [currentProblemIdx, setCurrentProblemIdx] = useState<number>(0);
   const [submissions, setSubmissions] = useState<
     {
@@ -75,7 +78,16 @@ export function LeveltestEditor() {
   return (
     <>
       {isLoading && <Scoring />}
-      {result === null ? null : <ResultModal result={result} />}
+      {result === null ? null : (
+        <ResultModal
+          passedCount={result}
+          type={type}
+          algorithm={algorithm}
+          language={language}
+          dailyGoal={dailyGoal}
+          levelTestResult={0}
+        />
+      )}
       <div className="flex flex-col w-screen h-screen overflow-hidden">
         {/* 상단 고정 헤더 */}
         <ProblemHeader title={problems[currentProblemIdx].name} />
