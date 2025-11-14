@@ -1,10 +1,11 @@
 // src/components/MyCalendar.tsx
 
-import React from "react";
+import React, { useMemo } from "react";
 import Calendar from "react-calendar";
 import { format, isSameDay, isWeekend } from "date-fns";
 import IconPrev from "@assets/icons/chevron_backward.svg?react";
 import IconNext from "@assets/icons/chevron_forward.svg?react";
+import { getPointHistoryDto } from "@/apis/dto/pointDto";
 // 1. react-calendar의 기본 CSS는 임포트하지 않습니다.
 // import 'react-calendar/dist/Calendar.css'; // <--- 이 줄이 있다면 삭제하세요!
 
@@ -16,12 +17,30 @@ type Value = ValuePiece | [ValuePiece, ValuePiece];
 interface AttendanceCalendarProps {
   date: Date;
   onDateChange: (date: Date) => void;
+  pointHistory: getPointHistoryDto[];
 }
 
 export default function AttendanceCalendar({
   date: value,
   onDateChange,
+  pointHistory,
 }: AttendanceCalendarProps) {
+  const getPointColorClass = (point: number) => {
+    if (point >= 3) return "bg-point";
+    if (point === 2) return "bg-point-secondary";
+    if (point === 1) return "bg-point-teritary";
+    if (point === 0) return "bg-transparent";
+    return "";
+  };
+
+  const pointHistoryMap = useMemo(
+    () =>
+      pointHistory.reduce((acc, cur) => {
+        acc[cur.date] = cur.totalPoint;
+        return acc;
+      }, {} as Record<string, number>),
+    [pointHistory]
+  );
   const handleCalendarChange = (newValue: Value) => {
     // 타입 가드: newValue가 Date 객체인지 확인합니다.
     if (newValue instanceof Date) {
@@ -80,6 +99,12 @@ export default function AttendanceCalendar({
               "aspect-square",
               "hover:bg-gray-100",
             ];
+
+            const dateStr = format(date, "yyyy-MM-dd");
+            const point = pointHistoryMap[dateStr];
+            if (point) {
+              classes.push(getPointColorClass(point));
+            }
 
             // 1. 현재 렌더링되는 날짜(date)가
             //    state에 저장된 날짜(value)와 같은지 확인합니다.
