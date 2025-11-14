@@ -44,7 +44,7 @@ interface UserReviewElementProps {
   content: string;
 }
 
-function UserReviewElement(props: UserReviewElementProps): JSX.Element {
+function UserReviewElement(props: UserReviewElementProps) {
   return (
     <div className="flex flex-col font-light text-base gap-y-4">
       <div>

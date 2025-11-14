@@ -1,4 +1,4 @@
-import { API_PREFIX, TOKEN_HEADER } from "../constants/api";
+import { API_PREFIX, getTokenHeader } from "../constants/api";
 import { ApiResponse } from "../types/api";
 import {
   postLeveltestReq,
@@ -15,7 +15,7 @@ const postSubmission = async (
   try {
     const rawResponse = await fetch(`${LEVELTEST_PREFIX}/submissions`, {
       method: "POST",
-      headers: TOKEN_HEADER,
+      headers: getTokenHeader(),
       body: JSON.stringify(request),
     });
 
@@ -37,7 +37,7 @@ const postLeveltest = async (
   try {
     const rawResponse = await fetch(`${LEVELTEST_PREFIX}`, {
       method: "POST",
-      headers: TOKEN_HEADER,
+      headers: getTokenHeader(),
       body: JSON.stringify(request),
     });
 

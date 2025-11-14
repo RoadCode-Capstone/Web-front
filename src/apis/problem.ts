@@ -1,5 +1,5 @@
 import axios from "axios";
-import { API_PREFIX, TOKEN_HEADER } from "../constants/api";
+import { API_PREFIX, getTokenHeader } from "../constants/api";
 import { ApiResponse } from "../types/api";
 import { ProblemResponse } from "../types/leveltest";
 import { ApiDefaultHeaders } from "../utils/apiHeaders";
@@ -13,7 +13,7 @@ export const getProblem = async (request: number): Promise<problemRes> => {
     const params = `ids=${request}`;
     const rawResponse = await fetch(`${PROBLEM_PREFIX}?${params}`, {
       method: "GET",
-      headers: TOKEN_HEADER,
+      headers: getTokenHeader(),
     });
 
     const response: ApiResponse<problemsRes> = await rawResponse.json();
@@ -33,7 +33,7 @@ export const getProblems = async (request: number[]): Promise<problemsRes> => {
     const params = `ids=${request.toString()}`;
     const rawResponse = await fetch(`${PROBLEM_PREFIX}?${params}`, {
       method: "GET",
-      headers: TOKEN_HEADER,
+      headers: getTokenHeader(),
     });
 
     const response: ApiResponse<problemsRes> = await rawResponse.json();
@@ -57,7 +57,7 @@ export const postSolution = async (
       `${PROBLEM_PREFIX}/${problemId}/submission`,
       {
         body: JSON.stringify(request),
-        headers: TOKEN_HEADER,
+        headers: getTokenHeader(),
         method: "POST",
       }
     );

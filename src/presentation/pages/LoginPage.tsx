@@ -23,7 +23,7 @@ export default function LoginPage() {
       });
       const token = response.accessToken;
       sessionStorage.setItem("jwt", token);
-      const attendance = await addAttendance();
+      // const attendance = await addAttendance();
       navigate("/");
     } catch (error) {
       const errorMessage =

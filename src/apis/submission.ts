@@ -1,4 +1,4 @@
-import { API_PREFIX, TOKEN_HEADER } from "@/constants/api";
+import { API_PREFIX, getTokenHeader } from "@/constants/api";
 import { ApiResponse } from "@/types/api";
 import { getSubmissionsDto } from "./dto/submissionDto";
 
@@ -12,7 +12,7 @@ const getSubmissions = async (
     const params = `start=${startDate}&end=${endDate}`;
     const rawResponse = await fetch(`${PREFIX}?${params}`, {
       method: "GET",
-      headers: TOKEN_HEADER,
+      headers: getTokenHeader(),
     });
 
     const response: ApiResponse<getSubmissionsDto> = await rawResponse.json();

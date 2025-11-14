@@ -17,7 +17,7 @@ import { getProblem, getProblems } from "@/apis/problem";
 import { problemRes } from "@/apis/dto/problemDto";
 import { LanguageType } from "@/types/problem";
 import { Spinner } from "../components/common/spinner";
-
+import { addAttendance } from "@/apis/point";
 export function RoadMap() {
   const navigate = useNavigate();
 
@@ -33,6 +33,7 @@ export function RoadMap() {
   useEffect(() => {
     const handleRoadmap = async () => {
       try {
+        const attendance = await addAttendance();
         // 1. 로드맵 진행 상태 및 문제 목록 가져오기
         const inProgRoadmap = await getInProgRoadmaps();
 
@@ -142,8 +143,8 @@ export function RoadMap() {
               <BubbleBtn
                 text={"일일 학습 목표 달성까지\n0문제 남음"}
                 position="right"
-                style={{ "--tail-offset": "50px" }}
-                className="absolute w-[259px] h-[111px] bottom-[104px] left-[-301px] whitespace-pre-line"
+                style={{ "--tail-offset": "50px", "--tail-color": "#F8E19D" }}
+                className="absolute w-[259px] h-[111px] bottom-[104px] left-[-301px] whitespace-pre-line bg-point-secondary"
               />
               <BubbleBtn
                 text={"문제 추가하기"}
