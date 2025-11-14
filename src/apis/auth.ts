@@ -47,7 +47,7 @@ const login = async (request: AuthLoginRequest): Promise<AuthLoginResponse> => {
 
 const logout = async () => {
   try {
-    localStorage.removeItem("jwt");
+    sessionStorage.removeItem("jwt");
     // const rawResponse = await axios.post(`${AUTH_PREFIX}/logout`, {
     //   headers: {
     //     Authorization: API_TEST_TOKEN,

@@ -53,18 +53,16 @@ export const postSolution = async (
   request: SolutionRequest
 ): Promise<SolutionResponse> => {
   try {
-    const rawResponse = await axios.post(
-      `${PROBLEM_PREFIX}/${problemId}/solution`,
-      request,
+    const rawResponse = await fetch(
+      `${PROBLEM_PREFIX}/${problemId}/submission`,
       {
-        headers: {
-          ...ApiDefaultHeaders,
-        },
+        body: JSON.stringify(request),
+        headers: TOKEN_HEADER,
+        method: "POST",
       }
     );
-    const response: ApiResponse<SolutionResponse> = rawResponse.data;
+    const response: ApiResponse<SolutionResponse> = await rawResponse.json();
 
-    console.log(response);
     if (response.code != "SUCCESS" || response.data == null)
       throw new Error(response.message);
 

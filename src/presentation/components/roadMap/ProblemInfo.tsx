@@ -4,6 +4,7 @@ import Button from "../common/Button";
 interface ProblemInfoProps {
   title: string;
   description: string;
+  onClick: () => void;
 }
 export function ProblemInfo(props: ProblemInfoProps) {
   return (
@@ -18,7 +19,7 @@ export function ProblemInfo(props: ProblemInfoProps) {
         <div className="flex justify-end">
           <Button
             text={"학습 시작하기"}
-            onClick={function (): void {}}
+            onClick={props.onClick}
             colorTheme={"main-primary"}
             style="w-[400px] h-[72px]"
           />

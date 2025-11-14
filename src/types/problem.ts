@@ -3,6 +3,8 @@ export type LanguageType = "c" | "java" | "python";
 export interface SolutionRequest {
   language: "c" | "java" | "python";
   sourceCode: string;
+  roadmapId: number;
+  roadmapProblemId: number;
 }
 
 export interface SolutionResponse {

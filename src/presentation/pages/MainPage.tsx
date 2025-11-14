@@ -26,6 +26,7 @@ export default function Main() {
           <BubbleBtn
             text={"완료한 학습 로드맵 목록 조회하기"}
             position="left"
+            onClick={() => navigate("/roadmap/list")}
             style={{ "--tail-color": "#F8E19D" }}
             className="w-[636px]! h-[110px]! drop-shadow-[0_0_0_rgba(0,0,0,0.25)]! text-[22px]! bg-point-secondary hover:bg-point-secondary-hover"
           />

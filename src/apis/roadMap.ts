@@ -8,6 +8,7 @@ import {
   RoadmapResponse,
   MyRoadMapResDto,
   RoadmapProblemsDto,
+  RoadMapDetailDto,
 } from "../types/roadmap";
 
 const PROBLEM_PREFIX = `${API_PREFIX}/roadmaps`;
@@ -25,6 +26,26 @@ export const getMyRoadmaps = async (): Promise<MyRoadMapResDto> => {
     if (response.data == null) throw new Error("data is null");
 
     return response.data;
+  } catch (err) {
+    console.log(err);
+    throw err;
+  }
+};
+
+export const getInProgRoadmaps = async (): Promise<RoadMapDetailDto> => {
+  try {
+    const params = `statusList=IN_PROGRESS`;
+    const rawResponse = await fetch(`${PROBLEM_PREFIX}/my?${params}`, {
+      headers: TOKEN_HEADER,
+      method: "GET",
+    });
+
+    const response: ApiResponse<MyRoadMapResDto> = await rawResponse.json();
+
+    if (response.code != "SUCCESS") throw new Error(response.message);
+    if (response.data == null) throw new Error("data is null");
+
+    return response.data.roadmaps[0];
   } catch (err) {
     console.log(err);
     throw err;
@@ -105,6 +126,24 @@ export const deleteRoadmap = async (roadmapId: number) => {
     if (response.code != "SUCCESS") throw new Error(response.message);
 
     return true;
+  } catch (err) {
+    console.log(err);
+    throw err;
+  }
+};
+
+export const giveUpRoadmap = async (roadmapId: number) => {
+  try {
+    const rawResponse = await fetch(`${PROBLEM_PREFIX}/${roadmapId}/give-up`, {
+      headers: TOKEN_HEADER,
+      method: "POST",
+    });
+
+    const response: ApiResponse<null> = await rawResponse.json();
+
+    if (response.code != "SUCCESS") throw new Error(response.message);
+
+    return response.message;
   } catch (err) {
     console.log(err);
     throw err;

@@ -36,17 +36,18 @@ function App() {
           {/* private pages */}
           <Route element={<PrivateRoute />}>
             <Route element={<HeaderLayout />}>
-              <Route path="/" element={<MainPage />} />
+              <Route path="/none" element={<MainPage />} />
               <Route
                 path="/leveltest/setting"
                 element={<LeveltestSettingPage />}
               />
-              <Route path="/roadmap" element={<RoadMap />} />
+              <Route path="/" element={<RoadMap />} />
               <Route path="/ranking" element={<RankingPage />} />
               <Route path="/attendance" element={<AttendancePage />} />
               <Route path="/roadmap/list" element={<RoadMapListPage />} />
             </Route>
             <Route path="/leveltest" element={<LeveltestEditor />} />
+            <Route path="/code" element={<ProblemPage />} />
           </Route>
           <Route path="/dev/components" element={<Components />}></Route>
 

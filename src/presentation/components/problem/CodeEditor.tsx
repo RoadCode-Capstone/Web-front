@@ -12,7 +12,7 @@ import { cn } from "@/utils/tailwind";
 
 interface CodeEditorProps {
   initialCode?: string;
-  onChange?: (value: string) => void;
+  onChange: (value: string) => void;
   language: "python" | "java" | "cpp" | "c";
   style?: string;
 }
@@ -46,7 +46,10 @@ export default function CodeEditor({
     if (!editorRef.current) return;
 
     const state = EditorState.create({
-      doc: initialCode,
+      doc:
+        language === "java"
+          ? 'public class Solution {\n\tpublic static void main(String[] args) {\n\t\tSystem.out.println("Hello World");\n\t}\n}'
+          : initialCode,
       extensions: [
         basicSetup,
         keymap.of(defaultKeymap),

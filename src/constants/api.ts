@@ -10,7 +10,7 @@ export const BASE_HEADER = {
 };
 
 export const TOKEN_HEADER = {
-  Authorization: `${import.meta.env.VITE_TOKEN_TYPE} ${localStorage.getItem(
+  Authorization: `${import.meta.env.VITE_TOKEN_TYPE} ${sessionStorage.getItem(
     "jwt"
   )}`,
   ...BASE_HEADER,

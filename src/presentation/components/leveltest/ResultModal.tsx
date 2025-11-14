@@ -28,9 +28,8 @@ export function ResultModal(props: ResultModalProps) {
       dailyGoal: props.dailyGoal,
       levelTestResult: props.levelTestResult,
     });
-    const newRoadMapId = response.id;
     setIsLoading(false);
-    navigate("/roadmap", { state: newRoadMapId });
+    navigate("/");
   };
 
   return (

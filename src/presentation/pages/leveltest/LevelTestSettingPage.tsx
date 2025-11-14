@@ -84,7 +84,7 @@ export function LeveltestSettingPage() {
     >
       <div className="flex justify-between w-full">
         <ReturnBtn />
-        {isLastStep ? <></> : <SkipBtn />}
+        {/* {isLastStep ? <></> : <SkipBtn />} */}
       </div>
       {isLastStep ? (
         <TestInfo
