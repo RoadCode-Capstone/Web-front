@@ -1,11 +1,15 @@
+import { useState } from "react";
 import { format, getMonth, getYear } from "date-fns";
 import { AttendanceCalendar } from "../components";
 import BubbleBtn from "../components/common/CartoonButton";
 import { HistoryList } from "../components/attendance/HistoryList";
 
 export default function AttendancePage() {
-  const date = new Date();
-  const formatting = format(date, "yyyy-MM-dd");
+  const [currentDate, setCurrentDate] = useState(new Date());
+
+  // const getAttendanceHistory = async () => {
+  //   const response = await getMyPoint
+  // }
 
   return (
     <div className="flex items-center justify-center gap-x-8 h-full w-full py-10 ">
@@ -13,12 +17,17 @@ export default function AttendancePage() {
         <BubbleBtn
           position="right"
           style={{ "--tail-offset": "30rem" }}
-          text={`${getYear(date)}년 ${getMonth(date) + 1}월에 13번 출석했어요`}
+          text={`${getYear(currentDate)}년 ${
+            getMonth(currentDate) + 1
+          }월에 13번 출석했어요`}
           className="drop-shadow-none h-[159px] font-medium text-[32px]"
         />
-        <AttendanceCalendar />
+        <AttendanceCalendar date={currentDate} onDateChange={setCurrentDate} />
       </div>
-      <HistoryList year={getYear(date)} month={getMonth(date) + 1} />
+      <HistoryList
+        year={getYear(currentDate)}
+        month={getMonth(currentDate) + 1}
+      />
     </div>
   );
 }

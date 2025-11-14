@@ -1,6 +1,6 @@
 // src/components/MyCalendar.tsx
 
-import React, { useState } from "react";
+import React from "react";
 import Calendar from "react-calendar";
 import { format, isSameDay, isWeekend } from "date-fns";
 import IconPrev from "@assets/icons/chevron_backward.svg?react";
@@ -13,25 +13,28 @@ import IconNext from "@assets/icons/chevron_forward.svg?react";
 type ValuePiece = Date | null;
 type Value = ValuePiece | [ValuePiece, ValuePiece];
 
-export default function AttendanceCalendar() {
-  // 3. state의 타입을 'Date | null'로 지정합니다.
-  const [value, setValue] = useState<Date | null>(new Date());
+interface AttendanceCalendarProps {
+  date: Date;
+  onDateChange: (date: Date) => void;
+}
 
-  // 4. onChange 에러 해결:
-  // setValue를 직접 전달하는 대신, 타입에 맞는 핸들러 함수로 감싸줍니다.
+export default function AttendanceCalendar({
+  date: value,
+  onDateChange,
+}: AttendanceCalendarProps) {
   const handleCalendarChange = (newValue: Value) => {
     // 타입 가드: newValue가 Date 객체인지 확인합니다.
     if (newValue instanceof Date) {
-      setValue(newValue);
+      onDateChange(newValue);
     } else {
       // (참고) 범위 선택(range)을 사용한다면 이 부분을 수정해야 합니다.
       // 여기서는 범위가 아니거나(null) 범위의 시작 날짜를 선택합니다.
       const firstValue = Array.isArray(newValue) ? newValue[0] : newValue;
-      setValue(firstValue);
+      if (firstValue) {
+        onDateChange(firstValue);
+      }
     }
   };
-
-  const today = new Date();
 
   return (
     <div className="flex justify-center items-center ">
