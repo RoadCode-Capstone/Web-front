@@ -8,6 +8,10 @@ import CodeEditor from "@/presentation/components/problem/CodeEditor";
 import { problemRes } from "@/apis/dto/problemDto";
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import { Suggest } from "@/presentation/components/problem/modals/Suggest";
+import { Scoring } from "@/presentation/components/problem/modals/Scoring";
+import { postSubmission } from "@/apis/leveltest";
+import { ResultModal } from "@/presentation/components/leveltest/ResultModal";
 
 interface ProblemPageProps {
   language: LanguageType;
@@ -18,7 +22,6 @@ export function LeveltestEditor() {
   const navigate = useNavigate();
   const location = useLocation();
 
-  // state가 없으면 렌더링을 중단하고 리디렉션 로직을 실행합니다.
   useEffect(() => {
     if (!location.state || !Array.isArray(location.state.problems)) {
       alert("잘못된 접근입니다. 레벨 테스트 설정 페이지로 이동합니다.");
@@ -26,7 +29,6 @@ export function LeveltestEditor() {
     }
   }, [location.state, navigate]);
 
-  // state 유효성 검사 후 구조 분해 할당을 진행합니다.
   if (!location.state) {
     return null; // useEffect가 실행될 때까지 렌더링을 중단합니다.
   }
@@ -40,25 +42,43 @@ export function LeveltestEditor() {
     }[]
   >([]);
 
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [result, setResult] = useState<number | null>(null);
+
   const handleCodeChange = (
     problemId: number,
     language: LanguageType,
     sourceCode: string
   ) => {
     setSubmissions((prevSubmissions) => {
-      return [
-        ...prevSubmissions,
-        { problemId: problemId, language: language, sourceCode: sourceCode },
-      ];
+      const existingSubmissionIndex = prevSubmissions.findIndex(
+        (sub) => sub.problemId === problemId
+      );
+
+      if (existingSubmissionIndex > -1) {
+        const updatedSubmissions = [...prevSubmissions];
+        updatedSubmissions[existingSubmissionIndex].sourceCode = sourceCode;
+        return updatedSubmissions;
+      } else {
+        return [...prevSubmissions, { problemId, language, sourceCode }];
+      }
     });
-    console.log(submissions);
+  };
+
+  const handleSubmissions = async () => {
+    setIsLoading(true);
+    const response = await postSubmission({ submissions: submissions });
+    setIsLoading(false);
+    setResult(() => response.passedCount);
   };
 
   return (
     <>
+      {isLoading && <Scoring />}
+      {result === null ? null : <ResultModal result={result} />}
       <div className="flex flex-col w-screen h-screen overflow-hidden">
         {/* 상단 고정 헤더 */}
-        <ProblemHeader title="문제 제목" />
+        <ProblemHeader title={problems[currentProblemIdx].name} />
 
         {
           <ProblemMain
@@ -75,8 +95,13 @@ export function LeveltestEditor() {
         {/* 하단 고정 푸터 */}
         <ProblemFooter
           language={language.toUpperCase()}
-          onClick={() => {
-            setCurrentProblemIdx(() => currentProblemIdx + 1);
+          onClick={async () => {
+            if (currentProblemIdx >= problems.length - 1) {
+              console.log(JSON.stringify(submissions));
+              await handleSubmissions();
+            } else {
+              setCurrentProblemIdx((prev) => prev + 1);
+            }
           }}
         />
       </div>
@@ -98,6 +123,7 @@ interface ProblemMainProps {
 }
 
 function ProblemMain(props: ProblemMainProps) {
+  const [sourceCode, setSourceCode] = useState("");
   return (
     <div className="flex flex-1 min-h-0 bg-[#282C34]">
       {/* 왼쪽: 문제 영역 */}
@@ -113,8 +139,9 @@ function ProblemMain(props: ProblemMainProps) {
       <div className="flex-1 min-w-0 overflow-y-auto">
         <CodeEditor
           language={props.language}
-          onChange={(sourceCode) => {
-            props.onCodeChange(props.problemId, props.language, sourceCode);
+          onChange={(newCode) => {
+            setSourceCode(newCode);
+            props.onCodeChange(props.problemId, props.language, newCode);
           }}
         />
       </div>

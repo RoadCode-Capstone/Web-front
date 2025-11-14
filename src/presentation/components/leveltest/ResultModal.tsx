@@ -1,16 +1,16 @@
 import { useNavigate } from "react-router-dom";
-import Button from "@/presentation/components/common/Button";
-import WindowBox from "@/presentation/components/common/WindowBox";
+import WindowBox from "../common/WindowBox";
+import Button from "../common/Button";
 import Character from "@assets/character/happy.svg?react";
 
-export function Correct() {
+export function ResultModal({ result }: { result: number }) {
   const navigate = useNavigate();
   return (
     <div className="fixed inset-0 bg-black/50 flex justify-center z-50 ">
       <div className="absolute top-1/5 flex flex-col gap-y-4">
         <WindowBox
           colorTheme={"point"}
-          content={<CorrectInfo />}
+          content={<ResultInfo result={result} />}
           style="w-[970px]! h-[343px]!"
         />
         <div className="flex gap-x-4">
@@ -21,7 +21,7 @@ export function Correct() {
             style="h-[72px]"
           />
           <Button
-            text={"리뷰 보기"}
+            text={"로드맵 시작하기"}
             onClick={() => {}}
             colorTheme={"point-secondary"}
             style="h-[72px]"
@@ -33,13 +33,12 @@ export function Correct() {
   );
 }
 
-function CorrectInfo() {
+function ResultInfo({ result }: { result: number }) {
   return (
     <div className="flex flex-col items-center">
-      <h1 className="font-bold text-[45px] text-[#87BCED]">맞았습니다!</h1>
-      <span className="font-light text-[22px] text-black">
-        [리뷰 보기]를 클릭하여 코드 분석 결과를 확인해보세요!
-      </span>
+      <h1 className="font-bold text-[45px] text-point">
+        {result}문제 맞았습니다!
+      </h1>
     </div>
   );
 }

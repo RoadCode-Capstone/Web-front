@@ -8,7 +8,7 @@ const ProblemHeader = (props: ProblemHeaderProps) => {
   const navigate = useNavigate();
   return (
     <header
-      className="h-[72px] px-[72px]
+      className="h-[72px] pr-[72px] pl-10
       bg-main border-b-[2px] border-white
     flex items-center justify-between"
     >

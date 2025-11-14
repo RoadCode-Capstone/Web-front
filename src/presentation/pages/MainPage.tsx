@@ -18,12 +18,16 @@ export default function Main() {
         <div className="flex flex-col gap-y-10">
           <BubbleBtn
             text={"새로운 학습 로드맵 만들기"}
-            className="w-[636px]! h-[110px]! drop-shadow-[0_0_0_rgba(0,0,0,0.25)]! text-[22px]!"
+            position="left"
+            style={{ "--tail-color": "#F8E19D" }}
+            className="w-[636px]! h-[110px]! drop-shadow-[0_0_0_rgba(0,0,0,0.25)]! text-[22px]! bg-point-secondary hover:bg-point-secondary-hover"
             onClick={() => navigate("/leveltest/setting")}
           />
           <BubbleBtn
             text={"완료한 학습 로드맵 목록 조회하기"}
-            className="w-[636px]! h-[110px]! drop-shadow-[0_0_0_rgba(0,0,0,0.25)]! text-[22px]!"
+            position="left"
+            style={{ "--tail-color": "#F8E19D" }}
+            className="w-[636px]! h-[110px]! drop-shadow-[0_0_0_rgba(0,0,0,0.25)]! text-[22px]! bg-point-secondary hover:bg-point-secondary-hover"
           />
         </div>
       </div>
