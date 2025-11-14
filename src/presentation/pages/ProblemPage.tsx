@@ -49,7 +49,7 @@ export default function ProblemPage() {
       if (isPassed === true) setResult("CORRECT");
       else {
         setFailCount((prev) => prev + 1);
-        failCount < SUGGEST_COUNT ? setResult("FAIL") : setResult("SUGGEST");
+        failCount >= SUGGEST_COUNT ? setResult("SUGGEST") : setResult("FAIL");
       }
     } catch (err) {
       console.error("제출 실패:", err);

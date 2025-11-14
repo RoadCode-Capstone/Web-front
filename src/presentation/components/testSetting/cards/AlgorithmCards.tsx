@@ -1,32 +1,30 @@
+import { useEffect, useState } from "react";
 import FeaturedCard from "../FeaturedCard";
+import { getTags } from "@/apis/others";
 
 const CARD_STYLE =
-  "h-[300px] w-[320px] hover:scale-105 transition-transform duration-300 ease-out";
-const CARD_PROPS = [
-  {
-    text: "스택/큐",
-  },
-  {
-    text: "DFS/BFS",
-  },
-  {
-    text: "탐욕법",
-  },
-  {
-    text: "트리",
-  },
-];
+  "h-[120px] w-full hover:scale-105 transition-transform duration-300 ease-out";
 
 export function AlgorithmCards({
   onClick,
 }: {
   onClick?: (value: string) => void;
 }) {
+  const [tags, setTags] = useState<string[]>([]);
+
+  useEffect(() => {
+    const handleTags = async () => {
+      const tags = await getTags();
+      setTags(tags.tags);
+    };
+    handleTags();
+  }, []);
+
   return (
-    <div className="flex items-center justify-center gap-x-20">
-      {CARD_PROPS.map((props) => (
-        <button key={props.text} onClick={() => onClick?.(props.text)}>
-          <FeaturedCard {...props} styles={CARD_STYLE} />
+    <div className="grid grid-cols-5 gap-5">
+      {tags.map((tag) => (
+        <button key={tag} onClick={() => onClick?.(tag)}>
+          <FeaturedCard text={tag} styles={CARD_STYLE} />
         </button>
       ))}
     </div>

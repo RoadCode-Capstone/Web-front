@@ -41,110 +41,73 @@ export default function CodeEditor({
     }
   };
 
-  // 에디터 최초 생성
   useEffect(() => {
     if (!editorRef.current) return;
 
-    const state = EditorState.create({
-      doc:
-        language === "java"
-          ? 'public class Solution {\n\tpublic static void main(String[] args) {\n\t\tSystem.out.println("Hello World");\n\t}\n}'
-          : initialCode,
-      extensions: [
-        basicSetup,
-        keymap.of(defaultKeymap),
-        getLanguageExtension(),
-        oneDark,
-        EditorView.updateListener.of((update) => {
-          if (update.docChanged && onChange) {
-            const newCode = update.state.doc.toString();
-            onChange(newCode);
-          }
-        }),
-        EditorView.theme({
-          "&": {
-            height: "100%",
-            width: "100%",
-            fontSize: "16pt",
-          },
-          ".cm-editor": {
-            height: "100%",
-          },
-          ".cm-scroller": {
-            overflow: "auto",
-            height: "100%",
-          },
-          ".cm-content": {
-            height: "100%",
-          },
-        }),
-      ],
-    });
+    const extensions = [
+      basicSetup,
+      keymap.of(defaultKeymap),
+      getLanguageExtension(),
+      oneDark,
+      EditorView.updateListener.of((update) => {
+        if (update.docChanged) {
+          onChange(update.state.doc.toString());
+        }
+      }),
+      EditorView.theme({
+        "&": {
+          height: "100%",
+          width: "100%",
+          fontSize: "16pt",
+        },
+        ".cm-editor": {
+          height: "100%",
+        },
+        ".cm-scroller": {
+          overflow: "auto",
+          height: "100%",
+        },
+        ".cm-content": {
+          height: "100%",
+        },
+      }),
+    ];
 
-    const view = new EditorView({
-      state,
-      parent: editorRef.current,
-    });
+    if (!viewRef.current) {
+      // 최초 생성
+      const state = EditorState.create({
+        doc: initialCode,
+        extensions,
+      });
+      const view = new EditorView({
+        state,
+        parent: editorRef.current,
+      });
+      viewRef.current = view;
+    } else {
+      // 업데이트
+      const view = viewRef.current;
+      // 언어 변경 시 reconfigure
+      view.dispatch({
+        effects: StateEffect.reconfigure.of(extensions),
+      });
 
-    viewRef.current = view;
+      // initialCode가 변경되었을 때만 문서 내용 업데이트
+      const currentCode = view.state.doc.toString();
+      if (initialCode !== currentCode) {
+        view.dispatch({
+          changes: { from: 0, to: currentCode.length, insert: initialCode },
+        });
+      }
+    }
 
     return () => {
-      view.destroy();
+      if (viewRef.current) {
+        viewRef.current.destroy();
+        viewRef.current = null;
+      }
     };
-  }, []);
-
-  // initialCode 변경 시 코드 반영
-  useEffect(() => {
-    if (!viewRef.current) return;
-    const current = viewRef.current.state.doc.toString();
-    if (initialCode !== current) {
-      const transaction = viewRef.current.state.update({
-        changes: {
-          from: 0,
-          to: current.length,
-          insert: initialCode,
-        },
-      });
-      viewRef.current.dispatch(transaction);
-    }
-  }, [initialCode]);
-
-  // language 변경 시 문법 하이라이팅 교체
-  useEffect(() => {
-    if (!viewRef.current) return;
-    const languageExtension = getLanguageExtension();
-    viewRef.current.dispatch({
-      effects: StateEffect.reconfigure.of([
-        basicSetup,
-        keymap.of(defaultKeymap),
-        languageExtension,
-        oneDark,
-        EditorView.updateListener.of((update) => {
-          if (update.docChanged && onChange) {
-            const newCode = update.state.doc.toString();
-            onChange(newCode);
-          }
-        }),
-        EditorView.theme({
-          "&": {
-            height: "100%",
-            width: "100%",
-            fontSize: "16pt",
-          },
-          ".cm-editor": {
-            height: "100%",
-          },
-          ".cm-scroller": {
-            overflow: "auto",
-            height: "100%",
-          },
-          ".cm-content": {
-            height: "100%",
-          },
-        }),
-      ]),
-    });
-  }, [language]);
+  }, [initialCode, language]);
 
   return <div ref={editorRef} className={cn(`${style}`)} />;
 }
