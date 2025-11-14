@@ -15,6 +15,7 @@ interface CodeEditorProps {
   onChange: (value: string) => void;
   language: "python" | "java" | "cpp" | "c";
   style?: string;
+  readOnly?: boolean;
 }
 
 export default function CodeEditor({
@@ -22,6 +23,7 @@ export default function CodeEditor({
   onChange,
   language,
   style,
+  readOnly = false,
 }: CodeEditorProps) {
   const editorRef = useRef<HTMLDivElement | null>(null);
   const viewRef = useRef<EditorView | null>(null);
@@ -73,6 +75,10 @@ export default function CodeEditor({
       }),
     ];
 
+    if (readOnly) {
+      extensions.push(EditorState.readOnly.of(true));
+    }
+
     if (!viewRef.current) {
       // 최초 생성
       const state = EditorState.create({
@@ -107,7 +113,7 @@ export default function CodeEditor({
         viewRef.current = null;
       }
     };
-  }, [initialCode, language]);
+  }, [initialCode, language, readOnly]);
 
   return <div ref={editorRef} className={cn(`${style}`)} />;
 }

@@ -1,6 +1,7 @@
 import "./App.css";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
+import OthersReviewPage from "./presentation/pages/OthersReviewPage";
 import { Navigate } from "react-router-dom";
 import { HeaderLayout } from "./layouts";
 import { RestrictedRoute, PrivateRoute } from "./presentation/components";
@@ -35,6 +36,10 @@ function App() {
               <Route path="/ranking" element={<RankingPage />} />
               <Route path="/attendance" element={<AttendancePage />} />
               <Route path="/roadmap/list" element={<RoadMapListPage />} />
+              <Route
+                path="/others-review/:problemId"
+                element={<OthersReviewPage />}
+              />
             </Route>
             <Route path="/leveltest" element={<LevelTestEditor />} />
             <Route path="/code" element={<ProblemPage />} />

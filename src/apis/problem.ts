@@ -4,7 +4,11 @@ import { ApiResponse } from "../types/api";
 import { ProblemResponse } from "../types/leveltest";
 import { ApiDefaultHeaders } from "../utils/apiHeaders";
 import { SolutionRequest, SolutionResponse } from "../types/problem";
-import { problemsRes, problemRes } from "./dto/problemDto";
+import {
+  problemsRes,
+  problemRes,
+  getOthersSubmissionsDto,
+} from "./dto/problemDto";
 
 const PROBLEM_PREFIX = `${API_PREFIX}/problems`;
 
@@ -62,6 +66,30 @@ export const postSolution = async (
       }
     );
     const response: ApiResponse<SolutionResponse> = await rawResponse.json();
+
+    if (response.code != "SUCCESS" || response.data == null)
+      throw new Error(response.message);
+
+    return response.data;
+  } catch (err) {
+    console.log(err);
+    throw err;
+  }
+};
+
+export const getOthersSubmissions = async (
+  problemId: number
+): Promise<getOthersSubmissionsDto> => {
+  try {
+    const rawResponse = await fetch(
+      `${API_PREFIX}/problem/${problemId}/submissions/success`,
+      {
+        headers: getTokenHeader(),
+        method: "GET",
+      }
+    );
+    const response: ApiResponse<getOthersSubmissionsDto> =
+      await rawResponse.json();
 
     if (response.code != "SUCCESS" || response.data == null)
       throw new Error(response.message);

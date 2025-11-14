@@ -77,7 +77,7 @@ export default function ProblemPage() {
   return (
     <>
       {isLoading && <Scoring />}
-      {result === "CORRECT" && <Correct />}
+      {result === "CORRECT" && <Correct problemId={currProblem?.problemId} />}
       {result === "FAIL" && <Fail onClose={() => setResult(null)} />}
       {result === "SUGGEST" && <Suggest onClose={() => setResult(null)} />}
       <div className="flex flex-col w-screen h-screen overflow-hidden">

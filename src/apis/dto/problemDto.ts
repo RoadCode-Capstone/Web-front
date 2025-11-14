@@ -16,3 +16,15 @@ export interface problemRes {
 export interface problemsRes {
   problems: problemRes[];
 }
+
+export interface otherSubmissionDetail {
+  submissionId: number;
+  language: string;
+  sourceCode: string;
+  nickname: string;
+  createdAt: string;
+}
+
+export interface getOthersSubmissionsDto {
+  submissions: otherSubmissionDetail[];
+}

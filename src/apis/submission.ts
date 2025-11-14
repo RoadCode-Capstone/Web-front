@@ -1,6 +1,11 @@
 import { API_PREFIX, getTokenHeader } from "@/constants/api";
 import { ApiResponse } from "@/types/api";
-import { getSubmissionsDto } from "./dto/submissionDto";
+import {
+  getReviewsDto,
+  getSubmissionDto,
+  getSubmissionsDto,
+} from "./dto/submissionDto";
+import { problemRes } from "./dto/problemDto";
 
 const PREFIX = `${API_PREFIX}/submissions`;
 
@@ -27,4 +32,46 @@ const getSubmissions = async (
   }
 };
 
-export { getSubmissions };
+const getSubmission = async (
+  submissionId: number
+): Promise<getSubmissionDto> => {
+  try {
+    const rawResponse = await fetch(`${PREFIX}/${submissionId}`, {
+      method: "GET",
+      headers: getTokenHeader(),
+    });
+
+    const response: ApiResponse<getSubmissionDto> = await rawResponse.json();
+    if (response.code != "SUCCESS" || response.data === null) {
+      throw new Error(response.message);
+    }
+
+    return response.data;
+  } catch (err) {
+    console.log(err);
+    throw err;
+  }
+};
+
+const getReviews = async (submissionId: number): Promise<getReviewsDto> => {
+  try {
+    const rawResponse = await fetch(
+      `${PREFIX}/${submissionId}/reviews-with-comments`,
+      {
+        method: "GET",
+        headers: getTokenHeader(),
+      }
+    );
+
+    const response: ApiResponse<getReviewsDto> = await rawResponse.json();
+    if (response.code != "SUCCESS" || response.data === null) {
+      throw new Error(response.message);
+    }
+
+    return response.data;
+  } catch (err) {
+    console.log(err);
+    throw err;
+  }
+};
+export { getSubmissions, getSubmission, getReviews };
