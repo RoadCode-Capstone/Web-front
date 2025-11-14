@@ -10,6 +10,9 @@ export interface SolutionRequest {
 export interface SolutionResponse {
   allPassed: boolean;
   testcaseResults: TestCaseResult[];
+  dailyGoal: number;
+  dailyCompleted: number;
+  dailyAchievementRate: number;
 }
 
 export interface TestCaseResult {
