@@ -1,33 +1,23 @@
 import "./App.css";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import {
-  Register,
-  RegisterSuccess,
-  PasswordFinding,
-  PasswordSetting,
-  UserInfo,
-  Main,
-  Planning,
-  LevelTest,
-  LevelTestResult,
-} from "./presentation/pages";
-import Components from "./presentation/pages/Components";
+
 import { Navigate } from "react-router-dom";
-import LoginPage from "./presentation/pages/LoginPage";
-import AuthLayout from "./layouts/AuthLayout";
-import RegisterPage from "./presentation/pages/RegisterPage";
-import MainPage from "./presentation/pages/MainPage";
-import { HeaderLayout } from "./layouts/HeaderLayout";
-import { LeveltestSettingPage } from "./presentation/pages/leveltest/LevelTestSettingPage";
-import { ProblemPage } from "./presentation/pages/ProblemPage";
-import { RoadMap } from "./presentation/pages/RoadMap";
-import { RankingPage } from "./presentation/pages/RankingPage";
-import AttendancePage from "./presentation/pages/AttendancePage";
-import RestrictedRoute from "./presentation/components/auth/RestrictedRoute";
-import PrivateRoute from "./presentation/components/auth/PrivateRoute";
-import PasswordResetPage from "./presentation/pages/PasswordResetPage";
-import { LeveltestEditor } from "./presentation/pages/leveltest/leveltestEditor";
-import RoadMapListPage from "./presentation/pages/RoadMapListPage";
+import { HeaderLayout } from "./layouts";
+import { RestrictedRoute, PrivateRoute } from "./presentation/components";
+import {
+  AttendancePage,
+  LevelTestEditor,
+  LevelTestSettingPage,
+  MainPage,
+  ProblemPage,
+  RankingPage,
+  RoadMapListPage,
+  RoadMapPage,
+  LoginPage,
+  RegisterPage,
+  PasswordResetPage,
+} from "./presentation/pages";
+
 function App() {
   return (
     <div className="App">
@@ -39,17 +29,16 @@ function App() {
               <Route path="/none" element={<MainPage />} />
               <Route
                 path="/leveltest/setting"
-                element={<LeveltestSettingPage />}
+                element={<LevelTestSettingPage />}
               />
-              <Route path="/" element={<RoadMap />} />
+              <Route path="/" element={<RoadMapPage />} />
               <Route path="/ranking" element={<RankingPage />} />
               <Route path="/attendance" element={<AttendancePage />} />
               <Route path="/roadmap/list" element={<RoadMapListPage />} />
             </Route>
-            <Route path="/leveltest" element={<LeveltestEditor />} />
+            <Route path="/leveltest" element={<LevelTestEditor />} />
             <Route path="/code" element={<ProblemPage />} />
           </Route>
-          <Route path="/dev/components" element={<Components />}></Route>
 
           {/* public pages(이미 로그인한 사람 제한) */}
           <Route element={<RestrictedRoute />}>

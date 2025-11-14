@@ -11,3 +11,6 @@ export { default as ProblemFooter } from "./problem/ProblemFooter";
 export { default as ProblemHeader } from "./problem/ProblemHeader";
 
 export { default as AttendanceCalendar } from "./attendance/Calendar";
+
+export { default as RestrictedRoute } from "./auth/RestrictedRoute";
+export { default as PrivateRoute } from "./auth/PrivateRoute";

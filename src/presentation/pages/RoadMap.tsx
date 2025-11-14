@@ -18,13 +18,15 @@ import { problemRes } from "@/apis/dto/problemDto";
 import { LanguageType } from "@/types/problem";
 import { Spinner } from "../components/common/spinner";
 import { addAttendance } from "@/apis/point";
-export function RoadMap() {
+
+export default function RoadMap() {
   const navigate = useNavigate();
 
   const [isLoading, setIsLoading] = useState(true);
   const [inprogOrder, setInprogOrder] = useState<number>(0);
-  const [roadmapId, setRoadmapId] = useState<number | null>(null);
-  const [currentProblemOrder, setCurrentProblemOrder] = useState<number>(0);
+  const [inProgProblem, setInProgProblem] = useState<problemRes>();
+  const [roadmapId, setRoadmapId] = useState<number>();
+  const [currentProblemId, setCurrentProblemId] = useState<number>(0);
   const [problems, setProblems] = useState<RoadmapProblem[]>([]);
   const [currProblem, setCurrProblem] = useState<problemRes>();
   const [language, setLanguage] = useState<LanguageType>("c");
@@ -37,7 +39,7 @@ export function RoadMap() {
         // 1. 로드맵 진행 상태 및 문제 목록 가져오기
         const inProgRoadmap = await getInProgRoadmaps();
 
-        if (!inProgRoadmap) {
+        if (!inProgRoadmap || inProgRoadmap.status != "IN_PROGRESS") {
           navigate("/none");
           return;
         }
@@ -49,17 +51,18 @@ export function RoadMap() {
           inProgRoadmap.roadmapId
         );
         const allProblems = problemsResponse.roadmapProblems;
-        const currentOrder = roadmap.currentProblem.order;
+        const currentId = roadmap.currentProblem.problemId;
 
         // 2. 현재 순서에 맞는 문제 ID로 문제 정보 가져오기
-        const currentProblemId = allProblems[currentOrder].problemId;
-        const problemResponse = await getProblem(currentProblemId);
+        const problemResponse = await getProblem(currentId);
 
         // 3. 모든 상태 한 번에 업데이트
         setProblems(allProblems);
-        setCurrentProblemOrder(currentOrder);
-        setInprogOrder(currentOrder);
+        setCurrentProblemId(currentId);
         setCurrProblem(problemResponse);
+
+        setInprogOrder(allProblems.findIndex((p) => p.problemId === currentId));
+        setInProgProblem(problemResponse);
       } catch (error) {
         // console.error("로드맵 정보를 불러오는 데 실패했습니다.", error);
         // alert("로드맵 정보를 불러오는 데 실패했습니다.");
@@ -72,26 +75,34 @@ export function RoadMap() {
   }, []);
 
   const handleNext = async () => {
-    if (currentProblemOrder >= problems.length - 1) {
+    const index = getProblemIndex();
+    if (index >= problems.length - 1) {
     } else {
-      setCurrentProblemOrder((currentProblemOrder) => currentProblemOrder + 1);
-      const currentProblemId = problems[currentProblemOrder].problemId;
-      const problemResponse = await getProblem(currentProblemId);
+      const nextIndex = index + 1;
+      const nextProblemId = problems[nextIndex].problemId;
+      setCurrentProblemId(() => nextProblemId);
+      const problemResponse = await getProblem(nextProblemId);
       setCurrProblem(problemResponse);
     }
   };
 
   const handlePrev = async () => {
-    if (currentProblemOrder <= 0) {
+    const index = getProblemIndex();
+    if (index <= 0) {
     } else {
-      setCurrentProblemOrder((currentProblemOrder) => currentProblemOrder - 1);
-      const currentProblemId = problems[currentProblemOrder].problemId;
-      const problemResponse = await getProblem(currentProblemId);
+      const prevIndex = index - 1;
+      const prevProblemId = problems[prevIndex].problemId;
+      setCurrentProblemId(() => prevProblemId);
+      const problemResponse = await getProblem(prevProblemId);
       setCurrProblem(problemResponse);
     }
   };
 
   const handleProblemInfoClick = async () => {
+    if (currentProblemId != inProgProblem?.problemId) {
+      alert(`[${inProgProblem?.name}]을 먼저 해결해야 도전할 수 있습니다!`);
+      return;
+    }
     navigate("/code", {
       state: {
         title: currProblem?.name || "오류 발생",
@@ -100,10 +111,20 @@ export function RoadMap() {
         outputDescription: currProblem?.outputDescription || "오류 발생",
         language,
         roadmapId,
-        roadmapProblemId: problems[currentProblemOrder].roadmapProblemId,
+        roadmapProblemId: getProblemDetail().roadmapProblemId,
         problemId: currProblem?.problemId || 0,
       },
     });
+  };
+
+  const getProblemIndex = () => {
+    return problems.findIndex((p) => p.problemId === currentProblemId);
+  };
+
+  const getProblemDetail = () => {
+    const detail = problems.find((p) => p.problemId === currentProblemId);
+    if (!detail) throw new Error();
+    return detail;
   };
 
   const handleGiveUp = async () => {
@@ -127,7 +148,7 @@ export function RoadMap() {
         <div className="flex items-center justify-center">
           <IconStar className="z-10 drop-shadow-[0_0_40px_#F2C53D]" />
           <span className="absolute font-bold text-4xl z-10">
-            {currentProblemOrder + 1}
+            {getProblemIndex() + 1}
           </span>
           <div className="fixed bottom-20">
             <Character className="z-0 relative" />

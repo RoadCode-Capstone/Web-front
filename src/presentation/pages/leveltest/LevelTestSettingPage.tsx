@@ -45,7 +45,7 @@ type SelectedValues = {
   dailyGoal?: number;
 };
 
-export function LeveltestSettingPage() {
+export default function LeveltestSettingPage() {
   const [currentStepIndex, setCurrentStepIndex] = useState<number>(0);
   const currentStep = LEVELTEST_STEP_ORDER[currentStepIndex];
   const [selectedValues, setSelectedValues] = useState<SelectedValues>({});

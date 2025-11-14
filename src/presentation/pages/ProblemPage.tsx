@@ -16,7 +16,7 @@ interface ProblemPageProps {
 
 const SUGGEST_COUNT = 3;
 
-export function ProblemPage() {
+export default function ProblemPage() {
   const location = useLocation();
   const navigate = useNavigate();
   const {
