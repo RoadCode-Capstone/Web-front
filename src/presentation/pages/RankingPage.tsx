@@ -36,9 +36,9 @@ export function RankingPage() {
         <BubbleBtn
           position="left"
           text={`나는 현재\n${myRank}위`}
-          className="w-[448px] h-[280px] font-bold whitespace-pre-line"
+          className="w-[448px] h-[280px] font-bold whitespace-pre-line cursor-none bg-point-secondary"
           lineStyles={["text-[36px]", "text-[45px]"]}
-          style={{ "--tail-offset": "280px" }}
+          style={{ "--tail-offset": "280px", "--tail-color": "#F8E19D" }}
         />
         <Character />
       </div>

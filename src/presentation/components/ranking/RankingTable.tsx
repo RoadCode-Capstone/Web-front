@@ -76,7 +76,7 @@ export function RankingTable(props: RankingTableProps) {
           <button
             key={p}
             onClick={() => setPage(p)}
-            className={`font-light text-xs text-black rounded w-4 h-4 ${
+            className={`hover:bg-main-secondary/30 font-light text-xs text-black rounded w-4 h-4 ${
               p === page ? "bg-main-tertiary" : ""
             }`}
           >
