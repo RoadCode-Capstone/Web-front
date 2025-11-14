@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { postLeveltest, postSubmission } from "../../apis/levelTest";
 import { ProblemResponse } from "../../types/leveltest";
 import { Button } from "../components";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -16,11 +15,7 @@ interface LevelTestProps {
 const LevelTest = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  const {
-    language,
-    algorithm,
-    dailyGoal,
-  } = location.state as LevelTestProps;
+  const { language, algorithm, dailyGoal } = location.state as LevelTestProps;
   const [codes, setCodes] = useState<string[]>([]);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -51,8 +46,8 @@ const LevelTest = () => {
       const request = algorithm
         ? { type: "algorithm", category: algorithm }
         : { type: "language", category: language };
-        
-      console.log("로드맵 생성 request",request)
+
+      console.log("로드맵 생성 request", request);
       navigate("/leveltest/result", {
         state: {
           type: request.type,
@@ -101,7 +96,7 @@ const LevelTest = () => {
           problemDescription={problems[currentIndex].description}
           inputDescription={problems[currentIndex].inputDescription}
           outputDescription={problems[currentIndex].outputDescription}
-          language={language ? language : "python" }
+          language={language ? language : "python"}
           onActionClick={
             currentIndex === problems.length - 1
               ? handleSubmit // 마지막 문제면 제출

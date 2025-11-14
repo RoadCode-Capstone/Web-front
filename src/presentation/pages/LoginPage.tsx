@@ -8,6 +8,7 @@ import { useNavigate } from "react-router-dom";
 import RoadcodeSleep from "../assets/character/roadcode_sleep.gif";
 import { login } from "@/apis/auth";
 import { useState } from "react";
+import { addAttendance } from "@/apis/point";
 
 export default function LoginPage() {
   const navigate = useNavigate();
@@ -22,6 +23,7 @@ export default function LoginPage() {
       });
       const token = response.accessToken;
       localStorage.setItem("jwt", token);
+      const attendance = await addAttendance();
       navigate("/");
     } catch (error) {
       const errorMessage =

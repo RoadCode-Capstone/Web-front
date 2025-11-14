@@ -1,4 +1,4 @@
-import WindowBox from "../..//common/WindowBox";
+import WindowBox from "../../common/WindowBox";
 import Character from "@assets/character/searching.svg?react";
 
 export function Scoring() {
