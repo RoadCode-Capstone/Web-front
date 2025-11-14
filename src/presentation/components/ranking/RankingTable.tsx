@@ -1,27 +1,21 @@
 // src/components/Leaderboard.tsx
+import { rankingDetailDto } from "@/apis/dto/pointDto";
 import { useState } from "react";
 
-interface User {
-  rank: number;
-  name: string;
-  points: number;
+interface RankingTableProps {
+  ranks: rankingDetailDto[];
 }
 
-const sampleData: User[] = [
-  { rank: 1, name: "first", points: 500 },
-  { rank: 2, name: "second", points: 400 },
-  { rank: 3, name: "third", points: 300 },
-  { rank: 4, name: "fourth", points: 200 },
-  { rank: 5, name: "name", points: 150 },
-];
-
-export function RankingTable() {
+export function RankingTable(props: RankingTableProps) {
   const [page, setPage] = useState(1);
-  const perPage = 5;
+  const perPage = 10;
+
+  const totalPages = Math.ceil(props.ranks.length / perPage);
+  const pageNumbers = Array.from({ length: totalPages }, (_, i) => i + 1);
 
   const start = (page - 1) * perPage;
   const end = start + perPage;
-  const currentData = sampleData.slice(start, end);
+  const currentData = props.ranks.slice(start, end);
 
   const getRankColor = (rank: number) => {
     switch (rank) {
@@ -47,22 +41,26 @@ export function RankingTable() {
           </tr>
         </thead>
         <tbody>
-          {currentData.map((user) => (
-            <tr
-              key={user.rank}
-              className="border-b-[0.5px] border-main  text-[22px]"
-            >
-              <td
-                className={`font-medium text-center py-6 ${getRankColor(
-                  user.rank
-                )}`}
+          {currentData
+            .sort((a: rankingDetailDto, b: rankingDetailDto) => {
+              return b.totalPoint - a.totalPoint;
+            })
+            .map((user) => (
+              <tr
+                key={user.rank}
+                className="border-b-[0.5px] border-main  text-[22px]"
               >
-                {user.rank}
-              </td>
-              <td className="font-light px-6">{user.name}</td>
-              <td className="font-light text-right">{user.points}</td>
-            </tr>
-          ))}
+                <td
+                  className={`font-medium text-center py-6 ${getRankColor(
+                    user.rank
+                  )}`}
+                >
+                  {user.rank}
+                </td>
+                <td className="font-light px-6">{user.nickname}</td>
+                <td className="font-light text-right">{user.totalPoint}</td>
+              </tr>
+            ))}
         </tbody>
       </table>
 
@@ -74,20 +72,21 @@ export function RankingTable() {
         >
           &lt;
         </button>
-        {[1, 2, 3, 4, 5].map((p) => (
+        {pageNumbers.map((p) => (
           <button
             key={p}
             onClick={() => setPage(p)}
-            className={`font-light text-xs text-black rounded w-4 h-4 ${
-              p === page ? "bg-main-teritary " : ""
+            className={`hover:bg-main-secondary/30 font-light text-xs text-black rounded w-4 h-4 ${
+              p === page ? "bg-main-tertiary" : ""
             }`}
           >
             {p}
           </button>
         ))}
         <button
-          onClick={() => setPage((p) => p + 1)}
+          onClick={() => setPage((p) => Math.min(p + 1, totalPages))}
           className="px-3 py-1 rounded text-main-secondary"
+          disabled={page === totalPages}
         >
           &gt;
         </button>

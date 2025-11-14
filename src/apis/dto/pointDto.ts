@@ -32,3 +32,15 @@ export interface getMyPointByTypeDto {
   totalPoint: number;
   history: getTypeHistoryDto[];
 }
+
+export interface rankingDetailDto {
+  memberId: number;
+  nickname: string;
+  totalPoint: number;
+  rank: number;
+}
+
+export interface getRankingDto {
+  myRank: number;
+  ranks: rankingDetailDto[];
+}
