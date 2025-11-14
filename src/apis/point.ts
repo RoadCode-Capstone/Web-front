@@ -1,4 +1,4 @@
-import { API_PREFIX, TOKEN_HEADER } from "@/constants/api";
+import { API_PREFIX, getTokenHeader } from "@/constants/api";
 import { ApiResponse } from "@/types/api";
 import {
   getMyPointByTypeDto,
@@ -12,7 +12,7 @@ const addAttendance = async (): Promise<string> => {
   try {
     const rawResponse = await fetch(`${PREFIX}/attendance/check`, {
       method: "POST",
-      headers: TOKEN_HEADER,
+      headers: getTokenHeader(),
     });
 
     const response: ApiResponse<null> = await rawResponse.json();
@@ -38,7 +38,7 @@ const getMyPoint = async (
     const param = `groupBy=${groupBy}&start=${start}&end=${end}`;
     const rawResponse = await fetch(`${PREFIX}/my?${param}`, {
       method: "GET",
-      headers: TOKEN_HEADER,
+      headers: getTokenHeader(),
     });
 
     const response: ApiResponse<getMyPointDto> = await rawResponse.json();
@@ -61,7 +61,7 @@ const getMyPointByType = async (
     const param = `groupBy=type&start=${start}&end=${end}`;
     const rawResponse = await fetch(`${PREFIX}/my?${param}`, {
       method: "GET",
-      headers: TOKEN_HEADER,
+      headers: getTokenHeader(),
     });
 
     const response: ApiResponse<getMyPointByTypeDto> = await rawResponse.json();
@@ -84,7 +84,7 @@ const getRanking = async (
     const param = `start=${start}&end=${end}`;
     const rawResponse = await fetch(`${PREFIX}/ranking?${param}`, {
       method: "GET",
-      headers: TOKEN_HEADER,
+      headers: getTokenHeader(),
     });
 
     const response: ApiResponse<getRankingDto> = await rawResponse.json();

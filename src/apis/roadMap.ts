@@ -1,5 +1,5 @@
 import axios from "axios";
-import { API_PREFIX, TOKEN_HEADER } from "../constants/api";
+import { API_PREFIX, getTokenHeader } from "../constants/api";
 import { ApiResponse } from "../types/api";
 import { ApiDefaultHeaders } from "../utils/apiHeaders";
 import {
@@ -16,7 +16,7 @@ const PROBLEM_PREFIX = `${API_PREFIX}/roadmaps`;
 export const getMyRoadmaps = async (): Promise<MyRoadMapResDto> => {
   try {
     const rawResponse = await fetch(`${PROBLEM_PREFIX}/my`, {
-      headers: TOKEN_HEADER,
+      headers: getTokenHeader(),
       method: "GET",
     });
 
@@ -36,7 +36,7 @@ export const getInProgRoadmaps = async (): Promise<RoadMapDetailDto> => {
   try {
     const params = `statusList=IN_PROGRESS`;
     const rawResponse = await fetch(`${PROBLEM_PREFIX}/my?${params}`, {
-      headers: TOKEN_HEADER,
+      headers: getTokenHeader(),
       method: "GET",
     });
 
@@ -55,7 +55,7 @@ export const getInProgRoadmaps = async (): Promise<RoadMapDetailDto> => {
 export const getRoadmap = async (roadmapId: number) => {
   try {
     const rawResponse = await fetch(`${PROBLEM_PREFIX}/${roadmapId}`, {
-      headers: TOKEN_HEADER,
+      headers: getTokenHeader(),
       method: "GET",
     });
 
@@ -74,7 +74,7 @@ export const getRoadmap = async (roadmapId: number) => {
 export const getRoadmapProblems = async (roadmapId: number) => {
   try {
     const rawResponse = await fetch(`${PROBLEM_PREFIX}/${roadmapId}/problems`, {
-      headers: TOKEN_HEADER,
+      headers: getTokenHeader(),
       method: "GET",
     });
 
@@ -96,7 +96,7 @@ export const postRoadmap = async (
   try {
     const rawResponse = await fetch(`${PROBLEM_PREFIX}`, {
       method: "POST",
-      headers: TOKEN_HEADER,
+      headers: getTokenHeader(),
       body: JSON.stringify(request),
     });
 
@@ -135,7 +135,7 @@ export const deleteRoadmap = async (roadmapId: number) => {
 export const giveUpRoadmap = async (roadmapId: number) => {
   try {
     const rawResponse = await fetch(`${PROBLEM_PREFIX}/${roadmapId}/give-up`, {
-      headers: TOKEN_HEADER,
+      headers: getTokenHeader(),
       method: "POST",
     });
 

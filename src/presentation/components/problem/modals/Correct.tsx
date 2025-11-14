@@ -3,7 +3,7 @@ import Button from "@/presentation/components/common/Button";
 import WindowBox from "@/presentation/components/common/WindowBox";
 import Character from "@assets/character/happy.svg?react";
 
-export function Correct() {
+export function Correct({ problemId }: { problemId: number | undefined }) {
   const navigate = useNavigate();
   return (
     <div className="fixed inset-0 bg-black/50 flex justify-center z-50 ">
@@ -21,8 +21,10 @@ export function Correct() {
             style="h-[72px]"
           />
           <Button
-            text={"리뷰 보기"}
-            onClick={() => {}}
+            text={"다른 사람 풀이 보기"}
+            onClick={() => {
+              if (problemId) navigate(`/others-review/${problemId}`);
+            }}
             colorTheme={"point-secondary"}
             style="h-[72px]"
           />

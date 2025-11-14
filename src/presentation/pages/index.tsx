@@ -1,11 +1,14 @@
-export { default as Login } from "./LoginPage";
-export { default as Register } from "./RegisterPage";
-export { default as RegisterSuccess } from "./RegisterSuccess";
-export { default as PasswordFinding } from "./PasswordFinding";
-export { default as PasswordSetting } from "./PasswordSetting";
-export { default as UserInfo } from "./UserInfo";
-export { default as Main } from "./Main";
-export { default as Planning } from "./Planning";
-export { default as LevelTest } from "./LevelTest";
-export { default as Problem } from "./Problem";
-export { default as LevelTestResult } from "./LevelTestResult";
+export { default as LoginPage } from "./LoginPage";
+export { default as RegisterPage } from "./RegisterPage";
+export { default as PasswordResetPage } from "./PasswordResetPage";
+
+export { default as ProblemPage } from "./ProblemPage";
+export { default as RankingPage } from "./RankingPage";
+export { default as AttendancePage } from "./AttendancePage";
+
+export { default as RoadMapPage } from "./RoadMap";
+export { default as RoadMapListPage } from "./RoadMapListPage";
+
+export { default as MainPage } from "./MainPage";
+export { default as LevelTestEditor } from "./leveltest/leveltestEditor";
+export { default as LevelTestSettingPage } from "./leveltest/LevelTestSettingPage";

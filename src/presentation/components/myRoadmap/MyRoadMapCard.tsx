@@ -22,8 +22,8 @@ export function MyRoadMapCard(props: MyRoadMapCardProps) {
       <div className="flex flex-col gap-y-2">
         <h1 className="text-left text-xl">{props.title}</h1>
         <div className="text-left text-sm font-light">
-          <span>학습 언어: {props.language}</span>
-          {props.algorithm ?? <span>학습 알고리즘: {props.algorithm}</span>}
+          <p>학습 언어: {props.language}</p>
+          {props.algorithm && <p>학습 알고리즘: {props.algorithm}</p>}
         </div>
       </div>
       <div className="text-right">

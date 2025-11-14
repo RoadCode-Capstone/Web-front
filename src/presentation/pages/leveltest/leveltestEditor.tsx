@@ -20,7 +20,7 @@ interface ProblemPageProps {
   dailyGoal: number;
 }
 
-export function LeveltestEditor() {
+export default function LeveltestEditor() {
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -135,7 +135,11 @@ interface ProblemMainProps {
 }
 
 function ProblemMain(props: ProblemMainProps) {
-  const [sourceCode, setSourceCode] = useState("");
+  const initialCode =
+    props.language === "java"
+      ? 'public class Solution {\n\tpublic static void main(String[] args) {\n\t\tSystem.out.println("Hello World");\n\t}\n}'
+      : "";
+  const [sourceCode, setSourceCode] = useState(initialCode);
   return (
     <div className="flex flex-1 min-h-0 bg-[#282C34]">
       {/* 왼쪽: 문제 영역 */}
@@ -150,6 +154,7 @@ function ProblemMain(props: ProblemMainProps) {
       {/* 오른쪽: 코드 에디터 */}
       <div className="flex-1 min-w-0 overflow-y-auto">
         <CodeEditor
+          initialCode={initialCode}
           language={props.language}
           onChange={(newCode) => {
             setSourceCode(newCode);

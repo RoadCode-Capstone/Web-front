@@ -5,7 +5,7 @@ import { getRanking } from "@/apis/point";
 import { useEffect, useState } from "react";
 import { rankingDetailDto } from "@/apis/dto/pointDto";
 
-export function RankingPage() {
+export default function RankingPage() {
   const [myRank, setMyRank] = useState<number>();
   const [ranks, setRanks] = useState<rankingDetailDto[]>([]);
   useEffect(() => {

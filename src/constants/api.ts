@@ -9,9 +9,10 @@ export const BASE_HEADER = {
   "Content-Type": "application/json",
 };
 
-export const TOKEN_HEADER = {
-  Authorization: `${import.meta.env.VITE_TOKEN_TYPE} ${sessionStorage.getItem(
-    "jwt"
-  )}`,
-  ...BASE_HEADER,
+export const getTokenHeader = () => {
+  const token = sessionStorage.getItem("jwt");
+  return {
+    Authorization: `${import.meta.env.VITE_TOKEN_TYPE} ${token}`,
+    ...BASE_HEADER,
+  };
 };
