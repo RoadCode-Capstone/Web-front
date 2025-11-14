@@ -53,28 +53,43 @@ import { getSubmissionsDto, submissionDto } from "@/apis/dto/submissionDto";
 
 // --- 데이터 변환 ---
 const processApiData = (history: submissionDto[] = []) =>
-  history.map((daily) => ({
-    date: daily.date,
-    problems: Object.values(
-      daily.submissionDetails.reduce((acc: Record<number, any>, sub, idx) => {
-        if (!acc[sub.problemId]) {
-          acc[sub.problemId] = {
-            problemId: sub.problemId,
-            problemName: sub.problemName,
-            attempts: [],
-          };
-        }
-        acc[sub.problemId].attempts.push({
-          submissionId: sub.submissionId,
-          isSuccess: sub.isSuccess,
-          label: `${sub.isSuccess ? "[정답]" : "[오답]"} 풀이 시도 ${idx + 1}`,
-          buttonText: sub.isSuccess ? "문제 및 리뷰 보기" : "문제 및 코드 보기",
-          variant: sub.isSuccess ? "highlight" : "default",
-        });
-        return acc;
-      }, {})
-    ),
-  }));
+  history
+    .map((daily) => {
+      const problemsById = daily.submissionDetails.reduce(
+        (acc: Record<number, any>, sub, idx) => {
+          if (!acc[sub.problemId]) {
+            acc[sub.problemId] = {
+              problemId: sub.problemId,
+              problemName: sub.problemName,
+              attempts: [], // 성공한 시도만 담을 배열
+            };
+          }
+          // 성공한 경우에만 시도 목록에 추가
+          if (sub.isSuccess) {
+            acc[sub.problemId].attempts.push({
+              submissionId: sub.submissionId,
+              isSuccess: sub.isSuccess,
+              label: `[정답] 풀이 시도 ${idx + 1}`,
+              buttonText: "문제 및 리뷰 보기",
+              variant: "highlight",
+            });
+          }
+          return acc;
+        },
+        {}
+      );
+
+      // 성공한 시도가 하나라도 있는 문제만 필터링
+      const successfulProblems = Object.values(problemsById).filter(
+        (p) => p.attempts.length > 0
+      );
+
+      return {
+        date: daily.date,
+        problems: successfulProblems,
+      };
+    })
+    .filter((daily) => daily.problems.length > 0);
 
 const formatDate = (date: string) => date.split("-")[2];
 
