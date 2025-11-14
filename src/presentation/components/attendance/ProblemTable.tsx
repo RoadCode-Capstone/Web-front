@@ -1,6 +1,5 @@
 import React, { useState, useMemo } from "react";
 import IconDown from "@assets/icons/down.svg?react";
-import IconUp from "@assets/icons/up.svg?react";
 import { getSubmissionsDto, submissionDto } from "@/apis/dto/submissionDto";
 
 // --- API 데이터 ---
@@ -145,17 +144,24 @@ export default function ProblemTable({ data }: { data: submissionDto[] }) {
                     <span className="text-base text-gray-900">
                       {problem.problemName}
                     </span>
-                    {isExpanded ? (
-                      <IconUp width={24} height={12} />
-                    ) : (
-                      <IconDown width={24} height={12} color="#94999F" />
-                    )}
+                    <IconDown
+                      width={24}
+                      height={12}
+                      color="#94999F"
+                      className={`transition-transform duration-300 ${
+                        isExpanded ? "rotate-180" : ""
+                      }`}
+                    />
                   </div>
                 </div>
 
                 {/* 풀이 시도 */}
-                {isExpanded && (
-                  <div className="pb-5 pt-1 pl-[16.666%] pr-4 space-y-3">
+                <div
+                  className={`overflow-hidden transition-all duration-500 ease-in-out ${
+                    isExpanded ? "max-h-96" : "max-h-0"
+                  }`}
+                >
+                  <div className="pt-1 pb-5 pl-[16.666%] pr-4 space-y-3">
                     {problem.attempts.map((a: any) => (
                       <div
                         key={a.submissionId}
@@ -181,7 +187,7 @@ export default function ProblemTable({ data }: { data: submissionDto[] }) {
                       </div>
                     ))}
                   </div>
-                )}
+                </div>
               </div>
             );
           })}
