@@ -1,57 +1,58 @@
 import React, { useState, useMemo } from "react";
 import IconDown from "@assets/icons/down.svg?react";
 import IconUp from "@assets/icons/up.svg?react";
+import { getSubmissionsDto, submissionDto } from "@/apis/dto/submissionDto";
 
 // --- API 데이터 ---
-const apiResponse = {
-  data: {
-    history: [
-      {
-        date: "2025-09-14",
-        submissionDetails: [
-          {
-            problemId: 2195,
-            problemName: "Hello World 출력",
-            submissionId: 282,
-            isSuccess: false,
-          },
-          {
-            problemId: 2195,
-            problemName: "Hello World 출력",
-            submissionId: 283,
-            isSuccess: false,
-          },
-          {
-            problemId: 373,
-            problemName: "D. 비밀 비밀번호",
-            submissionId: 284,
-            isSuccess: false,
-          },
-        ],
-      },
-      {
-        date: "2025-09-27",
-        submissionDetails: [
-          {
-            problemId: 2195,
-            problemName: "Hello World 출력",
-            submissionId: 304,
-            isSuccess: false,
-          },
-          {
-            problemId: 2195,
-            problemName: "Hello World 출력",
-            submissionId: 305,
-            isSuccess: true,
-          },
-        ],
-      },
-    ],
-  },
-};
+// const apiResponse = {
+//   data: {
+//     history: [
+//       {
+//         date: "2025-09-14",
+//         submissionDetails: [
+//           {
+//             problemId: 2195,
+//             problemName: "Hello World 출력",
+//             submissionId: 282,
+//             isSuccess: false,
+//           },
+//           {
+//             problemId: 2195,
+//             problemName: "Hello World 출력",
+//             submissionId: 283,
+//             isSuccess: false,
+//           },
+//           {
+//             problemId: 373,
+//             problemName: "D. 비밀 비밀번호",
+//             submissionId: 284,
+//             isSuccess: false,
+//           },
+//         ],
+//       },
+//       {
+//         date: "2025-09-27",
+//         submissionDetails: [
+//           {
+//             problemId: 2195,
+//             problemName: "Hello World 출력",
+//             submissionId: 304,
+//             isSuccess: false,
+//           },
+//           {
+//             problemId: 2195,
+//             problemName: "Hello World 출력",
+//             submissionId: 305,
+//             isSuccess: true,
+//           },
+//         ],
+//       },
+//     ],
+//   },
+// };
 
 // --- 데이터 변환 ---
-const processApiData = (history: typeof apiResponse.data.history = []) =>
+const processApiData = (history: submissionDto[] = []) =>
   history.map((daily) => ({
     date: daily.date,
     problems: Object.values(
@@ -78,11 +79,8 @@ const processApiData = (history: typeof apiResponse.data.history = []) =>
 const formatDate = (date: string) => date.split("-")[2];
 
 // --- 메인 컴포넌트 ---
-export default function ProblemTable() {
-  const processedData = useMemo(
-    () => processApiData(apiResponse.data.history),
-    []
-  );
+export default function ProblemTable({ data }: { data: submissionDto[] }) {
+  const processedData = useMemo(() => processApiData(data), [data]);
 
   const defaultExpandedId = processedData[0]?.problems[0]
     ? `${processedData[0].date}-${processedData[0].problems[0].problemId}`

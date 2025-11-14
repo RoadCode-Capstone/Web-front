@@ -1,5 +1,6 @@
 import { API_PREFIX, TOKEN_HEADER } from "@/constants/api";
 import { ApiResponse } from "@/types/api";
+import { getMyPointByTypeDto, getMyPointDto } from "./dto/pointDto";
 
 const PREFIX = `${API_PREFIX}/points`;
 
@@ -24,4 +25,51 @@ const addAttendance = async (): Promise<string> => {
   }
 };
 
-export { addAttendance };
+const getMyPoint = async (
+  groupBy: "date" | "type",
+  start: string,
+  end: string
+): Promise<getMyPointDto> => {
+  try {
+    const param = `groupBy=${groupBy}&start=${start}&end=${end}`;
+    const rawResponse = await fetch(`${PREFIX}/my?${param}`, {
+      method: "GET",
+      headers: TOKEN_HEADER,
+    });
+
+    const response: ApiResponse<getMyPointDto> = await rawResponse.json();
+    if (response.code != "SUCCESS" || response.data === null) {
+      throw new Error(response.message);
+    }
+
+    return response.data;
+  } catch (err) {
+    console.log(err);
+    throw err;
+  }
+};
+
+const getMyPointByType = async (
+  start: string,
+  end: string
+): Promise<getMyPointByTypeDto> => {
+  try {
+    const param = `groupBy=type&start=${start}&end=${end}`;
+    const rawResponse = await fetch(`${PREFIX}/my?${param}`, {
+      method: "GET",
+      headers: TOKEN_HEADER,
+    });
+
+    const response: ApiResponse<getMyPointByTypeDto> = await rawResponse.json();
+    if (response.code != "SUCCESS" || response.data === null) {
+      throw new Error(response.message);
+    }
+
+    return response.data;
+  } catch (err) {
+    console.log(err);
+    throw err;
+  }
+};
+
+export { addAttendance, getMyPoint, getMyPointByType };
