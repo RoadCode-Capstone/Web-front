@@ -36,6 +36,21 @@ export function UserReview(props: getReviewsDto) {
           {props.reviews.map((prop) => (
             <UserReviewElement {...prop} />
           ))}
+          <div className="flex gap-x-2">
+            <InputField
+              placeholder="리뷰를 남겨보세요"
+              id="comment"
+              type="text"
+              onChange={(e) => {}}
+              style="h-[64px]"
+            />
+            <Button
+              text="등록"
+              onClick={() => {}}
+              colorTheme={"point-secondary"}
+              style={"font-light w-[94px] h-[64px]"}
+            />
+          </div>
         </div>
       )}
     </div>
@@ -67,8 +82,10 @@ function UserReviewElement(props: reviewDto) {
             type="text"
             onChange={(e) => setNewReview(e.target.value)}
             style="h-[64px]"
+            key={props.reviewId}
           />
           <Button
+            key={props.reviewId}
             text="등록"
             onClick={() => {}}
             colorTheme={"point-secondary"}

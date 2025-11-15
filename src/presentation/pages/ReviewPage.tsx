@@ -1,32 +1,41 @@
 import { getSubmission, getReviews } from "@/apis/submission";
-import { getReviewsDto } from "@/apis/dto/submissionDto";
+import { getReviewsDto, getSubmissionDto } from "@/apis/dto/submissionDto";
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import CodeEditor from "../components/problem/CodeEditor";
 import { UserReview } from "../components/review/UserReview";
 import { LanguageType } from "@/types/problem";
+import CodeFooter from "../components/review/CodeFooter";
+import { Button } from "../components";
+import MyCodeHeader from "../components/review/MyCodeHeader";
+import { problemRes } from "@/apis/dto/problemDto";
+import { getProblem } from "@/apis/problem";
+import { AiReview } from "../components/review/AIReview";
 
 export default function ReviewPage() {
-  const { submissionId } = useParams<{ submissionId: string }>();
+  const navigate = useNavigate();
+  const location = useLocation();
+  const state: getSubmissionDto = location.state;
+
   const [reviewsData, setReviewsData] = useState<getReviewsDto | null>(null);
-  const [code, setCode] = useState("");
+  const [code, setCode] = useState<string>("");
   const [language, setLanguage] = useState<LanguageType>("c");
+  const [problemDetail, setProblemDetail] = useState<problemRes>();
 
   useEffect(() => {
-    if (!submissionId) return;
-
     const fetchReviewData = async () => {
       try {
-        const id = parseInt(submissionId, 10);
-        // submission 상세 정보(코드, 언어)와 리뷰 목록을 병렬로 불러옵니다.
-        const [submissionDetail, reviews] = await Promise.all([
-          getSubmission(id),
-          getReviews(id),
+        if (!state || !state.id) throw new Error("state error");
+        const id = state.id;
+        const problemResponse = await getProblem(state.problemId);
+        if (!problemResponse) throw new Error("problem detail error");
+        setProblemDetail(problemResponse);
+        await Promise.all([
+          (async () => setCode(state.sourceCode))(),
+          (async () =>
+            setLanguage(state.language.toLowerCase() as LanguageType))(),
+          (async () => setReviewsData(await getReviews(id)))(),
         ]);
-
-        setCode(submissionDetail.sourceCode);
-        setLanguage(submissionDetail.language.toLowerCase() as LanguageType);
-        setReviewsData(reviews);
       } catch (error) {
         console.error("리뷰 데이터를 불러오는 데 실패했습니다:", error);
         alert("리뷰 정보를 불러오는 데 실패했습니다.");
@@ -34,32 +43,25 @@ export default function ReviewPage() {
     };
 
     fetchReviewData();
-  }, [submissionId]);
+  }, [location.state, navigate]);
 
   return (
-    <div className="flex h-full w-full">
-      <div className="basis-3/5 min-w-0 overflow-y-auto">
-        <CodeEditor
-          language={language}
-          initialCode={code}
-          onChange={() => {}}
-          readOnly={true} // CodeEditor를 읽기 전용으로 설정합니다.
-        />
+    <div className="flex h-full w-full px-[72px] py-4 gap-x-4">
+      <div className="basis-3/5 min-w-0 w-full overflow-y-auto bg-[#282C34] flex flex-col justify-between">
+        <div className="w-full">
+          <MyCodeHeader {...problemDetail!} />
+          <CodeEditor
+            language={language}
+            initialCode={code}
+            onChange={() => {}}
+            readOnly={true}
+          />
+        </div>
+        <CodeFooter language={language} />
       </div>
-      <div className="basis-2/5 min-w-0 overflow-y-auto p-4">
+      <div className="basis-2/5 min-w-0 overflow-y-auto  flex flex-col gap-y-4">
+        <AiReview content="Hello~~~~~~~~~~~~~~~~~~~~~~~~~~~~" />
         <UserReview reviews={reviewsData?.reviews || []} />
-      </div>
-    </div>
-  );
-}
-      <CodeEditor
-        language={language}
-        initialCode={code}
-        onChange={() => {}}
-        //타이핑 안되게 해야함 ㅜㅜ
-      />
-      <div className="flex-1 min-w-0 overflow-y-auto">
-        <UserReview reviews={[]} />
       </div>
     </div>
   );
