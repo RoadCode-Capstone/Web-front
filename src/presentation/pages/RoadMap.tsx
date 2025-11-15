@@ -8,6 +8,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { Spinner } from "../components/common/spinner";
 import { useRoadmapStore } from "@/stores/roadmapStore"; // 스토어 import
+import { postConceptProblem, postRecommendProblem } from "@/apis/roadMap";
 
 export default function RoadMap() {
   const navigate = useNavigate();
@@ -65,6 +66,11 @@ export default function RoadMap() {
     navigate("/none");
   };
 
+  const handleAddProblem = async () => {
+    const response = await postRecommendProblem(roadmapId!);
+    setCurrentProblemById(response.currentProblem.problemId);
+  };
+
   // if (isLoading) {
   //   return <Spinner />;
   // }
@@ -106,6 +112,7 @@ export default function RoadMap() {
               />
               <BubbleBtn
                 text={"문제 추가하기"}
+                onClick={handleAddProblem}
                 position="left"
                 style={{ "--tail-offset": "40px", "--tail-color": "#FBF0CE" }}
                 className="absolute w-[192px] h-[82px] bottom-[188px] right-[-179px] bg-point-teritary hover:bg-point-secondary"

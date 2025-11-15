@@ -149,3 +149,55 @@ export const giveUpRoadmap = async (roadmapId: number) => {
     throw err;
   }
 };
+
+export const postConceptProblem = async (
+  roamdmapId: number,
+  currentProblemId: number
+): Promise<RoadmapResponse> => {
+  try {
+    const rawResponse = await fetch(
+      `${PROBLEM_PREFIX}/${roamdmapId}/concept-problem`,
+      {
+        method: "POST",
+        headers: getTokenHeader(),
+        body: JSON.stringify({
+          currentProblemId,
+        }),
+      }
+    );
+
+    const response: ApiResponse<RoadmapResponse> = await rawResponse.json();
+
+    if (response.code != "SUCCESS" || response.data === null)
+      throw new Error(response.message);
+
+    return response.data;
+  } catch (err) {
+    console.log(err);
+    throw err;
+  }
+};
+
+export const postRecommendProblem = async (
+  roamdmapId: number
+): Promise<RoadmapResponse> => {
+  try {
+    const rawResponse = await fetch(
+      `${PROBLEM_PREFIX}/${roamdmapId}/concept-problem`,
+      {
+        method: "POST",
+        headers: getTokenHeader(),
+      }
+    );
+
+    const response: ApiResponse<RoadmapResponse> = await rawResponse.json();
+
+    if (response.code != "SUCCESS" || response.data === null)
+      throw new Error(response.message);
+
+    return response.data;
+  } catch (err) {
+    console.log(err);
+    throw err;
+  }
+};
