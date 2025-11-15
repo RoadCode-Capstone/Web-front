@@ -45,7 +45,7 @@ export default function AttendancePage() {
   }, [currentDate]);
 
   return (
-    <div className="flex items-center justify-center gap-x-8 h-full w-full py-10 ">
+    <div className="flex items-center justify-center gap-x-8 w-full py-10 h-full max-h-[1980px] overflow-y-scroll ">
       <div className="flex flex-col max-w-[624px] min-w-[440px] gap-y-18">
         <BubbleBtn
           position="right"
