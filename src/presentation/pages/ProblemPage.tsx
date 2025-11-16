@@ -14,7 +14,7 @@ interface ProblemPageProps {
   language: LanguageType;
 }
 
-const SUGGEST_COUNT = 3;
+const SUGGEST_COUNT = 2;
 
 export default function ProblemPage() {
   const navigate = useNavigate();

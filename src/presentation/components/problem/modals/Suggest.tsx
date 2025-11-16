@@ -2,9 +2,16 @@ import { useNavigate } from "react-router-dom";
 import WindowBox from "../../common/WindowBox";
 import Character from "@assets/character/fire.svg?react";
 import BubbleBtn from "../../common/CartoonButton";
+import { postConceptProblem } from "@/apis/roadMap";
+import { useRoadmapStore } from "@/stores/roadmapStore";
 
 export function Suggest({ onClose }: { onClose: () => void }) {
   const navigate = useNavigate();
+  const { roadmapId, currentProblemId, fetchRoadmapData } = useRoadmapStore();
+  const handleAddProblem = async () => {
+    await postConceptProblem(roadmapId!, currentProblemId!);
+    navigate("/");
+  };
   return (
     <div className="fixed inset-0 bg-black/50 flex justify-center z-50 ">
       <div className="absolute top-1/5 flex flex-col gap-y-4">
@@ -26,6 +33,7 @@ export function Suggest({ onClose }: { onClose: () => void }) {
           />
           <BubbleBtn
             text="예"
+            onClick={handleAddProblem}
             position="left"
             className="bg-[#ffa8a8] hover:bg-[#FF6565] hover:text-white 
             w-[185px] h-[94px] absolute bottom-[292px] right-[-71px]"
