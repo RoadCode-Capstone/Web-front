@@ -11,7 +11,7 @@ import MyCodeHeader from "../components/review/MyCodeHeader";
 import { problemRes } from "@/apis/dto/problemDto";
 import { getProblem } from "@/apis/problem";
 import { AiReview } from "../components/review/AIReview";
-import { useReviewStore } from "./reviewStore";
+import { useReviewStore } from "@/stores/reviewStore";
 import { Spinner } from "../components/common/spinner";
 
 export default function ReviewPage() {
