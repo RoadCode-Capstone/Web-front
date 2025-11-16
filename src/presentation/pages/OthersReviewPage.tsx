@@ -11,6 +11,7 @@ import { Spinner } from "../components/common/spinner";
 import { getOthersSubmissionsDto } from "@/apis/dto/problemDto";
 import CodeFooter from "../components/review/CodeFooter";
 import OtherCodeHeader from "../components/review/OtherCodeHeader";
+import { AiReview } from "../components/review/AIReview";
 
 export default function OthersReviewPage() {
   const { problemId } = useParams<{ problemId: string }>();
@@ -129,6 +130,12 @@ export default function OthersReviewPage() {
       </div>
       <div className="basis-2/5 min-w-0 overflow-y-auto  flex flex-col gap-y-4">
         <div className="flex-grow">
+          <AiReview
+            content={
+              reviewsData?.reviews.find((v) => v.nickname === "AI")?.content ||
+              ""
+            }
+          />
           <UserReview reviews={reviewsData?.reviews || []} />
         </div>
         <div className="">

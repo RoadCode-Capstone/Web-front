@@ -74,7 +74,9 @@ function UserReviewElement(props: reviewDto) {
       </div>
       <hr />
       <div>
-        {props.comments && props.comments.map((v) => <UserComment {...v} />)}
+        {props.comments &&
+          props.nickname === "AI" &&
+          props.comments.map((v) => <UserComment {...v} />)}
         <div className="flex gap-x-2">
           <InputField
             placeholder="답글을 남겨보세요"
