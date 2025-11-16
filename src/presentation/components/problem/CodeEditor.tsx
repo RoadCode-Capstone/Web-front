@@ -13,7 +13,7 @@ import { cn } from "@/utils/tailwind";
 interface CodeEditorProps {
   initialCode?: string;
   onChange: (value: string) => void;
-  language: "python" | "java" | "cpp" | "c";
+  language: "python" | "java" | "cpp" | "c" | "JAVA" | "C" | "PYTHON";
   style?: string;
   readOnly?: boolean;
 }
@@ -29,7 +29,7 @@ export default function CodeEditor({
   const viewRef = useRef<EditorView | null>(null);
 
   const getLanguageExtension = (): Extension => {
-    switch (language) {
+    switch (language.toLowerCase()) {
       case "python":
         return python();
       case "java":

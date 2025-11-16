@@ -15,12 +15,14 @@ type Value = ValuePiece | [ValuePiece, ValuePiece];
 interface AttendanceCalendarProps {
   date: Date;
   onDateChange: (date: Date) => void;
+  onActiveStartDateChange: (date: Date) => void;
   pointHistory: getPointHistoryDto[] | null;
 }
 
 export default function AttendanceCalendar({
   date: value,
   onDateChange,
+  onActiveStartDateChange,
   pointHistory,
 }: AttendanceCalendarProps) {
   const pointHistoryMap = useMemo(() => {
@@ -52,6 +54,9 @@ export default function AttendanceCalendar({
         // --- 1. 타입 에러 해결 ---
         onChange={handleCalendarChange}
         value={value}
+        onActiveStartDateChange={({ activeStartDate }) =>
+          onActiveStartDateChange(activeStartDate!)
+        }
         // --- 2. Tailwind 스타일링 (Props) ---
 
         // (A) 캘린더 전체 컨테이너

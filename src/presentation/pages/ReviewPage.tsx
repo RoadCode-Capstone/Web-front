@@ -1,4 +1,4 @@
-import { getSubmission, getReviews } from "@/apis/submission";
+import { getSubmission, getReviews, postReview } from "@/apis/submission";
 import { getReviewsDto, getSubmissionDto } from "@/apis/dto/submissionDto";
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
@@ -11,39 +11,32 @@ import MyCodeHeader from "../components/review/MyCodeHeader";
 import { problemRes } from "@/apis/dto/problemDto";
 import { getProblem } from "@/apis/problem";
 import { AiReview } from "../components/review/AIReview";
+import { useReviewStore } from "@/stores/reviewStore";
+import { Spinner } from "../components/common/spinner";
 
 export default function ReviewPage() {
-  const navigate = useNavigate();
   const location = useLocation();
   const state: getSubmissionDto = location.state;
 
-  const [reviewsData, setReviewsData] = useState<getReviewsDto | null>(null);
-  const [code, setCode] = useState<string>("");
-  const [language, setLanguage] = useState<LanguageType>("c");
-  const [problemDetail, setProblemDetail] = useState<problemRes>();
+  const {
+    submissionData,
+    reviewsData,
+    problemDetail,
+    isLoading,
+    fetchReviewPageData,
+    clearReviewPageData,
+  } = useReviewStore();
 
   useEffect(() => {
-    const fetchReviewData = async () => {
-      try {
-        if (!state || !state.id) throw new Error("state error");
-        const id = state.id;
-        const problemResponse = await getProblem(state.problemId);
-        if (!problemResponse) throw new Error("problem detail error");
-        setProblemDetail(problemResponse);
-        await Promise.all([
-          (async () => setCode(state.sourceCode))(),
-          (async () =>
-            setLanguage(state.language.toLowerCase() as LanguageType))(),
-          (async () => setReviewsData(await getReviews(id)))(),
-        ]);
-      } catch (error) {
-        console.error("리뷰 데이터를 불러오는 데 실패했습니다:", error);
-        alert("리뷰 정보를 불러오는 데 실패했습니다.");
-      }
-    };
+    if (state?.id) {
+      fetchReviewPageData(Number(state.id));
+    }
+    return () => clearReviewPageData();
+  }, [state, fetchReviewPageData, clearReviewPageData, state.id]);
 
-    fetchReviewData();
-  }, [location.state, navigate]);
+  if (isLoading || !submissionData || !problemDetail) {
+    return <Spinner />;
+  }
 
   return (
     <div className="flex h-full w-full px-[72px] py-4 gap-x-4">
@@ -51,21 +44,21 @@ export default function ReviewPage() {
         <div className="w-full">
           <MyCodeHeader {...problemDetail!} />
           <CodeEditor
-            language={language}
-            initialCode={code}
+            language={submissionData.language}
+            initialCode={submissionData.sourceCode}
             onChange={() => {}}
             readOnly={true}
           />
         </div>
-        <CodeFooter language={language} />
+        <CodeFooter language={submissionData.language} />
       </div>
-      <div className="basis-2/5 min-w-0 overflow-y-auto  flex flex-col gap-y-4">
+      <div className="basis-2/5 min-w-0 overflow-y-auto">
         <AiReview
           content={
             reviewsData?.reviews.find((v) => v.nickname === "AI")?.content || ""
           }
         />
-        <UserReview reviews={reviewsData?.reviews || []} />
+        <UserReview />
       </div>
     </div>
   );

@@ -59,6 +59,7 @@ export default function AttendancePage() {
         <AttendanceCalendar
           date={currentDate}
           onDateChange={setCurrentDate}
+          onActiveStartDateChange={setCurrentDate}
           pointHistory={pointHistory}
         />
       </div>

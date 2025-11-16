@@ -74,4 +74,27 @@ const getReviews = async (submissionId: number): Promise<getReviewsDto> => {
     throw err;
   }
 };
-export { getSubmissions, getSubmission, getReviews };
+
+const postReview = async (
+  submissionId: number,
+  comment: string
+): Promise<string> => {
+  try {
+    const rawResponse = await fetch(`${PREFIX}/${submissionId}/reviews`, {
+      method: "POST",
+      headers: getTokenHeader(),
+      body: JSON.stringify({ comment }),
+    });
+
+    const response: ApiResponse<null> = await rawResponse.json();
+    if (response.code != "SUCCESS") {
+      throw new Error(response.message);
+    }
+
+    return response.message;
+  } catch (err) {
+    console.log(err);
+    throw err;
+  }
+};
+export { getSubmissions, getSubmission, getReviews, postReview };
