@@ -83,7 +83,7 @@ const postReview = async (
     const rawResponse = await fetch(`${PREFIX}/${submissionId}/reviews`, {
       method: "POST",
       headers: getTokenHeader(),
-      body: JSON.stringify({ comment }),
+      body: JSON.stringify({ content: comment }),
     });
 
     const response: ApiResponse<null> = await rawResponse.json();

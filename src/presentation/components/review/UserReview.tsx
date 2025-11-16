@@ -130,7 +130,7 @@ function UserReviewElement(props: reviewDto) {
 
 function UserComment(props: commentDetail) {
   return (
-    <div className="flex flex-col gap-y-1 pl-4" key={props.commentId}>
+    <div className="flex flex-col gap-y-1 pl-4 mt-2" key={props.commentId}>
       <div className="flex justify-between">
         <span className="font-bold">{props.nickname}</span>
         <span className="text-sm">{props.createdAt.split("T")[0]}</span>
