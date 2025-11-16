@@ -79,7 +79,7 @@ export function UserReview() {
 }
 
 function UserReviewElement(props: reviewDto) {
-  const { submitComment } = useReviewStore();
+  const { isSubmittingComment, submitComment } = useReviewStore();
   const [newCommentContent, setNewCommentContent] = useState("");
 
   return (
@@ -88,6 +88,8 @@ function UserReviewElement(props: reviewDto) {
     rounded-2xl border-1 border-black "
       key={props.reviewId}
     >
+      {" "}
+      {isSubmittingComment && <WaitingModal />}
       <div className="flex flex-col gap-y-1">
         <div className="flex justify-between">
           <span className="font-bold">{props.nickname}</span>

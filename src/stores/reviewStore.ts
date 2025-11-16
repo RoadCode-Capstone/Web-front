@@ -65,6 +65,7 @@ export const useReviewStore = create<ReviewState>((set, get) => ({
 
   submitReview: async (submissionId: number, content: string) => {
     try {
+      set({ isSubmittingComment: true });
       const response = await postReview(submissionId, content);
       alert(response);
       const currentSubmissionId = get().submissionData?.id;
@@ -75,6 +76,8 @@ export const useReviewStore = create<ReviewState>((set, get) => ({
       const errorMessage =
         error instanceof Error ? error.message : "알 수 없는 오류 발생";
       alert(errorMessage);
+    } finally {
+      set({ isSubmittingComment: false });
     }
   },
 
