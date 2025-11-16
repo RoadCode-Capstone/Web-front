@@ -75,7 +75,7 @@ function UserReviewElement(props: reviewDto) {
       <hr />
       <div>
         {props.comments &&
-          props.nickname === "AI" &&
+          props.nickname !== "AI" &&
           props.comments.map((v) => <UserComment {...v} />)}
         <div className="flex gap-x-2">
           <InputField
