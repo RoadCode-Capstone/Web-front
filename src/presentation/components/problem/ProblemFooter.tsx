@@ -2,7 +2,7 @@ import Button from "../common/Button";
 
 interface ProblemFooterProps {
   language: string;
-  onActionClick: () => void;
+  onClick: () => void;
 }
 const ProblemFooter = (props: ProblemFooterProps) => {
   return (
@@ -14,10 +14,10 @@ const ProblemFooter = (props: ProblemFooterProps) => {
         {`사용언어: ${props.language}`}
       </span>
       <Button
-        type="submit"
-        buttonStyle="w-40 h-14 bg-point !text-black"
-        label="제출하기"
-        onClick={props.onActionClick}
+        style="w-40 h-14 bg-point !text-black"
+        text="제출하기"
+        onClick={props.onClick}
+        colorTheme={"point-primary"}
       ></Button>
     </footer>
   );

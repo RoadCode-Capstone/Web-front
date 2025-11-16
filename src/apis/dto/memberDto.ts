@@ -1,0 +1,3 @@
+interface DuplicatedDto {
+  duplicated: boolean;
+}

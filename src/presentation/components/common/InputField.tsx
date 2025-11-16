@@ -1,34 +1,35 @@
-import { ChangeEventHandler } from "react";
-import Icon from "./Icon";
-import { IconProps } from "./Icon";
+import { HTMLInputTypeAttribute, ChangeEventHandler } from "react";
+import { cn } from "@/utils/tailwind";
 
-interface InputFieldProps {
-  type: React.HTMLInputTypeAttribute;
-  placeholder?: string;
-  iconProps?: IconProps;
-  containerStyle?: string;
-  inputStyle?: string;
-  disabled?: boolean;
+export interface InputFieldProps {
+  id: string;
+  placeholder: string;
+  type: HTMLInputTypeAttribute;
   value?: string;
-  onActionChange?: ChangeEventHandler<HTMLInputElement>;
+  onChange?: ChangeEventHandler<HTMLInputElement>;
+  style?: string;
 }
 
-const InputField = (props: InputFieldProps) => {
+export default function InputField(props: InputFieldProps) {
   return (
     <div
-      className={`flex items-center rounded-2xl bg-[#F5F5F5] h-18 gap-x-2 px-8 ${props.containerStyle}`}
+      className={cn(
+        "flex py-6 px-[30px] w-full\
+   bg-[#F9F9F9] border border-black rounded-2xl\
+   font-light text-base \
+   focus-within:outline-3\
+    focus-within:outline-point",
+        props.style
+      )}
     >
-      {props.iconProps && <Icon {...props.iconProps} />}
       <input
-        className={`w-full focus:outline-none ${props.inputStyle}`}
-        type={props.type}
+        id={props.id}
         placeholder={props.placeholder}
+        type={props.type}
         value={props.value}
-        disabled={props.disabled ?? false}
-        onChange={props.onActionChange}
-      ></input>
+        onChange={props.onChange}
+        className="outline-none w-full bg-transparent"
+      />
     </div>
   );
-};
-
-export default InputField;
+}

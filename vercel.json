@@ -1,0 +1,14 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "outputDirectory": "build",
+  "rewrites": [
+    {
+      "source": "/api/:path*",
+      "destination": "http://3.35.192.94:8080/api/v1/:path*"
+    },
+    {
+      "source": "/((?!api/|manifest\\.json|[^/\\.]+\\.\\w+).*)",
+      "destination": "/index.html"
+    }
+  ]
+}

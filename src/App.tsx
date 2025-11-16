@@ -1,39 +1,68 @@
-import React from "react";
 import "./App.css";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+
+import OthersReviewPage from "./presentation/pages/OthersReviewPage";
+import { Navigate } from "react-router-dom";
+import { HeaderLayout } from "./layouts";
+import { RestrictedRoute, PrivateRoute } from "./presentation/components";
 import {
-  Login,
-  Register,
-  RegisterSuccess,
-  PasswordFinding,
-  PasswordSetting,
-  UserInfo,
-  Main,
-  Planning,
-  LevelTest,
-  Problem,
-  LevelTestResult,
+  AttendancePage,
+  LevelTestEditor,
+  LevelTestSettingPage,
+  MainPage,
+  ProblemPage,
+  RankingPage,
+  RoadMapListPage,
+  RoadMapPage,
+  LoginPage,
+  RegisterPage,
+  PasswordResetPage,
 } from "./presentation/pages";
+import ReviewPage from "./presentation/pages/ReviewPage";
 
 function App() {
   return (
     <div className="App">
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Login />}></Route>
-          <Route path="/register" element={<Register />}></Route>
-          <Route path="/passwordFinding" element={<PasswordFinding />}></Route>
+          {/* private pages */}
+          <Route element={<PrivateRoute />}>
+            <Route element={<HeaderLayout />}>
+              <Route path="/none" element={<MainPage />} />
+              <Route
+                path="/leveltest/setting"
+                element={<LevelTestSettingPage />}
+              />
+              <Route path="/" element={<RoadMapPage />} />
+              <Route path="/ranking" element={<RankingPage />} />
+              <Route path="/attendance" element={<AttendancePage />} />
+              <Route path="/roadmap/list" element={<RoadMapListPage />} />
+              <Route
+                path="/others-review/:problemId"
+                element={<OthersReviewPage />}
+              />
+              <Route path="/review" element={<ReviewPage />} />
+            </Route>
+            <Route path="/leveltest" element={<LevelTestEditor />} />
+            <Route path="/code" element={<ProblemPage />} />
+          </Route>
+
+          {/* public pages(이미 로그인한 사람 제한) */}
+          <Route element={<RestrictedRoute />}>
+            <Route path="/login" element={<LoginPage />}></Route>
+            <Route path="/register" element={<RegisterPage />}></Route>
+            <Route path="/reset" element={<PasswordResetPage />} />
+          </Route>
+          <Route path="*" element={<Navigate to="/" />} />
+          {/* <Route path="/passwordFinding" element={<PasswordFinding />}></Route>
           <Route path="/passwordSetting" element={<PasswordSetting />}></Route>
           <Route path="/registerSuccess" element={<RegisterSuccess />}></Route>
 
           <Route path="/userInfo" element={<UserInfo />}></Route>
 
-          <Route path="/main" element={<Main />}></Route>
-
           <Route path="/newRoadMap" element={<Planning />}></Route>
-          <Route path="/levelTest" element={<LevelTest />}></Route>
-          <Route path="/levelTest/result" element={<LevelTestResult />}></Route>
-        {/* <Route path="/problem/:problemId" element={<Problem />}></Route> */}
+          <Route path="/levelTest/result" element={<LevelTestResult />}></Route> */}
+          {/* <Route path="/problem/:problemId" element={<Problem />}></Route> */}
           {/* <Route
             path="/problem"
             element={

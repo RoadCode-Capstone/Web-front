@@ -1,62 +1,56 @@
-import axios from "axios";
-import { API_PREFIX } from "../constants/api";
+import { API_PREFIX, getTokenHeader } from "../constants/api";
 import { ApiResponse } from "../types/api";
 import {
-  LeveltestRequest,
-  LevelTestSubmissionsRequest,
-  LevelTestSubmissionsResponse,
-  ProblemResponse,
-} from "../types/leveltest";
-import { ApiDefaultHeaders } from "../utils/apiHeaders";
+  postLeveltestReq,
+  postLeveltestRes,
+  postSubmissionReq,
+  postSubmissionRes,
+} from "./dto/leveltestDto";
 
 const LEVELTEST_PREFIX = `${API_PREFIX}/level-test`;
 
-export const postSubmission = async (
-  request: LevelTestSubmissionsRequest
-): Promise<LevelTestSubmissionsResponse> => {
+const postSubmission = async (
+  request: postSubmissionReq
+): Promise<postSubmissionRes> => {
   try {
-    const axiosResponse = await axios.post(
-      `${LEVELTEST_PREFIX}/submissions`,
-      request,
-      {
-        headers: {
-          ...ApiDefaultHeaders,
-        },
-      }
-    );
-    const response: ApiResponse<LevelTestSubmissionsResponse> =
-      axiosResponse.data;
-
-    console.log(response);
-
-    if (response.code != "SUCCESS") throw new Error(response.message);
-    if (response.data == null) throw new Error("data is null");
-    return response.data;
-  } catch (err) {
-    console.log(err);
-    throw err;
-  }
-};
-
-export const postLeveltest = async (
-  request: LeveltestRequest
-): Promise<number[]> => {
-  try {
-    const axiosResponse = await axios.post(`${LEVELTEST_PREFIX}`, request, {
-      headers: {
-        ...ApiDefaultHeaders,
-      },
+    const rawResponse = await fetch(`${LEVELTEST_PREFIX}/submissions`, {
+      method: "POST",
+      headers: getTokenHeader(),
+      body: JSON.stringify(request),
     });
 
-    const response: ApiResponse<number[]> = axiosResponse.data;
-
-    console.log(response);
+    const response: ApiResponse<postSubmissionRes> = await rawResponse.json();
 
     if (response.code != "SUCCESS") throw new Error(response.message);
     if (response.data == null) throw new Error("data is null");
+
     return response.data;
   } catch (err) {
     console.log(err);
     throw err;
   }
 };
+
+const postLeveltest = async (
+  request: postLeveltestReq
+): Promise<postLeveltestRes> => {
+  try {
+    const rawResponse = await fetch(`${LEVELTEST_PREFIX}`, {
+      method: "POST",
+      headers: getTokenHeader(),
+      body: JSON.stringify(request),
+    });
+
+    const response: ApiResponse<postLeveltestRes> = await rawResponse.json();
+
+    if (response.code != "SUCCESS") throw new Error(response.message);
+    if (response.data == null) throw new Error("data is null");
+
+    return response.data;
+  } catch (err) {
+    console.log(err);
+    throw err;
+  }
+};
+
+export { postSubmission, postLeveltest };
