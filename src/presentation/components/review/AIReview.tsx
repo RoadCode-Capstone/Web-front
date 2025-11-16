@@ -6,7 +6,7 @@ interface AiReviewProps {
   content: string;
 }
 export function AiReview(props: AiReviewProps) {
-  const [isExpanded, setIsExpanded] = useState<boolean>(false);
+  const [isExpanded, setIsExpanded] = useState<boolean>(true);
 
   return (
     <div className="bg-point border-1 border-black rounded-2xl py-2 px-4 w-full">
