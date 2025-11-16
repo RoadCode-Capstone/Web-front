@@ -1,6 +1,8 @@
 import React, { useState, useMemo } from "react";
 import IconDown from "@assets/icons/down.svg?react";
 import { getSubmissionsDto, submissionDto } from "@/apis/dto/submissionDto";
+import { getSubmission } from "@/apis/submission";
+import { useNavigate } from "react-router-dom";
 
 // --- API 데이터 ---
 // const apiResponse = {
@@ -94,6 +96,12 @@ const formatDate = (date: string) => date.split("-")[2];
 
 // --- 메인 컴포넌트 ---
 export default function ProblemTable({ data }: { data: submissionDto[] }) {
+  const navigate = useNavigate();
+
+  const handleSubmission = async (submissionId: number) => {
+    const response = await getSubmission(submissionId);
+    navigate("/review", { state: response });
+  };
   const processedData = useMemo(() => processApiData(data), [data]);
 
   const defaultExpandedId = processedData[0]?.problems[0]
@@ -180,7 +188,10 @@ export default function ProblemTable({ data }: { data: submissionDto[] }) {
                               ? "bg-yellow-400 text-black hover:bg-yellow-500"
                               : "bg-gray-200 text-gray-800 hover:bg-gray-300"
                           }`}
-                          onClick={(e) => e.stopPropagation()}
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            handleSubmission(a.submissionId);
+                          }}
                         >
                           {a.buttonText}
                         </button>

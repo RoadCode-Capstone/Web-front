@@ -13,9 +13,14 @@ import {
 
 const PROBLEM_PREFIX = `${API_PREFIX}/roadmaps`;
 
-export const getMyRoadmaps = async (): Promise<MyRoadMapResDto> => {
+export const getMyRoadmaps = async (
+  status?: string[]
+): Promise<MyRoadMapResDto> => {
   try {
-    const rawResponse = await fetch(`${PROBLEM_PREFIX}/my`, {
+    const api = status
+      ? `${PROBLEM_PREFIX}/my?statusList=${status.toString()}}`
+      : `${PROBLEM_PREFIX}/my`;
+    const rawResponse = await fetch(`${api}`, {
       headers: getTokenHeader(),
       method: "GET",
     });
@@ -144,6 +149,58 @@ export const giveUpRoadmap = async (roadmapId: number) => {
     if (response.code != "SUCCESS") throw new Error(response.message);
 
     return response.message;
+  } catch (err) {
+    console.log(err);
+    throw err;
+  }
+};
+
+export const postConceptProblem = async (
+  roamdmapId: number,
+  currentProblemId: number
+): Promise<RoadmapResponse> => {
+  try {
+    const rawResponse = await fetch(
+      `${PROBLEM_PREFIX}/${roamdmapId}/concept-problem`,
+      {
+        method: "POST",
+        headers: getTokenHeader(),
+        body: JSON.stringify({
+          currentProblemId,
+        }),
+      }
+    );
+
+    const response: ApiResponse<RoadmapResponse> = await rawResponse.json();
+
+    if (response.code != "SUCCESS" || response.data === null)
+      throw new Error(response.message);
+
+    return response.data;
+  } catch (err) {
+    console.log(err);
+    throw err;
+  }
+};
+
+export const postRecommendProblem = async (
+  roamdmapId: number
+): Promise<RoadmapResponse> => {
+  try {
+    const rawResponse = await fetch(
+      `${PROBLEM_PREFIX}/${roamdmapId}/recommend-problems`,
+      {
+        method: "POST",
+        headers: getTokenHeader(),
+      }
+    );
+
+    const response: ApiResponse<RoadmapResponse> = await rawResponse.json();
+
+    if (response.code != "SUCCESS" || response.data === null)
+      throw new Error(response.message);
+
+    return response.data;
   } catch (err) {
     console.log(err);
     throw err;

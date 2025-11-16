@@ -4,17 +4,18 @@ import { AttendanceCalendar } from "../components";
 import BubbleBtn from "../components/common/CartoonButton";
 import { HistoryList } from "../components/attendance/HistoryList";
 import { getMyPoint, getMyPointByType } from "@/apis/point";
-import { getPointHistoryDto, getMyPointDto } from "@/apis/dto/pointDto";
+import {
+  getPointHistoryDto,
+  getMyPointDto,
+  getTypeHistoryDto,
+} from "@/apis/dto/pointDto";
 
 export default function AttendancePage() {
   const [currentDate, setCurrentDate] = useState(new Date());
   const [pointHistory, setPointHistory] = useState<getPointHistoryDto[]>([]);
-  const [attendanceHistory, setAttendanceHistory] = useState<{
-    type: string;
-    totalPoint: number;
-    point: number;
-    dates: string[];
-  } | null>(null);
+  const [pointHistoryByType, setPointHistoryByType] = useState<
+    getTypeHistoryDto[] | null
+  >([]);
 
   useEffect(() => {
     const fetchPointHistory = async () => {
@@ -33,10 +34,7 @@ export default function AttendancePage() {
         );
         setPointHistory(pointHistoryResponse.history || []);
         const typeHistoryResponse = await getMyPointByType(startDate, endDate);
-        const attendanceData = typeHistoryResponse.history.find(
-          (v) => v.type === "ATTENDANCE"
-        );
-        setAttendanceHistory(attendanceData || null);
+        setPointHistoryByType(typeHistoryResponse.history || []);
       } catch (error) {
         console.error("포인트 내역을 불러오는데 실패했습니다.", error);
       }
@@ -45,13 +43,16 @@ export default function AttendancePage() {
   }, [currentDate]);
 
   return (
-    <div className="flex items-center justify-center gap-x-8 h-full w-full py-10 ">
+    <div className="flex items-center justify-center gap-x-8 w-full py-10 h-full max-h-[1980px] overflow-y-scroll ">
       <div className="flex flex-col max-w-[624px] min-w-[440px] gap-y-18">
         <BubbleBtn
           position="right"
           style={{ "--tail-offset": "30rem" }}
           text={`${getYear(currentDate)}년 ${getMonth(currentDate) + 1}월에 ${
-            attendanceHistory?.totalPoint || 0
+            new Set(
+              pointHistoryByType!.find((h) => h.type === "ATTENDANCE")?.dates ||
+                []
+            ).size
           }번 출석했어요`}
           className="drop-shadow-none h-[159px] font-medium text-[32px]"
         />

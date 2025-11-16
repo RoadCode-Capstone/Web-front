@@ -18,6 +18,7 @@ import {
   RegisterPage,
   PasswordResetPage,
 } from "./presentation/pages";
+import ReviewPage from "./presentation/pages/ReviewPage";
 
 function App() {
   return (
@@ -40,6 +41,7 @@ function App() {
                 path="/others-review/:problemId"
                 element={<OthersReviewPage />}
               />
+              <Route path="/review" element={<ReviewPage />} />
             </Route>
             <Route path="/leveltest" element={<LevelTestEditor />} />
             <Route path="/code" element={<ProblemPage />} />
