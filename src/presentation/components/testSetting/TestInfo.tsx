@@ -1,4 +1,4 @@
-import { postLeveltest } from "@/apis/leveltest";
+import { postLeveltest } from "@/apis/levelTest";
 import BubbleBtn from "../common/CartoonButton";
 import { TestInfoBox } from "./TestInfoBox";
 import Character from "@assets/character/study_hard.svg?react";
