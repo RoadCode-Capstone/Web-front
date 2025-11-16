@@ -69,6 +69,8 @@ export default function RoadMap() {
   const handleAddProblem = async () => {
     const response = await postRecommendProblem(roadmapId!);
     setCurrentProblemById(response.currentProblem.problemId);
+    alert(`문제가 추가되었습니다`);
+    fetchRoadmapData(() => {});
   };
 
   // if (isLoading) {

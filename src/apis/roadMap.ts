@@ -183,7 +183,7 @@ export const postRecommendProblem = async (
 ): Promise<RoadmapResponse> => {
   try {
     const rawResponse = await fetch(
-      `${PROBLEM_PREFIX}/${roamdmapId}/concept-problem`,
+      `${PROBLEM_PREFIX}/${roamdmapId}/recommend-problems`,
       {
         method: "POST",
         headers: getTokenHeader(),
