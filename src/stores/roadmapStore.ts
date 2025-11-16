@@ -21,7 +21,7 @@ interface RoadmapState {
   inProgProblem?: problemRes;
   language: LanguageType;
   dailyGoal: number;
-  dailyRemainedCount: number;
+  dailyRemainedCount: number | null;
   error: string | null;
 
   fetchRoadmapData: (onFailure: () => void) => Promise<void>;
@@ -38,7 +38,7 @@ export const useRoadmapStore = create<RoadmapState>((set, get) => ({
   problems: [],
   language: "c",
   dailyGoal: 0,
-  dailyRemainedCount: 0,
+  dailyRemainedCount: null,
   error: null,
 
   // 액션 (상태를 변경하는 함수)
@@ -71,8 +71,11 @@ export const useRoadmapStore = create<RoadmapState>((set, get) => ({
         currProblem: problemResponse,
         inProgProblem: problemResponse,
         dailyGoal: roadmap.dailyGoal,
-        dailyRemainedCount: roadmap.dailyGoal,
       });
+
+      set((state) => ({
+        dailyRemainedCount: state.dailyRemainedCount ?? roadmap.dailyGoal,
+      }));
     } catch (error) {
       console.error("로드맵 정보를 불러오는 데 실패했습니다.", error);
       set({ error: "로드맵 정보를 불러오는 데 실패했습니다." });

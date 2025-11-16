@@ -1,7 +1,7 @@
 export type LanguageType = "c" | "java" | "python" | "JAVA" | "C" | "PYTHON";
 
 export interface SolutionRequest {
-  language: "c" | "java" | "python";
+  language: LanguageType;
   sourceCode: string;
   roadmapId: number;
   roadmapProblemId: number;

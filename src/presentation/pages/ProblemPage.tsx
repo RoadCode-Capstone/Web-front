@@ -50,16 +50,18 @@ export default function ProblemPage() {
     try {
       setIsLoading(true);
       const response = await postSolution(problemId, {
-        roadmapId,
-        roadmapProblemId,
         language,
         sourceCode: code,
+        roadmapId,
+        roadmapProblemId,
       });
       const isPassed = response.allPassed;
       if (isPassed === true) {
         setResult("CORRECT");
         setDailyRemainedCount(
-          Math.max(0, response.dailyGoal - response.dailyCompleted)
+          response.dailyGoal - response.dailyCompleted > 0
+            ? response.dailyGoal - response.dailyCompleted
+            : 0
         );
       } else {
         setFailCount((prev) => prev + 1);

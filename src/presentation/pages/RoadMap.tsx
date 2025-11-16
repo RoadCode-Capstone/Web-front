@@ -13,6 +13,7 @@ import { postConceptProblem, postRecommendProblem } from "@/apis/roadMap";
 export default function RoadMap() {
   const navigate = useNavigate();
   const {
+    dailyGoal,
     isLoading,
     inProgProblem,
     roadmapId,
@@ -107,7 +108,9 @@ export default function RoadMap() {
                 className="absolute w-[259px] h-[111px] bottom-[253px] left-[-236px]  bg-point-secondary"
               />
               <BubbleBtn
-                text={`일일 학습 목표 달성까지\n${dailyRemainedCount}문제 남음`}
+                text={`일일 학습 목표 달성까지\n${
+                  dailyRemainedCount || dailyGoal
+                }문제 남음`}
                 position="right"
                 style={{ "--tail-offset": "50px", "--tail-color": "#F8E19D" }}
                 className="absolute w-[259px] h-[111px] bottom-[104px] left-[-301px] whitespace-pre-line bg-point-secondary"
