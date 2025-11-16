@@ -100,7 +100,7 @@ function UserReviewElement(props: reviewDto) {
         {props.comments &&
           props.nickname !== "AI" &&
           props.comments.map((v) => <UserComment {...v} />)}
-        <div className="flex gap-x-2">
+        <div className="flex gap-x-2 mt-2">
           <InputField
             placeholder="답글을 남겨보세요"
             id={`reply-${props.reviewId}`}
@@ -128,7 +128,7 @@ function UserReviewElement(props: reviewDto) {
 
 function UserComment(props: commentDetail) {
   return (
-    <div className="flex flex-col gap-y-1" key={props.commentId}>
+    <div className="flex flex-col gap-y-1 px-4" key={props.commentId}>
       <div className="flex justify-between">
         <span className="font-bold">{props.nickname}</span>
         <span className="text-sm">{props.createdAt.split("T")[0]}</span>
