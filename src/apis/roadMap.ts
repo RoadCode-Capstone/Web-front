@@ -13,9 +13,14 @@ import {
 
 const PROBLEM_PREFIX = `${API_PREFIX}/roadmaps`;
 
-export const getMyRoadmaps = async (): Promise<MyRoadMapResDto> => {
+export const getMyRoadmaps = async (
+  status?: string[]
+): Promise<MyRoadMapResDto> => {
   try {
-    const rawResponse = await fetch(`${PROBLEM_PREFIX}/my`, {
+    const api = status
+      ? `${PROBLEM_PREFIX}/my?statusList=${status.toString()}}`
+      : `${PROBLEM_PREFIX}/my`;
+    const rawResponse = await fetch(`${api}`, {
       headers: getTokenHeader(),
       method: "GET",
     });
