@@ -1,23 +1,21 @@
-// src/components/MyCalendar.tsx
-
 import React, { useMemo } from "react";
 import Calendar from "react-calendar";
 import { format, isSameDay, isWeekend } from "date-fns";
 import IconPrev from "@assets/icons/chevron_backward.svg?react";
 import IconNext from "@assets/icons/chevron_forward.svg?react";
-import { getPointHistoryDto } from "@/apis/dto/pointDto";
-// 1. react-calendar의 기본 CSS는 임포트하지 않습니다.
-// import 'react-calendar/dist/Calendar.css'; // <--- 이 줄이 있다면 삭제하세요!
+import {
+  getPointHistoryDto,
+  getTypeHistoryDto,
+  pointDetailDto,
+} from "@/apis/dto/pointDto";
 
-// 2. onChange 핸들러의 'newValue' 타입을 정의합니다.
-// (react-calendar의 'Value' 타입과 동일)
 type ValuePiece = Date | null;
 type Value = ValuePiece | [ValuePiece, ValuePiece];
 
 interface AttendanceCalendarProps {
   date: Date;
   onDateChange: (date: Date) => void;
-  pointHistory: getPointHistoryDto[];
+  pointHistory: getPointHistoryDto[] | null;
 }
 
 export default function AttendanceCalendar({
@@ -25,22 +23,15 @@ export default function AttendanceCalendar({
   onDateChange,
   pointHistory,
 }: AttendanceCalendarProps) {
-  const getPointColorClass = (point: number) => {
-    if (point >= 3) return "bg-point";
-    if (point === 2) return "bg-point-secondary";
-    if (point === 1) return "bg-point-teritary";
-    if (point === 0) return "bg-transparent";
-    return "";
-  };
-
-  const pointHistoryMap = useMemo(
-    () =>
-      pointHistory.reduce((acc, cur) => {
-        acc[cur.date] = cur.totalPoint;
-        return acc;
-      }, {} as Record<string, number>),
-    [pointHistory]
-  );
+  const pointHistoryMap = useMemo(() => {
+    if (!pointHistory) return {};
+    const map: Record<string, pointDetailDto[]> = {};
+    for (const history of pointHistory) {
+      // Assuming history.date is in "YYYY-MM-DD" format
+      map[history.date] = history.pointDetails;
+    }
+    return map;
+  }, [pointHistory]);
   const handleCalendarChange = (newValue: Value) => {
     // 타입 가드: newValue가 Date 객체인지 확인합니다.
     if (newValue instanceof Date) {
@@ -103,7 +94,18 @@ export default function AttendanceCalendar({
             const dateStr = format(date, "yyyy-MM-dd");
             const point = pointHistoryMap[dateStr];
             if (point) {
-              classes.push(getPointColorClass(point));
+              if (
+                point.find((p) => p.type === "ATTENDANCE") &&
+                point.find((p) => p.type === "DAILY_GOAL_COMPLETED")
+              ) {
+                classes.push("bg-point-secondary-hover"); // 출석 + 데일리 목표
+              } else if (point.find((p) => p.type === "ATTENDANCE")) {
+                classes.push("bg-point-teritary"); // 출석만
+              } else {
+                classes.push("bg-transparent");
+              }
+            } else {
+              classes.push("bg-transparent");
             }
 
             // 1. 현재 렌더링되는 날짜(date)가
