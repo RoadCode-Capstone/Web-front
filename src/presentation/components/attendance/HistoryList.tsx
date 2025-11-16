@@ -1,4 +1,4 @@
-import { getSubmissions } from "@/apis/submission";
+import { getSubmission, getSubmissions } from "@/apis/submission";
 import ProblemTable from "./ProblemTable";
 import { submissionDto } from "@/apis/dto/submissionDto";
 import { useEffect, useState } from "react";

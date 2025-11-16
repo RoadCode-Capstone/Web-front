@@ -10,7 +10,7 @@ const MyCodeHeader = (props: problemRes) => {
         className="h-[72px] w-full bg-main border-b border-point px-10
     flex flex-col justify-center items-center"
       >
-        <div className="flex w-full justify-between">
+        <div className="flex w-full justify-between items-center">
           <span className="text-white text-titleL">{props.name}</span>
           <IconDown
             width={24}
@@ -24,8 +24,8 @@ const MyCodeHeader = (props: problemRes) => {
         </div>
       </header>
       {isExpanded && (
-        <p className="text-white font-light text-sm px-10 py-2">
-          {"props.description"}
+        <p className="text-white font-light text-sm px-10 py-4">
+          {props.description}
         </p>
       )}
     </>
