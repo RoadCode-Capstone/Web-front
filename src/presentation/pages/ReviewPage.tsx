@@ -59,7 +59,7 @@ export default function ReviewPage() {
         </div>
         <CodeFooter language={language} />
       </div>
-      <div className="basis-2/5 min-w-0 overflow-y-auto  flex flex-col gap-y-4">
+      <div className="basis-2/5 min-w-0 overflow-y-auto">
         <AiReview
           content={
             reviewsData?.reviews.find((v) => v.nickname === "AI")?.content || ""

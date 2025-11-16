@@ -9,7 +9,7 @@ export function AiReview(props: AiReviewProps) {
   const [isExpanded, setIsExpanded] = useState<boolean>(true);
 
   return (
-    <div className="bg-point border-1 border-black rounded-2xl py-2 px-4 w-full">
+    <div className="bg-point border-1 border-black rounded-2xl py-2 px-4 w-full mb-4">
       <div className="w-full flex justify-between items-center px-2 py-4 border-b-1 border-black">
         <span className="font-medium text-[22px] text-black">AI 리뷰</span>
         {isExpanded ? (
