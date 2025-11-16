@@ -1,4 +1,4 @@
-export type LanguageType = "c" | "java" | "python";
+export type LanguageType = "c" | "java" | "python" | "JAVA" | "C" | "PYTHON";
 
 export interface SolutionRequest {
   language: "c" | "java" | "python";

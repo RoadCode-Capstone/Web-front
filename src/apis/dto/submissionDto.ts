@@ -1,3 +1,5 @@
+import { LanguageType } from "@/types/problem";
+
 interface submissionDetail {
   problemId: number;
   problemName: string;
@@ -10,7 +12,7 @@ export interface getSubmissionDto {
   problemId: number;
   memberId: number;
   sourceCode: string;
-  language: string;
+  language: LanguageType;
   success: boolean;
 }
 

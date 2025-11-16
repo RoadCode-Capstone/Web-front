@@ -1,10 +1,7 @@
-import { getSubmission, getReviews } from "@/apis/submission";
-import { getReviewsDto } from "@/apis/dto/submissionDto";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import CodeEditor from "../components/problem/CodeEditor";
 import { UserReview } from "../components/review/UserReview";
-import { LanguageType } from "@/types/problem";
 import { getOthersSubmissions } from "@/apis/problem";
 import { Button } from "../components";
 import { Spinner } from "../components/common/spinner";
@@ -12,28 +9,28 @@ import { getOthersSubmissionsDto } from "@/apis/dto/problemDto";
 import CodeFooter from "../components/review/CodeFooter";
 import OtherCodeHeader from "../components/review/OtherCodeHeader";
 import { AiReview } from "../components/review/AIReview";
+import { useReviewStore } from "@/stores/reviewStore";
 
 export default function OthersReviewPage() {
   const { problemId } = useParams<{ problemId: string }>();
   const navigate = useNavigate();
   const [submissionIds, setSubmissionIds] = useState<number[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [nickname, setNickname] = useState<string>();
-  const [reviewsData, setReviewsData] = useState<getReviewsDto | null>(null);
-  const [code, setCode] = useState("");
-  const [language, setLanguage] = useState<LanguageType>("c");
-  const [isLoading, setIsLoading] = useState(true);
+  const [nickname, setNickname] = useState<string>("");
+  const {
+    submissionData,
+    reviewsData,
+    isLoading,
+    fetchReviewPageData,
+    clearReviewPageData,
+  } = useReviewStore();
 
   // 1. problemId로 다른 사람들의 submission ID 목록을 가져옵니다.
   useEffect(() => {
-    if (!problemId) {
-      setIsLoading(false);
-      return;
-    }
+    if (!problemId) return;
 
     const fetchSubmissionIds = async () => {
       try {
-        setIsLoading(true);
         const id = parseInt(problemId, 10);
         const response: getOthersSubmissionsDto = await getOthersSubmissions(
           id
@@ -42,7 +39,6 @@ export default function OthersReviewPage() {
           setSubmissionIds(response.submissions.map((s) => s.submissionId));
         } else {
           setSubmissionIds([]);
-          setIsLoading(false);
         }
       } catch (error) {
         console.error(
@@ -50,7 +46,6 @@ export default function OthersReviewPage() {
           error
         );
         setSubmissionIds([]);
-        setIsLoading(false);
       }
     };
 
@@ -59,35 +54,21 @@ export default function OthersReviewPage() {
 
   // 2. 현재 index에 해당하는 submission의 상세 정보와 리뷰를 가져옵니다.
   useEffect(() => {
-    if (submissionIds.length === 0) return;
-
-    const fetchSubmissionDetail = async () => {
-      try {
-        setIsLoading(true);
-
-        const response: getOthersSubmissionsDto = await getOthersSubmissions(
-          parseInt(problemId!, 10)
-        );
-        setNickname(response.submissions[currentIndex].nickname);
-
-        const submissionId = submissionIds[currentIndex];
-        const [submissionDetail, reviews] = await Promise.all([
-          getSubmission(submissionId),
-          getReviews(submissionId),
-        ]);
-
-        setCode(submissionDetail.sourceCode);
-        setLanguage(submissionDetail.language.toLowerCase() as LanguageType);
-        setReviewsData(reviews);
-      } catch (error) {
-        console.error("풀이 정보를 불러오는 데 실패했습니다:", error);
-      } finally {
-        setIsLoading(false);
-      }
+    const getNickname = async () => {
+      const response: getOthersSubmissionsDto = await getOthersSubmissions(
+        parseInt(problemId!, 10)
+      );
+      setNickname(response.submissions[currentIndex].nickname);
     };
-
-    fetchSubmissionDetail();
-  }, [currentIndex, submissionIds]);
+    if (submissionIds.length > 0) {
+      const submissionId = submissionIds[currentIndex];
+      fetchReviewPageData(submissionId);
+    }
+    getNickname();
+    return () => {
+      clearReviewPageData();
+    };
+  }, [currentIndex, submissionIds, fetchReviewPageData, clearReviewPageData]);
 
   const handleNext = () => {
     if (currentIndex < submissionIds.length - 1) {
@@ -99,7 +80,7 @@ export default function OthersReviewPage() {
     navigate("/");
   };
 
-  if (isLoading) {
+  if (isLoading || !submissionData) {
     return <Spinner />;
   }
 
@@ -120,13 +101,13 @@ export default function OthersReviewPage() {
           <OtherCodeHeader nickname={nickname!} />
           <CodeEditor
             key={submissionIds[currentIndex]}
-            language={language}
-            initialCode={code}
+            language={submissionData.language}
+            initialCode={submissionData.sourceCode}
             onChange={() => {}}
             readOnly={true}
           />
         </div>
-        <CodeFooter language={language} />
+        <CodeFooter language={submissionData.language} />
       </div>
       <div className="basis-2/5 min-w-0 overflow-y-auto  flex flex-col gap-y-4">
         <div className="flex-grow">
@@ -136,7 +117,7 @@ export default function OthersReviewPage() {
               ""
             }
           />
-          <UserReview reviews={reviewsData?.reviews || []} />
+          <UserReview />
         </div>
         <div className="">
           <Button
